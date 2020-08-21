@@ -1,4 +1,5 @@
 import { Deck } from './deck';
+import { Card } from './Card';
 import { PlayerDeck } from './decks/PlayerDeck';
 import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
@@ -37,7 +38,13 @@ export class GameState {
   playCard(cardId: string, targetId: string) {}
 
   discardCard(cardId: string) {
-    console.log(`discarding ${cardId}`);
+    let card = this.player.hand.findById(cardId);
+    if (!card) {
+      console.error(`Cannot find card to discard ${cardId}!`);
+      return;
+    }
+    Actions.discardCard(card);
+
   }
 
   getPossibleTargetsForCard(cardId: string): string[] {

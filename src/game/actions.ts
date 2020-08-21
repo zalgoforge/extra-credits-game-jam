@@ -1,6 +1,7 @@
 import { Entity } from './entity';
 import { Damage } from './damage';
 import { GameState } from './game';
+import { Card } from './card';
 
 export class Actions {
   private static player() {
@@ -21,6 +22,14 @@ export class Actions {
 
   static shuffleDeck() {
     Actions.player().deck.shuffle();
+  }
+
+  static discardCard(card:Card) {
+    if(Actions.player().hand.remove(card)) {
+      console.log(`Discarded ${card.title}`);
+    } else {
+      console.log(`Failed to discard ${card.title}`);
+    }
   }
 
   static drawToHandSize() {

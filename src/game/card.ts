@@ -6,5 +6,15 @@ export class Card {
   title = "Dummy text";
   description = "Lorem ipsum";
 
-  constructor() {}
+  //TODO leak
+  private static cardIds: { [uuid: string]: Card; } = {};
+
+  constructor()
+  {
+    Card.cardIds[this.uuid] = this;
+  }
+
+  play() {
+
+  }
 }

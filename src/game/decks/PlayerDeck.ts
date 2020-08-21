@@ -7,8 +7,8 @@ export class PlayerDeck extends Deck {
   constructor() {
     super();
     for(let i = 0; i < 15; i ++)
-      this.cards.push(new Draw());
+      this.add(new Draw());
     for(let i = 0; i < 15; i ++)
-      this.cards.push(new GainMana());
+      this.add(new GainMana());
   }
 }
