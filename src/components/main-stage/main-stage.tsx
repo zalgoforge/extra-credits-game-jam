@@ -25,6 +25,7 @@ const LANE_OFFSET = { x: 10, y: 120 };
 const LANE_DIMENSIONS = { width: 600, height: 60 };
 const LANE_SPACER = 10;
 
+const DISCARD_PILE = { x: 760, y: 500, width: 140, height: 140 };
 const END_TURN_BUTTON = { x: 860, y: 460, width: 120, height: 30 };
 
 GameState.instance();
@@ -113,11 +114,20 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           ))}
         </DroppableContainer>
       ))}
+      <DroppableContainer
+        {...DISCARD_PILE}
+        debugColor={0xdd1111}
+        onDrop={({ cardId }) => {
+          GameState.instance().discardCard(cardId);
+        }}
+      >
+        <Text text={'Discard here'} style={{ fontSize: 10 }} />
+      </DroppableContainer>
       {state.cards.map(({ id, title, description, cost }, index) => (
         <DraggableContainer
           key={id}
           app={app}
-          transferObject={{}}
+          transferObject={{ cardId: id }}
           x={HAND_X_POSITION + (CARD_WIDTH + CARD_SPACE_BETWEEN) * index}
           y={HAND_Y_POSITION}
         >
