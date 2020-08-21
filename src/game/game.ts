@@ -1,10 +1,12 @@
 import { Deck } from './deck';
 import { SignalizingVariable } from './util/SignalizingVariable';
+import { Entity } from './entity';
 
 export class Player {
   deck = new Deck();
   hand = new Deck();
   mana = new SignalizingVariable();
+  entity = new Entity();
 }
 
 export class GameState {
