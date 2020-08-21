@@ -1,4 +1,5 @@
 import { Card } from './card';
+import { Signal } from 'signal-slot';
 
 export class Deck {
   cards = Array<Card>();
