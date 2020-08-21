@@ -5,9 +5,8 @@ import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
 import { DroppableContainer } from '../droppable-container';
 import { State } from './types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Rect } from '../rect';
-import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../button';
 
 import { GameState } from '../../game/game';
@@ -30,20 +29,33 @@ const END_TURN_BUTTON = { x: 860, y: 460, width: 120, height: 30 };
 
 GameState.instance();
 
+const getCards = () => {
+  return GameState.instance().player.hand.cards.map((c) => ({
+    id: c.uuid,
+    title: c.title,
+    description: c.description,
+    cost: c.cost,
+  }));
+};
+
 const StageComponent: React.FC<Props> = ({ app }) => {
-  const [state] = useState<State>({
-    cards: GameState.instance().player.deck.cards.map((c) => ({
-      id: c.uuid,
-      title: c.title,
-      description: c.description,
-      cost: c.cost,
-    })),
+  const [state, setState] = useState<State>({
+    cards: getCards(),
     lanes: [
       { id: 'lane1', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
       { id: 'lane2', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
       { id: 'lane3', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
     ],
   });
+
+  useEffect(() => {
+    GameState.instance().player.hand.onCardsChanged.do(() => {
+      setState((prev) => ({
+        ...prev,
+        cards: getCards(),
+      }));
+    });
+  }, []);
 
   return (
     <Stage app={app}>
