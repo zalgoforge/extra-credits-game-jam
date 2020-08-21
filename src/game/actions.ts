@@ -1,15 +1,9 @@
 import { Entity } from './entity';
 
 export class Actions {
-    drawCard() {
+  drawCard() {}
 
-    }
+  gainMana() {}
 
-    gainMana() {
-
-    }
-
-    dealDamage(target: Entity) {
-
-    }
+  dealDamage(target: Entity) {}
 }

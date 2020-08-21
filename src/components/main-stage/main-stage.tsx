@@ -24,6 +24,8 @@ const CARD_SPACE_BETWEEN = 10;
 
 const END_TURN_BUTTON = { x: 800, y: 500, width: 120, height: 30 };
 
+GameState.instance();
+
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state] = useState<State>({
     cards: [{ id: uuidv4() }, { id: uuidv4() }],
