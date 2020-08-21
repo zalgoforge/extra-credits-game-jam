@@ -3,7 +3,7 @@ import { Signal } from 'signal-slot';
 export class SignalizingVariable {
   private _value = 0;
 
-  OnValueChanged: Signal<number, number> = new Signal();
+  OnValueChanged = new Signal<number, number>();
 
   constructor(value = 0) {
     this._value = value;

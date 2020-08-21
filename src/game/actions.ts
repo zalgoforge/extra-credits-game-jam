@@ -1,9 +1,17 @@
 import { Entity } from './entity';
+import { GameState } from './game';
 
 export class Actions {
-  drawCard() {}
+  private static player() {
+    return GameState.instance().player;
+  }
 
-  gainMana() {}
+  static drawCard() {
+    let card = Actions.player().deck.draw();
+    Actions.player().hand.Add(card);
+  }
 
-  dealDamage(target: Entity) {}
+  static gainMana() {}
+
+  static dealDamage(target: Entity) {}
 }
