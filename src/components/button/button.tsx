@@ -10,15 +10,14 @@ interface Props {
   height: number;
   graphics: string;
   text: string;
-  scale?: PIXI.Point;
   onClick?: () => void;
 }
 
 const BUTTON_TEXT_SPACER = 4;
 
-export const Button: React.FC<Props> = ({ x, y, text, scale, width, height, onClick }) => {
+export const Button: React.FC<Props> = ({ x, y, text, width, height, onClick }) => {
   return (
-    <Container x={x} y={y} scale={scale}>
+    <Container x={x} y={y}>
       <Sprite
         texture={PIXI.Texture.from(buttonGraphics)}
         width={width}
