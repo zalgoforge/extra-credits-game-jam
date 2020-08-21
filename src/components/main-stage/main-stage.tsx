@@ -7,6 +7,7 @@ import { DroppableContainer } from '../droppable-container';
 import { State } from './types';
 import { useState } from 'react';
 import { Rect } from '../rect';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   app: PIXI.Application;
@@ -20,7 +21,7 @@ const CARD_SPACE_BETWEEN = 10;
 
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state] = useState<State>({
-    cards: [{ id: 'card1' }, { id: 'card2' }],
+    cards: [{ id: uuidv4() }, { id: uuidv4() }],
   });
 
   return (
