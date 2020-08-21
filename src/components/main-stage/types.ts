@@ -17,4 +17,5 @@ export interface Lane {
 export interface State {
   cards: Card[];
   lanes: Lane[];
+  mana: number;
 }

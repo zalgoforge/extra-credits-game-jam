@@ -39,6 +39,10 @@ const getCards = () => {
   }));
 };
 
+const getMana = () => {
+  return GameState.instance().player.mana.value();
+};
+
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
@@ -77,6 +81,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         ],
       },
     ],
+    mana: getMana(),
   });
 
   useEffect(() => {
@@ -86,10 +91,17 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         cards: getCards(),
       }));
     });
+    GameState.instance().player.mana.onValueChanged.do(() => {
+      setState((prev) => ({
+        ...prev,
+        mana: getMana(),
+      }));
+    });
   }, []);
 
   return (
     <Stage app={app}>
+      <Text x={10} y={10} text={`${state.mana}`} style={{ fontSize: 32 }} />
       {state.lanes.map(({ id, slots }, index) => (
         <DroppableContainer
           key={id}
