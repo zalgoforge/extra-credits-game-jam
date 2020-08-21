@@ -1,12 +1,13 @@
-import { Deck } from './deck';
+import { Deck, PlayerDeck } from './deck';
 import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
 import { Actions } from './actions';
 
 export class Player {
-  deck = new Deck();
+  deck: Deck = new PlayerDeck();
   hand = new Deck();
   mana = new SignalizingVariable();
+  handLimit = new SignalizingVariable(6);
   entity = new Entity();
 }
 
@@ -17,8 +18,13 @@ export class GameState {
   static instance(): GameState {
     if (!GameState._instance) {
       GameState._instance = new GameState();
+      GameState._instance.initialize();
     }
     return GameState._instance;
+  }
+
+  protected initialize() {
+    Actions.drawToHandSize();
   }
 
   endTurn() {
@@ -27,6 +33,10 @@ export class GameState {
   }
 
   playCard(cardId:string, targetId:string) {
+
+  }
+
+  discardCard(cardId:string) {
 
   }
 

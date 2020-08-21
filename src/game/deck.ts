@@ -6,10 +6,7 @@ export class Deck {
   onCardsChanged = new Signal<Card>();
 
   constructor() {
-    this.cards.push(new Card());
-    this.cards.push(new Card());
-    this.cards.push(new Card());
-    this.cards.push(new Card());
+
   }
 
   draw() : Card {
@@ -24,4 +21,16 @@ export class Deck {
   }
 
   shuffle() {}
+
+  size() {
+    return this.cards.length;
+  }
+}
+
+export class PlayerDeck extends Deck {
+  constructor() {
+    super();
+    for(let i = 0; i < 30; i ++)
+      this.cards.push(new Card());
+  }
 }

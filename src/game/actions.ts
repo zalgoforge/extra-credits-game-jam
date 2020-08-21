@@ -8,8 +8,21 @@ export class Actions {
   }
 
   static drawCard() {
-    let card = Actions.player().deck.draw();
-    Actions.player().hand.add(card);
+    let player = Actions.player();
+    if (player.hand.size() >= player.handLimit.value()) {
+      console.log("Cannot draw card due to hand limit");
+      return false;
+    }
+    let card = player.deck.draw();
+    player.hand.add(card);
+    console.log("Drawing card");
+    return true;
+  }
+
+  static drawToHandSize() {
+    console.log("Drawing up to hand size...");
+    while (this.drawCard()) {}
+    console.log("Drawed up to hand size");
   }
 
   static gainMana(amount=1) {
