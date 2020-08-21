@@ -30,7 +30,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   const [state] = useState<State>({
     cards: GameState.instance().player.deck.cards.map((c) => ({
       id: uuidv4(),
-      title: c.text,
+      title: c.title,
     })),
   });
 
