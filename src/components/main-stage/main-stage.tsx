@@ -55,7 +55,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
         </DraggableContainer>
       ))}
-      <Button {...END_TURN_BUTTON} text={'Next Turn'} graphics={'button.png'} />
+      <Button
+        {...END_TURN_BUTTON}
+        text={'Next Turn'}
+        graphics={'button.png'}
+        onClick={() => {
+          GameState.instance().endTurn();
+        }}
+      />
     </Stage>
   );
 };

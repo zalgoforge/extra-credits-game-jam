@@ -21,6 +21,6 @@ export class GameState {
   }
 
   endTurn() {
-
+    console.log('End Turn');
   }
 }

@@ -11,12 +11,12 @@ interface Props {
   graphics: string;
   text: string;
   scale?: PIXI.Point;
-  onDice?: () => void;
+  onClick?: () => void;
 }
 
 const BUTTON_TEXT_SPACER = 4;
 
-export const Button: React.FC<Props> = ({ x, y, text, scale, width, height }) => {
+export const Button: React.FC<Props> = ({ x, y, text, scale, width, height, onClick }) => {
   return (
     <Container x={x} y={y} scale={scale}>
       <Sprite
@@ -24,9 +24,7 @@ export const Button: React.FC<Props> = ({ x, y, text, scale, width, height }) =>
         width={width}
         height={height}
         interactive={true}
-        click={() => {
-          console.log('clicked');
-        }}
+        click={onClick}
       />
       <Text
         x={5}
