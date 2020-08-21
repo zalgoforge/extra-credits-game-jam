@@ -1,5 +1,4 @@
 import { Deck } from './deck';
-import { Card } from './Card';
 import { PlayerDeck } from './decks/PlayerDeck';
 import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
@@ -35,7 +34,15 @@ export class GameState {
     console.log('End Turn');
   }
 
-  playCard(cardId: string, targetId: string) {}
+  playCard(cardId: string, targetId: string) {
+    let card = this.player.hand.findById(cardId);
+    if (!card) {
+      console.error(`Cannot find card to play ${cardId}!`);
+      return;
+    }
+
+    Actions.playCard(card);
+  }
 
   discardCard(cardId: string) {
     let card = this.player.hand.findById(cardId);
@@ -43,7 +50,7 @@ export class GameState {
       console.error(`Cannot find card to discard ${cardId}!`);
       return;
     }
-    Actions.discardCard(card);
+    Actions.discardCardForMana(card);
 
   }
 

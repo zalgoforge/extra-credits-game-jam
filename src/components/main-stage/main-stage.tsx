@@ -90,13 +90,13 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         ...prev,
         cards: getCards(),
       }));
-    });
+    }).bind();
     GameState.instance().player.mana.onValueChanged.do(() => {
       setState((prev) => ({
         ...prev,
         mana: getMana(),
       }));
-    });
+    }).bind();
   }, []);
 
   return (

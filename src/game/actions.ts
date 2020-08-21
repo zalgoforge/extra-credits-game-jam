@@ -24,9 +24,31 @@ export class Actions {
     Actions.player().deck.shuffle();
   }
 
+  static playCard(card:Card) {
+    if (!Actions.player().mana.tryToPay(card.cost)) {
+      console.log(`Cannot pay cost to play ${card.title}`);
+      return;
+    }
+
+    console.log(`Playing ${card.title}`);
+    // remove card from hand, if user has it in hand
+    Actions.player().hand.remove(card);
+    card.play();
+  }
+
   static discardCard(card:Card) {
     if(Actions.player().hand.remove(card)) {
       console.log(`Discarded ${card.title}`);
+    } else {
+      console.log(`Failed to discard ${card.title}`);
+    }
+  }
+
+  static discardCardForMana(card:Card) {
+    if(Actions.player().hand.remove(card)) {
+      let manaGain = card.manaGain;
+      Actions.player().mana.add(manaGain);
+      console.log(`Discarded ${card.title} for ${manaGain} mana`);
     } else {
       console.log(`Failed to discard ${card.title}`);
     }

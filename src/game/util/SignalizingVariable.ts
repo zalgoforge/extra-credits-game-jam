@@ -10,6 +10,7 @@ export class SignalizingVariable {
   }
 
   add(value: number) {
+    if (value == 0) return this;
     this._value += value;
     this.onValueChanged.emit(this._value);
     return this;
@@ -17,6 +18,12 @@ export class SignalizingVariable {
 
   substract(value: number) {
     return this.add(-value);
+  }
+
+  tryToPay(amount: number) {
+    if (amount > this._value) return false;
+    this.substract(amount);
+    return true;
   }
 
   value() {
