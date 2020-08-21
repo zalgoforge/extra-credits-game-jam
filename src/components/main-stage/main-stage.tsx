@@ -42,9 +42,39 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
     lanes: [
-      { id: 'lane1', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
-      { id: 'lane2', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
-      { id: 'lane3', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
+      {
+        id: 'lane1',
+        slots: [
+          { id: 'slot1' },
+          { id: 'slot2' },
+          { id: 'slot3' },
+          { id: 'slot4' },
+          { id: 'slot5' },
+          { id: 'slot6' },
+        ],
+      },
+      {
+        id: 'lane2',
+        slots: [
+          { id: 'slot1' },
+          { id: 'slot2' },
+          { id: 'slot3' },
+          { id: 'slot4' },
+          { id: 'slot5' },
+          { id: 'slot6' },
+        ],
+      },
+      {
+        id: 'lane3',
+        slots: [
+          { id: 'slot1' },
+          { id: 'slot2' },
+          { id: 'slot3' },
+          { id: 'slot4' },
+          { id: 'slot5' },
+          { id: 'slot6' },
+        ],
+      },
     ],
   });
 
@@ -59,7 +89,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
 
   return (
     <Stage app={app}>
-      {state.lanes.map(({ id }, index) => (
+      {state.lanes.map(({ id, slots }, index) => (
         <DroppableContainer
           key={id}
           x={LANE_OFFSET.x}
@@ -69,7 +99,19 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           onDrop={(transferObject) => {
             console.log(transferObject);
           }}
-        />
+        >
+          {slots.map(({ id }, index) => (
+            <DroppableContainer
+              key={id}
+              x={6 + 90 * index}
+              y={6}
+              width={88}
+              height={48}
+              debugColor={0x0099ee}
+              onDrop={() => {}}
+            />
+          ))}
+        </DroppableContainer>
       ))}
       {state.cards.map(({ id, title, description, cost }, index) => (
         <DraggableContainer
