@@ -20,7 +20,7 @@ export class GameState {
     return GameState._instance;
   }
 
-  static endTurn() {
+  endTurn() {
 
   }
 }
