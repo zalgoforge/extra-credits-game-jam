@@ -1,17 +1,27 @@
 import * as React from 'react';
-import { Stage, Sprite } from 'react-pixi-fiber';
+import { Stage } from 'react-pixi-fiber';
 import { hot } from 'react-hot-loader/root';
 import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
 import { DroppableContainer } from '../droppable-container';
-import spriteTexture from '../../assets/0_dot.png';
+import { State } from './types';
+import { useState } from 'react';
+import { Rect } from '../rect';
 
 interface Props {
   app: PIXI.Application;
 }
 
+const HAND_Y_POSITION = 500;
+const HAND_X_POSITION = 300;
+const CARD_WIDTH = 100;
+const CARD_HEIGHT = 180;
+const CARD_SPACE_BETWEEN = 10;
+
 const StageComponent: React.FC<Props> = ({ app }) => {
-  // const [state, setState] = useState<State>({});
+  const [state] = useState<State>({
+    cards: [{ id: 'card1' }, { id: 'card2' }],
+  });
 
   return (
     <Stage app={app}>
@@ -24,9 +34,17 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           console.log(transferObject);
         }}
       />
-      <DraggableContainer app={app} transferObject={{}} x={100} y={100}>
-        <Sprite x={0} y={0} texture={PIXI.Texture.from(spriteTexture)} />
-      </DraggableContainer>
+      {state.cards.map((card, index) => (
+        <DraggableContainer
+          key={card.id}
+          app={app}
+          transferObject={{}}
+          x={HAND_X_POSITION + (CARD_WIDTH + CARD_SPACE_BETWEEN) * index}
+          y={HAND_Y_POSITION}
+        >
+          <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
+        </DraggableContainer>
+      ))}
     </Stage>
   );
 };
