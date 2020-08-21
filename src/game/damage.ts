@@ -1,5 +1,5 @@
 export class Damage {
-  amount: Number;
+  amount: number;
 
   constructor(amount = 1) {
     this.amount = amount;

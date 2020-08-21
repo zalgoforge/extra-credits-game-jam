@@ -5,10 +5,11 @@ export class GainMana extends Card {
   constructor() {
     super();
     this.title = "Gain mana";
-    this.description = "Gain one mana";
+    this.description = "Gain 3 mana";
+    this.cost = 1;
   }
 
   play() {
-    Actions.gainMana();
+    Actions.gainMana(3);
   }
 }

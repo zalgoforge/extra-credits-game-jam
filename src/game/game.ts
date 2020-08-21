@@ -30,7 +30,7 @@ export class GameState {
   }
 
   endTurn() {
-    Actions.drawCard();
+    Actions.drawToHandSize();
     console.log('End Turn');
   }
 

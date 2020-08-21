@@ -9,6 +9,7 @@ export class Actions {
   }
 
   static drawCard() {
+    //TODO shuffle discard
     let player = Actions.player();
     if (player.hand.size() >= player.handLimit.value()) {
       console.log("Cannot draw card due to hand limit");
@@ -64,7 +65,12 @@ export class Actions {
     Actions.player().mana.add(1);
   }
 
-  static dealDamage(target: Entity, damage: Damage) {
+  static dealDamageToPlayer(amount=1) {
+    let dmg = new Damage(amount);
+    Actions.dealDamage(Actions.player().entity, dmg);
+  }
 
+  static dealDamage(target: Entity, damage: Damage) {
+    target.takeDamage(damage);
   }
 }
