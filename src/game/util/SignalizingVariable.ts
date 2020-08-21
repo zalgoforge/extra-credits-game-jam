@@ -15,4 +15,8 @@ export class SignalizingVariable {
         this.OnValueChanged.emit(this._value, old);
         return this;
     }
+
+    substract(value: number) {
+        return this.add(-value);
+    }
 }
