@@ -22,6 +22,10 @@ const CARD_WIDTH = 100;
 const CARD_HEIGHT = 180;
 const CARD_SPACE_BETWEEN = 10;
 
+const LANE_OFFSET = { x: 10, y: 120 };
+const LANE_DIMENSIONS = { width: 600, height: 60 };
+const LANE_SPACER = 10;
+
 const END_TURN_BUTTON = { x: 800, y: 500, width: 120, height: 30 };
 
 GameState.instance();
@@ -32,19 +36,27 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       id: uuidv4(),
       title: c.title,
     })),
+    lanes: [
+      { id: 'lane1', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
+      { id: 'lane2', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
+      { id: 'lane3', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
+    ],
   });
 
   return (
     <Stage app={app}>
-      <DroppableContainer
-        x={300}
-        y={100}
-        width={100}
-        height={100}
-        onDrop={(transferObject) => {
-          console.log(transferObject);
-        }}
-      />
+      {state.lanes.map(({ id }, index) => (
+        <DroppableContainer
+          key={id}
+          x={LANE_OFFSET.x}
+          y={LANE_OFFSET.y + index * (LANE_DIMENSIONS.height + LANE_SPACER)}
+          width={LANE_DIMENSIONS.width}
+          height={LANE_DIMENSIONS.height}
+          onDrop={(transferObject) => {
+            console.log(transferObject);
+          }}
+        />
+      ))}
       {state.cards.map(({ id, title }, index) => (
         <DraggableContainer
           key={id}
