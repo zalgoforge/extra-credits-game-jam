@@ -25,4 +25,12 @@ export class GameState {
     Actions.drawCard();
     console.log('End Turn');
   }
+
+  playCard(cardId:string, targetId:string) {
+
+  }
+
+  getPossibleTargetsForCard(cardId:string): string[] {
+    return [];
+  }
 }
