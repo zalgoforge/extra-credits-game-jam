@@ -62,7 +62,7 @@ export class Actions {
   }
 
   static gainMana(amount=1) {
-    Actions.player().mana.add(1);
+    Actions.player().mana.add(amount);
   }
 
   static dealDamageToPlayer(amount=1) {
