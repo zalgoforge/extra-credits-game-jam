@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Rect } from '../rect';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Entity } from '../../game/entity';
+import { GameState } from '../../game/game';
 
 interface Props {
   app: PIXI.Application;
