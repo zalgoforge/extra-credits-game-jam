@@ -8,6 +8,7 @@ import { State } from './types';
 import { useState } from 'react';
 import { Rect } from '../rect';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '../button';
 
 interface Props {
   app: PIXI.Application;
@@ -18,6 +19,8 @@ const HAND_X_POSITION = 300;
 const CARD_WIDTH = 100;
 const CARD_HEIGHT = 180;
 const CARD_SPACE_BETWEEN = 10;
+
+const END_TURN_BUTTON = { x: 800, y: 500, width: 120, height: 30 };
 
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state] = useState<State>({
@@ -46,6 +49,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
         </DraggableContainer>
       ))}
+      <Button {...END_TURN_BUTTON} text={'Next Turn'} graphics={'button.png'} />
     </Stage>
   );
 };
