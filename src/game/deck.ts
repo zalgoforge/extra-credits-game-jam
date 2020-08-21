@@ -1,5 +1,6 @@
 import { Card } from './card';
 import { Signal } from 'signal-slot';
+let shuffleArray = require('shuffle-array');
 
 export class Deck {
   cards = Array<Card>();
@@ -20,17 +21,11 @@ export class Deck {
     this.onCardsChanged.emit(card);
   }
 
-  shuffle() {}
+  shuffle() {
+    shuffleArray(this.cards);
+  }
 
   size() {
     return this.cards.length;
-  }
-}
-
-export class PlayerDeck extends Deck {
-  constructor() {
-    super();
-    for(let i = 0; i < 30; i ++)
-      this.cards.push(new Card());
   }
 }

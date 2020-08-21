@@ -74,6 +74,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:5.1.7"
       ],
       [
+        "@types/shuffle-array",
+        "npm:1.0.0"
+      ],
+      [
         "@types/uuid",
         "npm:7.0.3"
       ],
@@ -138,6 +142,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:0.14.0"
       ],
       [
+        "shuffle-array",
+        "npm:1.0.1"
+      ],
+      [
         "signal-slot",
         "npm:1.1.1"
       ],
@@ -180,6 +188,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:16.9.34"],
             ["@types/react-dom", "npm:16.9.7"],
             ["@types/react-router", "npm:5.1.7"],
+            ["@types/shuffle-array", "npm:1.0.0"],
             ["@types/uuid", "npm:7.0.3"],
             ["@types/webpack", "npm:4.41.12"],
             ["@types/webpack-env", "npm:1.15.2"],
@@ -196,6 +205,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:16.13.1"],
             ["react-hot-loader", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:4.12.21"],
             ["react-pixi-fiber", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:0.14.0"],
+            ["shuffle-array", "npm:1.0.1"],
             ["signal-slot", "npm:1.1.1"],
             ["typescript", "patch:typescript@npm%3A3.8.3#builtin<compat/typescript>::version=3.8.3&hash=270b6c"],
             ["uuid", "npm:8.0.0"],
@@ -2381,6 +2391,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@types/shuffle-array", [
+        ["npm:1.0.0", {
+          "packageLocation": "./.yarn/cache/@types-shuffle-array-npm-1.0.0-3e990846d5-2.zip/node_modules/@types/shuffle-array/",
+          "packageDependencies": [
+            ["@types/shuffle-array", "npm:1.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@types/source-list-map", [
         ["npm:0.1.2", {
           "packageLocation": "./.yarn/cache/@types-source-list-map-npm-0.1.2-1983e10da7-2.zip/node_modules/@types/source-list-map/",
@@ -3223,6 +3242,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:16.9.34"],
             ["@types/react-dom", "npm:16.9.7"],
             ["@types/react-router", "npm:5.1.7"],
+            ["@types/shuffle-array", "npm:1.0.0"],
             ["@types/uuid", "npm:7.0.3"],
             ["@types/webpack", "npm:4.41.12"],
             ["@types/webpack-env", "npm:1.15.2"],
@@ -3239,6 +3259,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:16.13.1"],
             ["react-hot-loader", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:4.12.21"],
             ["react-pixi-fiber", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:0.14.0"],
+            ["shuffle-array", "npm:1.0.1"],
             ["signal-slot", "npm:1.1.1"],
             ["typescript", "patch:typescript@npm%3A3.8.3#builtin<compat/typescript>::version=3.8.3&hash=270b6c"],
             ["uuid", "npm:8.0.0"],
@@ -8813,6 +8834,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/shebang-regex-npm-1.0.0-c3612b74e9-2.zip/node_modules/shebang-regex/",
           "packageDependencies": [
             ["shebang-regex", "npm:1.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["shuffle-array", [
+        ["npm:1.0.1", {
+          "packageLocation": "./.yarn/cache/shuffle-array-npm-1.0.1-5ed9a2d829-2.zip/node_modules/shuffle-array/",
+          "packageDependencies": [
+            ["shuffle-array", "npm:1.0.1"]
           ],
           "linkType": "HARD",
         }]

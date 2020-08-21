@@ -19,6 +19,10 @@ export class Actions {
     return true;
   }
 
+  static shuffleDeck() {
+    Actions.player().deck.shuffle();
+  }
+
   static drawToHandSize() {
     console.log("Drawing up to hand size...");
     while (this.drawCard()) {}

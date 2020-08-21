@@ -1,4 +1,5 @@
-import { Deck, PlayerDeck } from './deck';
+import { Deck } from './deck';
+import { PlayerDeck } from './decks/PlayerDeck';
 import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
 import { Actions } from './actions';
@@ -24,6 +25,7 @@ export class GameState {
   }
 
   protected initialize() {
+    Actions.shuffleDeck();
     Actions.drawToHandSize();
   }
 

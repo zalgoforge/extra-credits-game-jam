@@ -46,12 +46,14 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@types/shuffle-array": "^1.0.0",
     "fp-ts": "^2.8.1",
     "pixi.js": "^5.2.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-pixi-fiber": "^0.14.0",
+    "shuffle-array": "^1.0.1",
     "signal-slot": "^1.1.1",
     "uuid": "^8.0.0"
   }
