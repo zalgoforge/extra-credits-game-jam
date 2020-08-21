@@ -17,7 +17,7 @@ interface Props {
 }
 
 const HAND_Y_POSITION = 500;
-const HAND_X_POSITION = 300;
+const HAND_X_POSITION = 10;
 const CARD_WIDTH = 100;
 const CARD_HEIGHT = 180;
 const CARD_SPACE_BETWEEN = 10;
@@ -26,15 +26,17 @@ const LANE_OFFSET = { x: 10, y: 120 };
 const LANE_DIMENSIONS = { width: 600, height: 60 };
 const LANE_SPACER = 10;
 
-const END_TURN_BUTTON = { x: 800, y: 500, width: 120, height: 30 };
+const END_TURN_BUTTON = { x: 860, y: 460, width: 120, height: 30 };
 
 GameState.instance();
 
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state] = useState<State>({
     cards: GameState.instance().player.deck.cards.map((c) => ({
-      id: uuidv4(),
+      id: c.uuid,
       title: c.title,
+      description: c.description,
+      cost: c.cost,
     })),
     lanes: [
       { id: 'lane1', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
@@ -57,7 +59,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           }}
         />
       ))}
-      {state.cards.map(({ id, title }, index) => (
+      {state.cards.map(({ id, title, description, cost }, index) => (
         <DraggableContainer
           key={id}
           app={app}
@@ -67,6 +69,8 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         >
           <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
           <Text x={3} y={3} text={title} style={{ fontSize: 9 }} />
+          <Text x={3} y={80} text={description} style={{ fontSize: 9 }} />
+          <Text x={80} y={3} text={`${cost}`} style={{ fontSize: 20 }} />
         </DraggableContainer>
       ))}
       <Button
