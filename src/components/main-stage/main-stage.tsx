@@ -25,6 +25,7 @@ const LANE_OFFSET = { x: 10, y: 120 };
 const LANE_DIMENSIONS = { width: 600, height: 60 };
 const LANE_SPACER = 10;
 
+const DISCARD_PILE = { x: 760, y: 500, width: 140, height: 140 };
 const END_TURN_BUTTON = { x: 860, y: 460, width: 120, height: 30 };
 
 GameState.instance();
@@ -42,9 +43,39 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
     lanes: [
-      { id: 'lane1', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
-      { id: 'lane2', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
-      { id: 'lane3', slots: [{ id: 'slot1' }, { id: 'slot2' }, { id: 'slot3' }, { id: 'slot1' }] },
+      {
+        id: 'lane1',
+        slots: [
+          { id: 'slot1' },
+          { id: 'slot2' },
+          { id: 'slot3' },
+          { id: 'slot4' },
+          { id: 'slot5' },
+          { id: 'slot6' },
+        ],
+      },
+      {
+        id: 'lane2',
+        slots: [
+          { id: 'slot1' },
+          { id: 'slot2' },
+          { id: 'slot3' },
+          { id: 'slot4' },
+          { id: 'slot5' },
+          { id: 'slot6' },
+        ],
+      },
+      {
+        id: 'lane3',
+        slots: [
+          { id: 'slot1' },
+          { id: 'slot2' },
+          { id: 'slot3' },
+          { id: 'slot4' },
+          { id: 'slot5' },
+          { id: 'slot6' },
+        ],
+      },
     ],
   });
 
@@ -59,7 +90,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
 
   return (
     <Stage app={app}>
-      {state.lanes.map(({ id }, index) => (
+      {state.lanes.map(({ id, slots }, index) => (
         <DroppableContainer
           key={id}
           x={LANE_OFFSET.x}
@@ -69,13 +100,34 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           onDrop={(transferObject) => {
             console.log(transferObject);
           }}
-        />
+        >
+          {slots.map(({ id }, index) => (
+            <DroppableContainer
+              key={id}
+              x={6 + 90 * index}
+              y={6}
+              width={88}
+              height={48}
+              debugColor={0x0099ee}
+              onDrop={() => {}}
+            />
+          ))}
+        </DroppableContainer>
       ))}
+      <DroppableContainer
+        {...DISCARD_PILE}
+        debugColor={0xdd1111}
+        onDrop={({ cardId }) => {
+          GameState.instance().discardCard(cardId);
+        }}
+      >
+        <Text text={'Discard here'} style={{ fontSize: 10 }} />
+      </DroppableContainer>
       {state.cards.map(({ id, title, description, cost }, index) => (
         <DraggableContainer
           key={id}
           app={app}
-          transferObject={{}}
+          transferObject={{ cardId: id }}
           x={HAND_X_POSITION + (CARD_WIDTH + CARD_SPACE_BETWEEN) * index}
           y={HAND_Y_POSITION}
         >

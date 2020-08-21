@@ -34,15 +34,13 @@ export class GameState {
     console.log('End Turn');
   }
 
-  playCard(cardId:string, targetId:string) {
+  playCard(cardId: string, targetId: string) {}
 
+  discardCard(cardId: string) {
+    console.log(`discarding ${cardId}`);
   }
 
-  discardCard(cardId:string) {
-
-  }
-
-  getPossibleTargetsForCard(cardId:string): string[] {
+  getPossibleTargetsForCard(cardId: string): string[] {
     return [];
   }
 }
