@@ -10,6 +10,8 @@ import { Rect } from '../rect';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../button';
 
+import { GameState } from '../../game/game';
+
 interface Props {
   app: PIXI.Application;
 }

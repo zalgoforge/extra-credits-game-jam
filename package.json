@@ -51,6 +51,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-pixi-fiber": "^0.14.0",
+    "signal-slot": "^1.1.1",
     "uuid": "^8.0.0"
   }
 }
