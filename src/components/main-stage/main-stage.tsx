@@ -85,18 +85,22 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   });
 
   useEffect(() => {
-    GameState.instance().player.hand.onCardsChanged.do(() => {
-      setState((prev) => ({
-        ...prev,
-        cards: getCards(),
-      }));
-    }).bind();
-    GameState.instance().player.mana.onValueChanged.do(() => {
-      setState((prev) => ({
-        ...prev,
-        mana: getMana(),
-      }));
-    }).bind();
+    GameState.instance()
+      .player.hand.onCardsChanged.do(() => {
+        setState((prev) => ({
+          ...prev,
+          cards: getCards(),
+        }));
+      })
+      .bind();
+    GameState.instance()
+      .player.mana.onValueChanged.do(() => {
+        setState((prev) => ({
+          ...prev,
+          mana: getMana(),
+        }));
+      })
+      .bind();
   }, []);
 
   return (
@@ -109,8 +113,8 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           y={LANE_OFFSET.y + index * (LANE_DIMENSIONS.height + LANE_SPACER)}
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
-          onDrop={(transferObject) => {
-            console.log(transferObject);
+          onDrop={({ cardId }) => {
+            GameState.instance().playCard(cardId, '');
           }}
         >
           {slots.map(({ id }, index) => (
