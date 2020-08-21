@@ -28,7 +28,9 @@ GameState.instance();
 
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state] = useState<State>({
-    cards: [{ id: uuidv4() }, { id: uuidv4() }],
+    cards: GameState.instance().player.deck.cards.map((c) => ({
+      id: uuidv4(),
+    })),
   });
 
   return (
