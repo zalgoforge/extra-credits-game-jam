@@ -1,9 +1,9 @@
 import {Signal} from "signal-slot";
 
 export class SignalizingVariable {
-    _value = 0;
+    private _value = 0;
 
-    public OnValueChanged: Signal<number, number> = new Signal();
+    OnValueChanged: Signal<number, number> = new Signal();
 
     constructor(value = 0) {
         this._value = value;
@@ -18,5 +18,9 @@ export class SignalizingVariable {
 
     substract(value: number) {
         return this.add(-value);
+    }
+
+    value() {
+        return this._value;
     }
 }
