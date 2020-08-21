@@ -3,16 +3,15 @@ import { Signal } from 'signal-slot';
 export class SignalizingVariable {
   private _value = 0;
 
-  OnValueChanged = new Signal<number, number>();
+  onValueChanged = new Signal<number>();
 
   constructor(value = 0) {
     this._value = value;
   }
 
   add(value: number) {
-    let old = this._value;
     this._value += value;
-    this.OnValueChanged.emit(this._value, old);
+    this.onValueChanged.emit(this._value);
     return this;
   }
 
