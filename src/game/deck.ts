@@ -13,11 +13,14 @@ export class Deck {
   }
 
   draw() : Card {
-    return this.cards.pop() as Card;
+    let card = this.cards.pop() as Card;
+    this.OnCardsChanged.emit(card);
+    return card;
   }
 
   add(card:Card) {
-
+    this.cards.push(card);
+    this.OnCardsChanged.emit(card);
   }
 
   shuffle() {}

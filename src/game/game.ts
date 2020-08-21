@@ -1,6 +1,7 @@
 import { Deck } from './deck';
 import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
+import { Actions } from './actions';
 
 export class Player {
   deck = new Deck();
@@ -21,6 +22,7 @@ export class GameState {
   }
 
   endTurn() {
+    Actions.drawCard();
     console.log('End Turn');
   }
 }

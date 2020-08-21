@@ -8,7 +8,7 @@ export class Actions {
 
   static drawCard() {
     let card = Actions.player().deck.draw();
-    Actions.player().hand.Add(card);
+    Actions.player().hand.add(card);
   }
 
   static gainMana() {}
