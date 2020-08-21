@@ -134,6 +134,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:0.14.0"
       ],
       [
+        "signal-slot",
+        "npm:1.1.1"
+      ],
+      [
         "typescript",
         "patch:typescript@npm%3A3.8.3#builtin<compat/typescript>::version=3.8.3&hash=270b6c"
       ],
@@ -187,6 +191,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:16.13.1"],
             ["react-hot-loader", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:4.12.21"],
             ["react-pixi-fiber", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:0.14.0"],
+            ["signal-slot", "npm:1.1.1"],
             ["typescript", "patch:typescript@npm%3A3.8.3#builtin<compat/typescript>::version=3.8.3&hash=270b6c"],
             ["uuid", "npm:8.0.0"],
             ["webpack", "npm:4.43.0"],
@@ -3058,6 +3063,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:16.13.1"],
             ["react-hot-loader", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:4.12.21"],
             ["react-pixi-fiber", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:0.14.0"],
+            ["signal-slot", "npm:1.1.1"],
             ["typescript", "patch:typescript@npm%3A3.8.3#builtin<compat/typescript>::version=3.8.3&hash=270b6c"],
             ["uuid", "npm:8.0.0"],
             ["webpack", "npm:4.43.0"],
@@ -8637,6 +8643,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["signal-slot", [
+        ["npm:1.1.1", {
+          "packageLocation": "./.yarn/cache/signal-slot-npm-1.1.1-cddb0ed091-2.zip/node_modules/signal-slot/",
+          "packageDependencies": [
+            ["signal-slot", "npm:1.1.1"],
+            ["types", "npm:0.1.1"],
+            ["typescript", "patch:typescript@npm%3A2.9.2#builtin<compat/typescript>::version=2.9.2&hash=270b6c"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["snapdragon", [
         ["npm:0.8.2", {
           "packageLocation": "./.yarn/cache/snapdragon-npm-0.8.2-2bcc47d217-2.zip/node_modules/snapdragon/",
@@ -9288,7 +9305,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["types", [
+        ["npm:0.1.1", {
+          "packageLocation": "./.yarn/cache/types-npm-0.1.1-d83b47eed3-2.zip/node_modules/types/",
+          "packageDependencies": [
+            ["types", "npm:0.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["typescript", [
+        ["patch:typescript@npm%3A2.9.2#builtin<compat/typescript>::version=2.9.2&hash=270b6c", {
+          "packageLocation": "./.yarn/cache/typescript-patch-d7b82aa690-2.zip/node_modules/typescript/",
+          "packageDependencies": [
+            ["typescript", "patch:typescript@npm%3A2.9.2#builtin<compat/typescript>::version=2.9.2&hash=270b6c"]
+          ],
+          "linkType": "HARD",
+        }],
         ["patch:typescript@npm%3A3.8.3#builtin<compat/typescript>::version=3.8.3&hash=270b6c", {
           "packageLocation": "./.yarn/cache/typescript-patch-44be79f87b-2.zip/node_modules/typescript/",
           "packageDependencies": [
