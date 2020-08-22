@@ -22,9 +22,12 @@ const CARD_WIDTH = 100;
 const CARD_HEIGHT = 180;
 const CARD_SPACE_BETWEEN = 10;
 
-const LANE_OFFSET = { x: 400, y: 220 };
+const LANE_OFFSET = { x: 420, y: 220 };
 const LANE_DIMENSIONS = { width: 700, height: 60 };
 const LANE_SPACER = 10;
+const LANE_SHIFT = 30;
+
+const FIELD_WIDTH = 90;
 
 const DISCARD_PILE = { x: 760, y: 500, width: 140, height: 140 };
 const END_TURN_BUTTON = { x: 860, y: 460, width: 120, height: 30 };
@@ -100,7 +103,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       {state.lanes.map(({ id, fields }, index) => (
         <DroppableContainer
           key={id}
-          x={LANE_OFFSET.x}
+          x={LANE_OFFSET.x - index * LANE_SHIFT}
           y={LANE_OFFSET.y + index * (LANE_DIMENSIONS.height + LANE_SPACER)}
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
@@ -116,7 +119,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           fields.map(({ id }, index) => (
             <DroppableContainer
               key={id}
-              x={LANE_OFFSET.x + 6 + 90 * index}
+              x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + 6 + FIELD_WIDTH * index}
               y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6}
               width={88}
               height={48}
