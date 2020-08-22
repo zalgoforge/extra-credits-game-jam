@@ -31,6 +31,7 @@ export class GameState {
   protected initialize() {
     Actions.shuffleDeck();
     Actions.drawToHandSize();
+    Cheats.addTestEnemy();
   }
 
   endTurn() {
@@ -61,7 +62,7 @@ export class GameState {
   }
 
   doCheat(cheat: string) {
-    Cheats.addMana();
+    Cheats.addTestEnemy();
   }
 
   getPossibleTargetsForCard(cardId: string): string[] {

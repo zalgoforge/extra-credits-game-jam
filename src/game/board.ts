@@ -5,9 +5,24 @@ import { Signal } from 'signal-slot';
 export class Field extends UniqueObject {
   laneIdx = 0;
   fieldIdx = 0;
+  private _entity: Entity | null = null;
+
   constructor(idx: number) {
     super();
     this.fieldIdx = idx;
+  }
+
+  entity() : Entity | null {
+    return this._entity;
+  }
+
+  _setEntity(entity: Entity | null) {
+    if (this.entity()) {
+      console.error("Wanted to add entity to field, but field is not empty");
+      return false;
+    }
+    this._entity = entity;
+    return true;
   }
 }
 
@@ -28,6 +43,7 @@ export class Board extends UniqueObject {
   static lanesSize = 6;
 
   onEntityAdded = new Signal<Entity>();
+  onEntityRemoved = new Signal<Entity>();
 
   lanes = Array<Lane>();
   entities = Array<Entity>();
@@ -40,8 +56,27 @@ export class Board extends UniqueObject {
   }
 
   addEntity(entity: Entity, field: Field) {
+    if (field.entity()) return false;
+
+    entity._setField(field);
+    field._setEntity(entity);
+
     this.entities.push(entity);
     this.onEntityAdded.emit(entity);
+    return true;
+  }
+
+  entityDestroyed(entity: Entity) {
+    let index = this.entities.indexOf(entity, 0);
+    if (index == -1) return false;
+
+    this.entities.splice(index, 1);
+    let field = entity.field();
+    field?._setEntity(null);
+    entity._setField(null);
+
+    this.onEntityRemoved.emit(entity);
+    return true;
   }
 
   endOfTurn() {

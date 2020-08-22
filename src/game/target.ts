@@ -1,5 +1,6 @@
 import { Field } from './board';
 import { GameState } from './game';
+import shuffle from 'shuffle-array';
 
 export class Target {
   static board() {
@@ -24,5 +25,12 @@ export class Target {
       fields.push(lane.fields[lane.fields.length - 1]);
     }
     return fields;
+  }
+
+  static randomLastEmptyField() {
+    let fields = Target.lastFields().filter(f => !f.entity());
+    shuffle(fields);
+    if (fields.length == 0) return null;
+    return fields[0];
   }
 }

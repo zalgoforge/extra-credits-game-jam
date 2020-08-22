@@ -10,6 +10,10 @@ export class Actions {
     return GameState.instance().player;
   }
 
+  private static board() {
+    return GameState.instance().board;
+  }
+
   static drawCard() {
     //TODO shuffle discard
     let player = Actions.player();
@@ -86,5 +90,7 @@ export class Actions {
     target.takeDamage(damage);
   }
 
-  static spawnEnemy(target: Entity, field: Field) {}
+  static spawnEnemy(entity: Entity, field: Field) {
+    return Actions.board().addEntity(entity, field);
+  }
 }
