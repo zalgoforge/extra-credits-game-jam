@@ -1,6 +1,6 @@
 import { UniqueObject } from './unique-object';
 import { Target } from './target';
-import { Field } from './board';
+import { Field, Lane } from './board';
 
 export class PlayContext {
   targets = Array<UniqueObject>();
@@ -11,6 +11,10 @@ export class PlayContext {
 
   field() {
     return this.targets[0] as Field;
+  }
+
+  lane() {
+    return this.targets[0] as Lane;
   }
 }
 

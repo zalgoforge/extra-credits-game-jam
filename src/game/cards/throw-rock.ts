@@ -18,6 +18,13 @@ export class ThrowRock extends Card {
 
   play(ctx: PlayContext) {
     // TODO implement effect
-    console.log(`Playing ThrowRock on ${ctx.targets[0].uuid}`);
+    let lane = ctx.lane();
+    console.log(`Playing ThrowRock on lane ${lane.idx}`);
+    let target = lane.firstNonEmptyField();
+    if (!target) {
+      console.log(`Nobody to hit`);
+      return;
+    }
+    Actions.dealDamageToField(target, ThrowRock.damage);
   }
 }

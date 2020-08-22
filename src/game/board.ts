@@ -36,6 +36,13 @@ export class Lane extends UniqueObject {
       this.fields.push(new Field(i));
     }
   }
+
+  firstNonEmptyField() {
+    for(let field of this.fields) {
+      if (field.entity()) return field;
+    }
+    return null;
+  }
 }
 
 export class Board extends UniqueObject {
