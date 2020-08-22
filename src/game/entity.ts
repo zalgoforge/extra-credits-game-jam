@@ -11,6 +11,7 @@ export class Entity extends UniqueObject {
   private _field: Field | null = null;
 
   static onEntityHPChanged = new Signal<Entity>();
+  static onEntityMoved = new Signal<Entity>();
 
   takeDamage(damage: Damage) {
     this.hp.substract(damage.amount);
