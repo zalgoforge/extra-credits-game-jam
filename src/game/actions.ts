@@ -21,10 +21,23 @@ export class Actions {
       console.log('Cannot draw card due to hand limit');
       return false;
     }
+
+    if (player.deck.empty()) {
+      player.deck.addAllCardsFrom(player.discard);
+      if (player.deck.empty()) return false;
+      Actions.shuffleDeck();
+    }
+
     let card = player.deck.draw();
     player.hand.add(card);
     console.log('Drawing card');
     return true;
+  }
+
+  static drawToHandSize() {
+    console.log('Drawing up to hand size...');
+    while (this.drawCard()) {}
+    console.log('Drawed up to hand size');
   }
 
   static shuffleDeck() {
@@ -45,7 +58,10 @@ export class Actions {
 
     console.log(`Playing ${card.title}`);
     // remove card from hand, if user has it in hand
-    Actions.player().hand.remove(card);
+    if (Actions.player().hand.remove(card)) {
+      Actions.player().discard.add(card);
+    }
+
     let ctx = new PlayContext();
     if (target) {
       ctx.targets.push(target);
@@ -55,6 +71,7 @@ export class Actions {
 
   static discardCard(card: Card) {
     if (Actions.player().hand.remove(card)) {
+      Actions.player().discard.add(card);
       console.log(`Discarded ${card.title}`);
     } else {
       console.log(`Failed to discard ${card.title}`);
@@ -63,6 +80,7 @@ export class Actions {
 
   static discardCardForMana(card: Card) {
     if (Actions.player().hand.remove(card)) {
+      Actions.player().discard.add(card);
       let manaGain = card.manaGain;
       Actions.player().mana.add(manaGain);
       console.log(`Discarded ${card.title} for ${manaGain} mana`);
@@ -71,18 +89,16 @@ export class Actions {
     }
   }
 
-  static drawToHandSize() {
-    console.log('Drawing up to hand size...');
-    while (this.drawCard()) {}
-    console.log('Drawed up to hand size');
-  }
-
   static loseAllMana() {
     Actions.player().mana.set(0);
   }
 
   static gainMana(amount = 1) {
     Actions.player().mana.add(amount);
+  }
+
+  static healPlayer(amount = 1) {
+    Actions.player().entity.heal(amount);
   }
 
   static dealDamageToPlayer(amount = 1) {

@@ -19,6 +19,14 @@ export class Target {
     return fields;
   }
 
+  static allFieldsInColumn(idx:number) {
+    let fields = new Array<Field>();
+    for(let lane of Target.anyLane()) {
+      fields.push(lane.fields[idx]);
+    }
+    return fields;
+  }
+
   static anyFieldWithEnemy() {
     return Target.anyField().filter(f => f.entity());
   }

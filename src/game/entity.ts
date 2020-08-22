@@ -6,6 +6,7 @@ import { Signal } from 'signal-slot';
 
 export class Entity extends UniqueObject {
   name = "Unknown";
+  // TODO add maxHP
   hp = new SignalizingVariable(10);
   attack = new SignalizingVariable(1);
   private _field: Field | null = null;
@@ -15,6 +16,11 @@ export class Entity extends UniqueObject {
 
   takeDamage(damage: Damage) {
     this.hp.substract(damage.amount);
+    Entity.onEntityHPChanged.emit(this);
+  }
+
+  heal(amount: number) {
+    this.hp.add(amount);
     Entity.onEntityHPChanged.emit(this);
   }
 

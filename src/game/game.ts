@@ -12,6 +12,7 @@ import { SpawnEnemies } from './enemiesCards/spawn-enemies';
 export class Player {
   deck: Deck = new PlayerDeck();
   hand = new Deck();
+  discard = new Deck();
   mana = new SignalizingVariable();
   handLimit = new SignalizingVariable(6);
   entity = new Entity();

@@ -4,26 +4,39 @@ let shuffleArray = require('shuffle-array');
 
 export class Deck {
   cards = Array<Card>();
-  onCardsChanged = new Signal<Card>();
+  onCardsChanged = new Signal<number>();
 
   constructor() {}
 
   draw(): Card {
     let card = this.cards.pop() as Card;
-    this.onCardsChanged.emit(card);
+    this.onCardsChanged.emit(0);
     return card;
   }
 
   add(card: Card) {
     this.cards.push(card);
-    this.onCardsChanged.emit(card);
+    this.onCardsChanged.emit(0);
+  }
+
+  addCards(cards:Card[]) {
+    for (let card of cards) {
+      this.add(card);
+    }
+  }
+
+  addAllCardsFrom(deck:Deck) {
+    this.cards = deck.cards;
+    deck.cards = [];
+    deck.onCardsChanged.emit(0);
+    this.onCardsChanged.emit(0);
   }
 
   remove(card: Card) {
     let index = this.cards.indexOf(card, 0);
     if (index == -1) return false;
     this.cards.splice(index, 1);
-    this.onCardsChanged.emit(card);
+    this.onCardsChanged.emit(0);
     return true;
   }
 
@@ -35,6 +48,10 @@ export class Deck {
 
   shuffle() {
     shuffleArray(this.cards);
+  }
+
+  empty() {
+    return this.size() == 0;
   }
 
   size() {

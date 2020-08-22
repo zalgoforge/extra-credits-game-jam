@@ -17,11 +17,8 @@ export class ThrowRock extends Card {
   }
 
   play(ctx: PlayContext) {
-    let lane = ctx.lane();
-    console.log(`Playing ThrowRock on lane ${lane.idx}`);
-    let target = lane.firstNonEmptyField();
+    let target = ctx.lane().firstNonEmptyField();
     if (!target) {
-      console.log(`Nobody to hit`);
       return;
     }
     Actions.dealDamageToField(target, ThrowRock.damage);
