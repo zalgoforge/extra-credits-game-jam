@@ -69,7 +69,7 @@ const getMana = () => {
 };
 
 const getHealth = () => {
-  return 10;
+  return GameState.instance().player.entity.hp.value();
 };
 
 const StageComponent: React.FC<Props> = ({ app }) => {
@@ -136,6 +136,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         setState((prev) => ({
           ...prev,
           lanes: getLanes(),
+        }));
+      })
+      .bind();
+    GameState.instance()
+      .player.entity.hp.onValueChanged.do(() => {
+        setState((prev) => ({
+          ...prev,
+          health: getHealth(),
         }));
       })
       .bind();
