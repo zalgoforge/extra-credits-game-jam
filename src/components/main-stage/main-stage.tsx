@@ -33,9 +33,9 @@ const LANE_SHIFT = 30;
 
 const FIELD_WIDTH = 90;
 
-const DISCARD_PILE = { x: 760, y: 500, width: 140, height: 140 };
-const END_TURN_BUTTON = { x: 860, y: 460, width: 120, height: 30 };
-const DO_CHEAT_BUTTON = { x: 860, y: 420, width: 120, height: 30 };
+const DISCARD_PILE = { x: 720, y: 500, width: 140, height: 140 };
+const END_TURN_BUTTON = { x: 890, y: 560, width: 120, height: 30 };
+const DO_CHEAT_BUTTON = { x: 890, y: 520, width: 120, height: 30 };
 
 GameState.instance();
 
@@ -311,7 +311,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       })}
 
       <Button
-        {...END_TURN_BUTTON}
+        {...DO_CHEAT_BUTTON}
         text={'Do Cheat'}
         graphics={'button.png'}
         onClick={() => {
@@ -319,7 +319,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }}
       />
       <Button
-        {...DO_CHEAT_BUTTON}
+        {...END_TURN_BUTTON}
         text={'Next Turn'}
         graphics={'button.png'}
         onClick={() => {
