@@ -6,6 +6,8 @@ import * as React from 'react';
 interface Props extends React.PropsWithChildren<any> {
   x: number;
   y: number;
+  initialX?: number;
+  initialY?: number;
   alpha?: number;
 }
 
@@ -13,14 +15,15 @@ export type AnimatedContainerInstance = PIXI.Container & {
   __oldX: number;
   __oldY: number;
   __tween: any;
+  _destroyed: boolean;
 };
 
 const TYPE = 'AnimatedContainer';
 export const behavior = {
-  customDisplayObject: ({ x, y }: Props) => {
+  customDisplayObject: ({ x, y, initialX, initialY }: Props) => {
     const instance = new PIXI.Container() as AnimatedContainerInstance;
-    instance.__oldX = x;
-    instance.__oldY = y;
+    instance.__oldX = initialX !== undefined ? initialX : x;
+    instance.__oldY = initialY !== undefined ? initialY : y;
     return instance;
   },
   customApplyProps: (instance: AnimatedContainerInstance, oldProps: Props, newProps: Props) => {
@@ -33,8 +36,10 @@ export const behavior = {
       .to({ x: newProps.x, y: newProps.y }, 1000)
       .easing(TWEEN.Easing.Quadratic.Out)
       .onUpdate(() => {
-        instance.x = coords.x;
-        instance.y = coords.y;
+        if (!instance._destroyed) {
+          instance.x = coords.x;
+          instance.y = coords.y;
+        }
       })
       .start(TWEEN.now());
     instance.__oldX = newProps.x;

@@ -239,6 +239,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               return enemies.length ? (
                 <AnimatedContainer
                   key={enemies[0].id}
+                  initialX={1200}
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                 >
@@ -294,15 +295,17 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               }));
             }}
           >
-            <Card
-              width={CARD_WIDTH}
-              height={CARD_HEIGHT}
-              title={title}
-              description={description}
-              cost={cost}
-              manaGain={manaGain}
-              hasManaToPlay={cost <= state.mana}
-            />
+            <AnimatedContainer initialY={-20} x={0} y={0}>
+              <Card
+                width={CARD_WIDTH}
+                height={CARD_HEIGHT}
+                title={title}
+                description={description}
+                cost={cost}
+                manaGain={manaGain}
+                hasManaToPlay={cost <= state.mana}
+              />
+            </AnimatedContainer>
           </DraggableContainer>
         );
       })}
