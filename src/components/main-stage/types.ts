@@ -24,6 +24,7 @@ export interface State {
   cards: Card[];
   lanes: Lane[];
   mana: number;
+  health: number;
   highlightedTargets: undefined | string[];
   hoveredTarget: undefined | string;
 }
