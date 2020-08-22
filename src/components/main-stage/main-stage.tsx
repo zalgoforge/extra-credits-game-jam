@@ -13,6 +13,7 @@ import { Background } from '../background';
 import { EntityGraphics } from '../entity';
 import { Card } from '../card';
 import { Entity } from '../../game/entity';
+import { Token } from '../token';
 
 interface Props {
   app: PIXI.Application;
@@ -67,11 +68,16 @@ const getMana = () => {
   return GameState.instance().player.mana.value();
 };
 
+const getHealth = () => {
+  return GameState.instance().player.entity.hp.value();
+};
+
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
     lanes: getLanes(),
     mana: getMana(),
+    health: getHealth(),
     highlightedTargets: undefined,
     hoveredTarget: undefined,
   });
@@ -133,12 +139,21 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }));
       })
       .bind();
+    GameState.instance()
+      .player.entity.hp.onValueChanged.do(() => {
+        setState((prev) => ({
+          ...prev,
+          health: getHealth(),
+        }));
+      })
+      .bind();
   }, []);
 
   return (
     <Stage app={app}>
       <Background />
-      <Text x={10} y={10} text={`${state.mana}`} style={{ fontSize: 32 }} />
+      <Token x={240} y={310} counter={state.mana} type={'mana'} />
+      <Token x={280} y={310} counter={state.health} type={'health'} />
       <DroppableContainer
         x={0}
         y={0}

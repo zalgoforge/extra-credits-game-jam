@@ -1,7 +1,8 @@
 import React from 'react';
 import elfikGraphics from '../../assets/img/elfik.png';
-import { Container, Sprite, Text } from 'react-pixi-fiber';
+import { Container, Sprite } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
+import { Token } from '../token';
 
 interface Props {
   x?: number;
@@ -20,7 +21,7 @@ export const EntityGraphics: React.FC<Props> = ({ x = 0, y = 0, hp }) => {
         height={400 / 3}
         anchor={ANCHOR_POINT}
       />
-      <Text text={`${hp}`} x={10} y={-10} />
+      <Token x={10} y={-10} counter={hp} type={'health'} />
     </Container>
   );
 };
