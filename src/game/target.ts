@@ -19,6 +19,10 @@ export class Target {
     return fields;
   }
 
+  static anyFieldWithEnemy() {
+    return Target.anyField().filter(f => f.entity());
+  }
+
   static lastFields() {
     let fields = new Array<Field>();
     for (let lane of Target.anyLane()) {

@@ -11,7 +11,7 @@ export class Snipe extends Card {
   }
 
   protected getPossibleTargets(): Array<UniqueObject> {
-    return Target.anyField();
+    return Target.anyFieldWithEnemy();
   }
 
   play(ctx: PlayContext) {
