@@ -25,4 +25,5 @@ export interface State {
   lanes: Lane[];
   mana: number;
   highlightedTargets: undefined | string[];
+  hoveredTarget: undefined | string;
 }

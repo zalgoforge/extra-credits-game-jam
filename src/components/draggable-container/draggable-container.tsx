@@ -72,6 +72,7 @@ const behavior = {
     instance.__isDragged = false;
 
     let draggedObject: DragContainerInstance | undefined;
+    let draggedOverContainer: DroppableContainerInstance | undefined;
     instance.__dragStart = () => {
       draggedObject = instance;
       draggedObject.zIndex = 2000;
@@ -89,6 +90,9 @@ const behavior = {
       }
       const container = instance.__notifyContainerAt(event.data.global);
       if (container) {
+        if (container.__onDragLeave) {
+          container.__onDragLeave(draggedObject.__transferObject);
+        }
         container.__onDrop(draggedObject.__transferObject);
       }
       if (draggedObject.visible && !draggedObject._destroyed) {
@@ -99,12 +103,24 @@ const behavior = {
       }
       draggedObject = undefined;
     };
-    instance.__dragMove = (e: any) => {
+    instance.__dragMove = (event: any) => {
       if (draggedObject === undefined) {
         return;
       }
-      draggedObject.position.x += e.data.originalEvent.movementX;
-      draggedObject.position.y += e.data.originalEvent.movementY;
+
+      draggedObject.position.x += event.data.originalEvent.movementX;
+      draggedObject.position.y += event.data.originalEvent.movementY;
+
+      const container = instance.__notifyContainerAt(event.data.global);
+      if (draggedOverContainer !== container) {
+        if (draggedOverContainer && draggedOverContainer.__onDragLeave) {
+          draggedOverContainer.__onDragLeave(draggedObject.__transferObject);
+        }
+        if (container && container.__onDragEnter) {
+          container.__onDragEnter(draggedObject.__transferObject);
+        }
+        draggedOverContainer = container;
+      }
     };
 
     instance.on('mousedown', instance.__dragStart);
@@ -124,8 +140,10 @@ const behavior = {
     if (newProps.scale !== undefined) {
       instance.scale = newProps.scale;
     }
-    instance.x = newProps.x;
-    instance.y = newProps.y;
+    if (!instance.__isDragged) {
+      instance.x = newProps.x;
+      instance.y = newProps.y;
+    }
     // (this as any).applyDisplayObjectProps(oldProps, newProps);
   },
   customWillDetach: (instance: DragContainerInstance) => {

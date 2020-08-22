@@ -73,6 +73,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
     lanes: getLanes(),
     mana: getMana(),
     highlightedTargets: undefined,
+    hoveredTarget: undefined,
   });
 
   useEffect(() => {
@@ -158,9 +159,29 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
           acceptTags={['lane-targatable']}
-          alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.3 : 0}
+          alpha={
+            state.hoveredTarget === id
+              ? 1
+              : state.highlightedTargets && !state.highlightedTargets.includes(id)
+              ? 0.3
+              : 0
+          }
           onDrop={({ cardId }) => {
             GameState.instance().playCard(cardId, id);
+          }}
+          onDragEnter={() => {
+            console.log('on drag enter');
+            setState((prev) => ({
+              ...prev,
+              hoveredTarget: id,
+            }));
+          }}
+          onDragLeave={() => {
+            console.log('on drag leave');
+            setState((prev) => ({
+              ...prev,
+              hoveredTarget: undefined,
+            }));
           }}
         />
       ))}
