@@ -5,8 +5,13 @@ export interface Card {
   cost: number;
 }
 
+export interface Enemy {
+  id: string;
+}
+
 export interface Slot {
   id: string;
+  enemies: Enemy[];
 }
 
 export interface Lane {
