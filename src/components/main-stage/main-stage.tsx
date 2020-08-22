@@ -39,6 +39,15 @@ const getCards = () => {
   }));
 };
 
+const getLanes = () => {
+  return GameState.instance().board.lanes.map((l) => ({
+    id: l.uuid,
+    fields: l.fields.map((f) => ({
+      id: f.uuid,
+    })),
+  }));
+};
+
 const getMana = () => {
   return GameState.instance().player.mana.value();
 };
@@ -46,41 +55,7 @@ const getMana = () => {
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
-    lanes: [
-      {
-        id: 'lane1',
-        slots: [
-          { id: 'slot1' },
-          { id: 'slot2' },
-          { id: 'slot3' },
-          { id: 'slot4' },
-          { id: 'slot5' },
-          { id: 'slot6' },
-        ],
-      },
-      {
-        id: 'lane2',
-        slots: [
-          { id: 'slot1' },
-          { id: 'slot2' },
-          { id: 'slot3' },
-          { id: 'slot4' },
-          { id: 'slot5' },
-          { id: 'slot6' },
-        ],
-      },
-      {
-        id: 'lane3',
-        slots: [
-          { id: 'slot1' },
-          { id: 'slot2' },
-          { id: 'slot3' },
-          { id: 'slot4' },
-          { id: 'slot5' },
-          { id: 'slot6' },
-        ],
-      },
-    ],
+    lanes: getLanes(),
     mana: getMana(),
   });
 
@@ -106,7 +81,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   return (
     <Stage app={app}>
       <Text x={10} y={10} text={`${state.mana}`} style={{ fontSize: 32 }} />
-      {state.lanes.map(({ id, slots }, index) => (
+      {state.lanes.map(({ id, fields }, index) => (
         <DroppableContainer
           key={id}
           x={LANE_OFFSET.x}
@@ -117,7 +92,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
             GameState.instance().playCard(cardId, '');
           }}
         >
-          {slots.map(({ id }, index) => (
+          {fields.map(({ id }, index) => (
             <DroppableContainer
               key={id}
               x={6 + 90 * index}

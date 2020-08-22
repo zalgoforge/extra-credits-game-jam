@@ -11,7 +11,7 @@ export interface Slot {
 
 export interface Lane {
   id: string;
-  slots: Slot[];
+  fields: Slot[];
 }
 
 export interface State {
