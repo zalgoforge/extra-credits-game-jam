@@ -7,6 +7,7 @@ export interface Card {
 
 export interface Enemy {
   id: string;
+  hp: number;
 }
 
 export interface Slot {

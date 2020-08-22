@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stage, Text } from 'react-pixi-fiber';
+import { Stage, Text, Container } from 'react-pixi-fiber';
 import { hot } from 'react-hot-loader/root';
 import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
@@ -22,7 +22,7 @@ const CARD_WIDTH = 100;
 const CARD_HEIGHT = 180;
 const CARD_SPACE_BETWEEN = 10;
 
-const LANE_OFFSET = { x: 420, y: 220 };
+const LANE_OFFSET = { x: 400, y: 220 };
 const LANE_DIMENSIONS = { width: 700, height: 60 };
 const LANE_SPACER = 10;
 const LANE_SHIFT = 30;
@@ -53,6 +53,7 @@ const getLanes = () => {
         ? [
             {
               id: f.entity()!.uuid,
+              hp: f.entity()!.hp.value(),
             },
           ]
         : [],
@@ -123,38 +124,44 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       ))}
       {state.lanes
         .map(({ fields }, laneIndex) =>
-          fields.map(({ id }, index) => (
-            <DroppableContainer
-              key={id}
-              x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + 6 + FIELD_WIDTH * index}
-              y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6}
-              width={88}
-              height={48}
-              acceptTags={['field-targatable']}
-              alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 0.4}
-              debugColor={0x0099ee}
-              onDrop={({ cardId }) => {
-                GameState.instance().playCard(cardId, id);
-              }}
-            />
-          ))
+          fields.map(({ id }, index) => {
+            const reverseIndex = fields.length - index;
+            return (
+              <DroppableContainer
+                key={id}
+                x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
+                y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6}
+                width={88}
+                height={48}
+                acceptTags={['field-targatable']}
+                alpha={
+                  state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 0.4
+                }
+                debugColor={0x0099ee}
+                onDrop={({ cardId }) => {
+                  GameState.instance().playCard(cardId, id);
+                }}
+              />
+            );
+          })
         )
         .flat(1)}
       {state.lanes
         .map(({ fields }, laneIndex) =>
           fields
             .filter((f) => f.enemies.length)
-            .map(({ id }, index) => (
-              <Rect
-                key={id}
-                x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + 6 + FIELD_WIDTH * index}
-                y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6 - 72}
-                width={88}
-                height={120}
-                alpha={0.5}
-                fill={0xff0000}
-              />
-            ))
+            .map(({ id, enemies }, index) => {
+              const reverseIndex = fields.length - index;
+              return (
+                <Container
+                  x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
+                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6 - 72}
+                >
+                  <Text text={`${enemies[0].hp}`} />
+                  <Rect key={id} width={88} height={120} alpha={0.5} fill={0xff0000} />
+                </Container>
+              );
+            })
         )
         .flat(1)}
       <DroppableContainer
