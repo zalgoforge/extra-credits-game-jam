@@ -66,9 +66,6 @@ const behavior = {
       });
       return onDropToReturn;
     };
-    return instance;
-  },
-  customDidAttach: (instance: DragContainerInstance) => {
     instance.interactive = true;
     instance.cursor = 'pointer';
     instance.zIndex = 1000;
@@ -113,7 +110,9 @@ const behavior = {
     instance.on('mousedown', instance.__dragStart);
     instance.on('mouseup', instance.__dragEnd);
     instance.on('mousemove', instance.__dragMove);
+    return instance;
   },
+  customDidAttach: (instance: DragContainerInstance) => {},
   customApplyProps: function (instance: DragContainerInstance, oldProps: Props, newProps: Props) {
     instance.__transferObject = newProps.transferObject;
     instance.__desiredXPos = newProps.x;
