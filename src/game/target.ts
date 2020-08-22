@@ -1,4 +1,4 @@
-import { Field, Lane, Board } from './board';
+import { Field } from './board';
 import { GameState } from './game';
 
 export class Target {

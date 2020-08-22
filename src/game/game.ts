@@ -33,7 +33,9 @@ export class GameState {
   }
 
   endTurn() {
+    this.player.entity.endOfTurn();
     Actions.drawToHandSize();
+    this.board.endOfTurn();
     console.log('End Turn');
   }
 
@@ -55,6 +57,10 @@ export class GameState {
       return;
     }
     Actions.discardCardForMana(card);
+
+  }
+
+  doCheat(cheat: string) {
 
   }
 
