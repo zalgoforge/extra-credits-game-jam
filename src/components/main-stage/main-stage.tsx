@@ -90,6 +90,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }));
       })
       .bind();
+    GameState.instance()
+      .board.onEntityAdded.do(() => {
+        setState((prev) => ({
+          ...prev,
+          lanes: getLanes(),
+        }));
+      })
+      .bind();
   }, []);
 
   return (
