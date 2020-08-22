@@ -28,6 +28,11 @@ export class Field extends UniqueObject {
     return this._board.field(this.laneIdx, this.fieldIdx-1)
   }
 
+  previousField() {
+    if (this.fieldIdx == Board.lanesSize - 1) return null;
+    return this._board.field(this.laneIdx, this.fieldIdx+1)
+  }
+
   _setEntity(entity: Entity | null) {
     if (entity && this.entity()) {
       console.error("Wanted to add entity to field, but field is not empty");

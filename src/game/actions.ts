@@ -114,9 +114,13 @@ export class Actions {
   }
 
   static moveForward(entity: Entity) {
-    let field = entity.field();
+    let field = entity.field()?.nextField();
     if (!field) return;
-    field = field.nextField();
+    return Actions.board().moveEntity(entity, field);
+  }
+
+  static moveBackward(entity: Entity) {
+    let field = entity.field()?.previousField();
     if (!field) return;
     return Actions.board().moveEntity(entity, field);
   }
