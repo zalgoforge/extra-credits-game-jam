@@ -86,7 +86,16 @@ export class Actions {
     Actions.dealDamage(Actions.player().entity, dmg);
   }
 
+  static dealDamageToField(field: Field, amount = 1) {
+    let entity = field.entity();
+    if (!entity) return;
+    let dmg = new Damage(amount);
+    Actions.dealDamage(entity, dmg);
+  }
+
+
   static dealDamage(target: Entity, damage: Damage) {
+    console.log(`Dealing ${damage.amount} dmg to ${target.name}`);
     target.takeDamage(damage);
   }
 

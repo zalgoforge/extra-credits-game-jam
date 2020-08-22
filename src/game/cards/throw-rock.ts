@@ -4,10 +4,12 @@ import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
 
 export class ThrowRock extends Card {
+  static damage = 2;
+
   constructor() {
     super();
     this.title = 'Throw rock';
-    this.description = 'Deal 2 dmg to first enemy in lane';
+    this.description = `Deal ${ThrowRock.damage} dmg to first enemy in lane`;
   }
 
   protected getPossibleTargets(): Array<UniqueObject> {

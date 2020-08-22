@@ -13,6 +13,10 @@ export class Player {
   mana = new SignalizingVariable();
   handLimit = new SignalizingVariable(6);
   entity = new Entity();
+
+  constructor() {
+    this.entity.name = "Player";
+  }
 }
 
 export class GameState {

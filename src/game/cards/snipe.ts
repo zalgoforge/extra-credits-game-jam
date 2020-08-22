@@ -4,10 +4,12 @@ import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
 
 export class Snipe extends Card {
+  static damage = 2;
+
   constructor() {
     super();
     this.title = 'Snipe';
-    this.description = 'Deal 2 dmg to enemy in field';
+    this.description = `Deal ${Snipe.damage} dmg to enemy in field`;
   }
 
   protected getPossibleTargets(): Array<UniqueObject> {
@@ -15,7 +17,6 @@ export class Snipe extends Card {
   }
 
   play(ctx: PlayContext) {
-    // TODO implement effect
-    console.log(`Playing Snipe on ${ctx.targets[0].uuid}`);
+    Actions.dealDamageToField(ctx.field(), Snipe.damage);
   }
 }

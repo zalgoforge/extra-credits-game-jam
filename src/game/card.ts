@@ -1,11 +1,16 @@
 import { UniqueObject } from './unique-object';
 import { Target } from './target';
+import { Field } from './board';
 
 export class PlayContext {
   targets = Array<UniqueObject>();
 
   validTarget(target: UniqueObject) {
     return this.targets.includes(target);
+  }
+
+  field() {
+    return this.targets[0] as Field;
   }
 }
 
