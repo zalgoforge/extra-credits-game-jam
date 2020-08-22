@@ -1,18 +1,28 @@
-import { v4 as uuidv4 } from 'uuid';
+import { UniqueObject } from './unique-object';
 
-export class Card {
+export class PlayContext {
+  targets = Array<UniqueObject>();
+}
+
+export class Card extends UniqueObject {
   cost: number = 0;
   manaGain = 1;
-  uuid = uuidv4();
   title = "Dummy text";
   description = "Lorem ipsum";
 
-  //TODO leak
-  private static cardIds: { [uuid: string]: Card; } = {};
-
   constructor()
   {
-    Card.cardIds[this.uuid] = this;
+    super();
+  }
+
+  getContext() {
+    let ctx = new PlayContext();
+    ctx.targets = this.getPossibleTargets();
+    return ctx;
+  }
+
+  private getPossibleTargets() : Array<UniqueObject> {
+    return [];
   }
 
   play() {

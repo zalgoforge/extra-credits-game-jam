@@ -57,6 +57,13 @@ export class GameState {
   }
 
   getPossibleTargetsForCard(cardId: string): string[] {
-    return [];
+    let card = this.player.hand.findById(cardId);
+    if (!card) {
+      console.error(`Cannot find card ${cardId} for targets!`);
+      return [];
+    }
+
+    let ctx = card.getContext();
+    return ctx.targets.map( target => target.uuid );
   }
 }
