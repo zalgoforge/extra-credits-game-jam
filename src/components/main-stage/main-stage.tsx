@@ -22,7 +22,7 @@ const CARD_HEIGHT = 180;
 const CARD_SPACE_BETWEEN = 10;
 
 const LANE_OFFSET = { x: 10, y: 120 };
-const LANE_DIMENSIONS = { width: 600, height: 60 };
+const LANE_DIMENSIONS = { width: 700, height: 60 };
 const LANE_SPACER = 10;
 
 const DISCARD_PILE = { x: 760, y: 500, width: 140, height: 140 };
