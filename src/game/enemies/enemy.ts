@@ -5,6 +5,7 @@ export class Enemy extends Entity {
   constructor() {
     super();
     this.name = "Enemy";
+    this.hp.set(3);
   }
 
   atLastField() {

@@ -9,15 +9,19 @@ export class SignalizingVariable {
     this._value = value;
   }
 
-  add(value: number) {
-    if (value == 0) return this;
-    this._value += value;
+  set(value: number) {
+    if (value == this._value) return this;
+    this._value = value;
     this.onValueChanged.emit(this._value);
     return this;
   }
 
+  add(value: number) {
+    return this.set(this._value + value);
+  }
+
   substract(value: number) {
-    return this.add(-value);
+    return this.set(this._value - value);
   }
 
   tryToPay(amount: number) {

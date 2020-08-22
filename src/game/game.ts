@@ -6,6 +6,7 @@ import { Entity } from './entity';
 import { Actions } from './actions';
 import { Board } from './board';
 import { Cheats } from './cheats';
+import { Signal } from 'signal-slot';
 
 export class Player {
   deck: Deck = new PlayerDeck();
@@ -22,6 +23,8 @@ export class Player {
 export class GameState {
   player = new Player();
   board = new Board();
+  gameOver = false;
+  onGameOver = new Signal<number>();
 
   private static _instance: GameState;
   static instance(): GameState {
@@ -39,13 +42,20 @@ export class GameState {
   }
 
   endTurn() {
+    if (this.gameOver) return;
     this.player.entity.endOfTurn();
     Actions.drawToHandSize();
     this.board.endOfTurn();
+
+    if (this.player.entity.hp.value() <= 0) {
+      this.gameOver = true;
+      this.onGameOver.emit(0);
+    }
     console.log('End Turn');
   }
 
   playCard(cardId: string, targetId: string) {
+    if (this.gameOver) return;
     let card = this.player.hand.findById(cardId);
     if (!card) {
       console.error(`Cannot find card to play ${cardId}!`);
@@ -57,6 +67,7 @@ export class GameState {
   }
 
   discardCard(cardId: string) {
+    if (this.gameOver) return;
     let card = this.player.hand.findById(cardId);
     if (!card) {
       console.error(`Cannot find card to discard ${cardId}!`);
