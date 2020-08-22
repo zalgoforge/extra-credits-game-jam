@@ -112,12 +112,15 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           onDrop={({ cardId }) => {
             GameState.instance().playCard(cardId, id);
           }}
-        >
-          {fields.map(({ id }, index) => (
+        />
+      ))}
+      {state.lanes
+        .map(({ fields }, laneIndex) =>
+          fields.map(({ id }, index) => (
             <DroppableContainer
               key={id}
-              x={6 + 90 * index}
-              y={6}
+              x={LANE_OFFSET.x + 6 + 90 * index}
+              y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6}
               width={88}
               height={48}
               acceptTags={['field-targatable']}
@@ -127,9 +130,9 @@ const StageComponent: React.FC<Props> = ({ app }) => {
                 GameState.instance().playCard(cardId, id);
               }}
             />
-          ))}
-        </DroppableContainer>
-      ))}
+          ))
+        )
+        .flat(1)}
       <DroppableContainer
         {...DISCARD_PILE}
         debugColor={0xdd1111}
