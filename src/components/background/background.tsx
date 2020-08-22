@@ -2,6 +2,7 @@ import React from 'react';
 import nieboGraphics from '../../assets/img/niebo.png';
 import domekGraphics from '../../assets/img/domek.png';
 import trawaGraphics from '../../assets/img/trawa.png';
+import plotekGraphics from '../../assets/img/plotek.png';
 import { Container, Sprite } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 
@@ -11,6 +12,25 @@ export const Background: React.FC<Props> = ({}) => {
   return (
     <Container>
       <Sprite texture={PIXI.Texture.from(nieboGraphics)} width={2019} height={354} />
+      <Sprite
+        y={100}
+        texture={PIXI.Texture.from(plotekGraphics)}
+        width={1925 / 2}
+        height={252 / 2}
+      />
+      <Sprite
+        y={100}
+        texture={PIXI.Texture.from(plotekGraphics)}
+        width={1925 / 2}
+        height={252 / 2}
+      />
+      <Sprite
+        y={100}
+        x={960}
+        texture={PIXI.Texture.from(plotekGraphics)}
+        width={1925 / 2}
+        height={252 / 2}
+      />
       <Sprite
         y={200}
         texture={PIXI.Texture.from(trawaGraphics)}
