@@ -89,7 +89,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
           onDrop={({ cardId }) => {
-            GameState.instance().playCard(cardId, '');
+            GameState.instance().playCard(cardId, id);
           }}
         >
           {fields.map(({ id }, index) => (
@@ -100,7 +100,9 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               width={88}
               height={48}
               debugColor={0x0099ee}
-              onDrop={() => {}}
+              onDrop={({ cardId }) => {
+                GameState.instance().playCard(cardId, id);
+              }}
             />
           ))}
         </DroppableContainer>
