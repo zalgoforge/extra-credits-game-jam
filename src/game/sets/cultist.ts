@@ -27,11 +27,12 @@ export class Fear extends Card {
 }
 
 export class Raze extends Card {
-  static damage = 1;
+  static damage = 2;
 
   constructor() {
     super();
     this.title = 'Raze';
+    this.cost = 1;
     this.description = `Deal ${Raze.damage} dmg to all enemies in column`;
   }
 
