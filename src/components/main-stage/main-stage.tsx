@@ -59,6 +59,7 @@ const getLanes = () => {
             {
               id: f.entity()!.uuid,
               hp: f.entity()!.hp.value(),
+              name: f.entity()!.name,
             },
           ]
         : [],
@@ -243,7 +244,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                 >
-                  <EntityGraphics hp={enemies[0].hp} />
+                  <EntityGraphics hp={enemies[0].hp} name={enemies[0].name} />
                 </AnimatedContainer>
               ) : null;
             })
