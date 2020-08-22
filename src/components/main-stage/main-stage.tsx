@@ -298,6 +298,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               title={title}
               description={description}
               cost={cost}
+              hasManaToPlay={cost <= state.mana}
             />
           </DraggableContainer>
         );

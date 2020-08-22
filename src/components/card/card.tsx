@@ -11,6 +11,7 @@ interface Props {
   title: string;
   description: string;
   cost: number;
+  hasManaToPlay: boolean;
 }
 
 export const Card: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const Card: React.FC<Props> = ({
   title,
   description,
   cost,
+  hasManaToPlay,
 }) => {
   return (
     <Container x={x} y={y}>
@@ -41,7 +43,7 @@ export const Card: React.FC<Props> = ({
         x={width * 0.77}
         y={height * 0.05}
         text={`${cost}`}
-        style={{ fontSize: 20, fill: 0x111111 }}
+        style={{ fontSize: 20, fill: hasManaToPlay ? 0x111111 : 0xff0000 }}
       />
     </Container>
   );
