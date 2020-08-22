@@ -93,7 +93,6 @@ export class Actions {
     Actions.dealDamage(entity, dmg);
   }
 
-
   static dealDamage(target: Entity, damage: Damage) {
     console.log(`Dealing ${damage.amount} dmg to ${target.name}`);
     target.takeDamage(damage);
@@ -102,4 +101,13 @@ export class Actions {
   static spawnEnemy(entity: Entity, field: Field) {
     return Actions.board().addEntity(entity, field);
   }
+
+  static moveForward(entity: Entity) {
+    let field = entity.field();
+    if (!field) return;
+    field = field.nextField();
+    if (!field) return;
+    return Actions.board().moveEntity(entity, field);
+  }
+
 }

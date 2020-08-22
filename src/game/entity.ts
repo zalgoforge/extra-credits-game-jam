@@ -26,5 +26,9 @@ export class Entity extends UniqueObject {
     this._field = field;
   }
 
+  _onMoved(field: Field) {
+    Entity.onEntityMoved.emit(this);
+  }
+
   endOfTurn() {}
 }

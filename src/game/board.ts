@@ -3,17 +3,25 @@ import { Entity } from './entity';
 import { Signal } from 'signal-slot';
 
 export class Field extends UniqueObject {
-  laneIdx = 0;
-  fieldIdx = 0;
+  laneIdx: number;
+  fieldIdx: number;
+  private board: Board;
   private _entity: Entity | null = null;
 
-  constructor(idx: number) {
+  constructor(board: Board, idx: number, laneIdx: number) {
     super();
+    this.board = board;
     this.fieldIdx = idx;
+    this.laneIdx = laneIdx;
   }
 
   entity() : Entity | null {
     return this._entity;
+  }
+
+  nextField() {
+    if (this.fieldIdx == 0) return null;
+    return this.board.field(this.laneIdx, this.fieldIdx-1)
   }
 
   _setEntity(entity: Entity | null) {
@@ -29,11 +37,11 @@ export class Field extends UniqueObject {
 export class Lane extends UniqueObject {
   idx = 0;
   fields = Array<Field>();
-  constructor(idx: number) {
+  constructor(board: Board, idx: number) {
     super();
     this.idx = idx;
     for (let i = 0; i < Board.lanesSize; i++) {
-      this.fields.push(new Field(i));
+      this.fields.push(new Field(board, i, idx));
     }
   }
 
@@ -58,7 +66,7 @@ export class Board extends UniqueObject {
   constructor() {
     super();
     for (let i = 0; i < Board.lanesCount; i++) {
-      this.lanes.push(new Lane(i));
+      this.lanes.push(new Lane(this, i));
     }
   }
 
@@ -86,9 +94,28 @@ export class Board extends UniqueObject {
     return true;
   }
 
+  moveEntity(entity: Entity, field: Field) {
+    if (field.entity()) return false;
+    let index = this.entities.indexOf(entity, 0);
+    if (index == -1) return false;
+
+    let oldField = entity.field();
+    oldField?._setEntity(null);
+    entity._setField(field);
+    field._setEntity(entity);
+
+    entity._onMoved(field);
+
+    return true;
+  }
+
   endOfTurn() {
     for (let entity of this.entities) {
       entity.endOfTurn();
     }
+  }
+
+  field(laneIdx:number, fieldIdx:number) {
+    return this.lanes[laneIdx].fields[fieldIdx];
   }
 }
