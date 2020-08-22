@@ -22,7 +22,7 @@ const CARD_WIDTH = 100;
 const CARD_HEIGHT = 180;
 const CARD_SPACE_BETWEEN = 10;
 
-const LANE_OFFSET = { x: 10, y: 120 };
+const LANE_OFFSET = { x: 400, y: 220 };
 const LANE_DIMENSIONS = { width: 700, height: 60 };
 const LANE_SPACER = 10;
 
@@ -86,18 +86,13 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       <Background />
       <Text x={10} y={10} text={`${state.mana}`} style={{ fontSize: 32 }} />
       <DroppableContainer
-        x={5}
-        y={60}
-        width={800}
-        height={420}
+        x={0}
+        y={0}
+        width={1000}
+        height={500}
         debugColor={0x333333}
         acceptTags={['board-targatable']}
-        alpha={
-          state.highlightedTargets &&
-          !state.highlightedTargets.includes(GameState.instance().board.uuid)
-            ? 0.2
-            : 1
-        }
+        alpha={0}
         onDrop={({ cardId }) => {
           GameState.instance().playCard(cardId, GameState.instance().board.uuid);
         }}
@@ -110,7 +105,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
           acceptTags={['lane-targatable']}
-          alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 1}
+          alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 0.4}
           onDrop={({ cardId }) => {
             GameState.instance().playCard(cardId, id);
           }}
@@ -126,7 +121,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               width={88}
               height={48}
               acceptTags={['field-targatable']}
-              alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 1}
+              alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 0.4}
               debugColor={0x0099ee}
               onDrop={({ cardId }) => {
                 GameState.instance().playCard(cardId, id);
