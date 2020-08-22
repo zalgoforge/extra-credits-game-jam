@@ -133,6 +133,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       <DroppableContainer
         {...DISCARD_PILE}
         debugColor={0xdd1111}
+        acceptTags={['board-targatable', 'lane-targatable', 'field-targatable']}
         onDrop={({ cardId }) => {
           GameState.instance().discardCard(cardId);
         }}
