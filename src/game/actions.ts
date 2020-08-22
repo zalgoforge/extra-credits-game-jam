@@ -27,6 +27,12 @@ export class Actions {
   }
 
   static playCard(card:Card, target:UniqueObject) {
+    let checkCtx = card.getContext();
+    if (!checkCtx.validTarget(target)) {
+      console.log(`${target.uuid} is invalid target for ${card.title}`);
+      return;
+    }
+
     if (!Actions.player().mana.tryToPay(card.cost)) {
       console.log(`Cannot pay cost to play ${card.title}`);
       return;

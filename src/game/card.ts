@@ -1,7 +1,12 @@
 import { UniqueObject } from './unique-object';
+import { Target } from './target';
 
 export class PlayContext {
   targets = Array<UniqueObject>();
+
+  validTarget(target: UniqueObject) {
+    return this.targets.includes(target);
+  }
 }
 
 export class Card extends UniqueObject {
@@ -10,8 +15,7 @@ export class Card extends UniqueObject {
   title = "Dummy text";
   description = "Lorem ipsum";
 
-  constructor()
-  {
+  constructor() {
     super();
   }
 
@@ -22,10 +26,10 @@ export class Card extends UniqueObject {
   }
 
   protected getPossibleTargets() : Array<UniqueObject> {
-    return [];
+    return [ Target.board() ];
   }
 
-  play() {
+  play(ctx:PlayContext) {
 
   }
 }
