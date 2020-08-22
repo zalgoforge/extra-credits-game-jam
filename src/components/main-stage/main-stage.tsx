@@ -49,6 +49,13 @@ const getLanes = () => {
     id: l.uuid,
     fields: l.fields.map((f) => ({
       id: f.uuid,
+      enemies: f.entity()
+        ? [
+            {
+              id: f.entity()!.uuid,
+            },
+          ]
+        : [],
     })),
   }));
 };
@@ -133,6 +140,23 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           ))
         )
         .flat(1)}
+      {state.lanes
+        .map(({ fields }, laneIndex) =>
+          fields
+            .filter((f) => f.enemies.length)
+            .map(({ id }, index) => (
+              <Rect
+                key={id}
+                x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + 6 + FIELD_WIDTH * index}
+                y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6 - 72}
+                width={88}
+                height={120}
+                alpha={0.5}
+                fill={0xff0000}
+              />
+            ))
+        )
+        .flat(1)}
       <DroppableContainer
         {...DISCARD_PILE}
         debugColor={0xdd1111}
@@ -191,6 +215,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           </DraggableContainer>
         );
       })}
+
       <Button
         {...END_TURN_BUTTON}
         text={'Do Cheat'}

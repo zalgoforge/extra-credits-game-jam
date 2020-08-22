@@ -7,15 +7,16 @@ interface Props {
   fill: number;
   width: number;
   height: number;
+  alpha?: number;
 }
 
 const TYPE = 'Rect';
 export const behavior = {
   customDisplayObject: () => new PIXI.Graphics(),
   customApplyProps: (instance: PIXI.Graphics, oldProps: Props, newProps: Props) => {
-    const { fill, x, y, width, height } = newProps;
+    const { fill, x, y, width, height, alpha } = newProps;
     instance.clear();
-    instance.beginFill(fill);
+    instance.beginFill(fill, alpha);
     instance.drawRect(x || 0, y || 0, width, height);
     instance.endFill();
   },
