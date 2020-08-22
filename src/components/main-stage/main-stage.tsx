@@ -87,6 +87,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         width={800}
         height={420}
         debugColor={0x333333}
+        acceptTags={['board-targatable']}
         onDrop={({ cardId }) => {
           GameState.instance().playCard(cardId, GameState.instance().board.uuid);
         }}
@@ -98,6 +99,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           y={LANE_OFFSET.y + index * (LANE_DIMENSIONS.height + LANE_SPACER)}
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
+          acceptTags={['lane-targatable']}
           onDrop={({ cardId }) => {
             GameState.instance().playCard(cardId, id);
           }}
@@ -109,6 +111,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               y={6}
               width={88}
               height={48}
+              acceptTags={['field-targatable']}
               debugColor={0x0099ee}
               onDrop={({ cardId }) => {
                 GameState.instance().playCard(cardId, id);
@@ -126,20 +129,42 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       >
         <Text text={'Discard here'} style={{ fontSize: 10 }} />
       </DroppableContainer>
-      {state.cards.map(({ id, title, description, cost }, index) => (
-        <DraggableContainer
-          key={id}
-          app={app}
-          transferObject={{ cardId: id }}
-          x={HAND_X_POSITION + (CARD_WIDTH + CARD_SPACE_BETWEEN) * index}
-          y={HAND_Y_POSITION}
-        >
-          <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
-          <Text x={3} y={3} text={title} style={{ fontSize: 9 }} />
-          <Text x={3} y={80} text={description} style={{ fontSize: 9 }} />
-          <Text x={80} y={3} text={`${cost}`} style={{ fontSize: 20 }} />
-        </DraggableContainer>
-      ))}
+      {state.cards.map(({ id, title, description, cost }, index) => {
+        const targets = GameState.instance().getPossibleTargetsForCard(id);
+        const boardLaneIds = GameState.instance().board.lanes.map((l) => l.uuid);
+        const fieldIds = GameState.instance()
+          .board.lanes.map((l) => l.fields.map((f) => f.uuid))
+          .flat(1);
+        const canTargetBoard = targets.find((t) => t === GameState.instance().board.uuid);
+        const canTargetLane = targets.some((t) => boardLaneIds.includes(t));
+        const canTargetField = targets.some((t) => fieldIds.includes(t));
+        const tags = [
+          ...(canTargetBoard ? ['board-targatable'] : []),
+          ...(canTargetLane ? ['lane-targatable'] : []),
+          ...(canTargetField ? ['field-targatable'] : []),
+        ];
+        return (
+          <DraggableContainer
+            key={id}
+            app={app}
+            transferObject={{ cardId: id }}
+            tags={tags}
+            x={HAND_X_POSITION + (CARD_WIDTH + CARD_SPACE_BETWEEN) * index}
+            y={HAND_Y_POSITION}
+          >
+            <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
+            <Text x={3} y={3} text={title} style={{ fontSize: 9 }} />
+            <Text
+              x={80}
+              y={30}
+              text={tags.map((t) => t.slice(0, 1)).join(',')}
+              style={{ fontSize: 9 }}
+            />
+            <Text x={3} y={80} text={description} style={{ fontSize: 9 }} />
+            <Text x={80} y={3} text={`${cost}`} style={{ fontSize: 20 }} />
+          </DraggableContainer>
+        );
+      })}
       <Button
         {...END_TURN_BUTTON}
         text={'Next Turn'}
