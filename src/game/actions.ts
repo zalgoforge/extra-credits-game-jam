@@ -1,6 +1,7 @@
 import { Entity } from './entity';
 import { Damage } from './damage';
 import { GameState } from './game';
+import { Field } from './board';
 import { Card, PlayContext } from './card';
 import { UniqueObject } from './unique-object';
 
@@ -13,12 +14,12 @@ export class Actions {
     //TODO shuffle discard
     let player = Actions.player();
     if (player.hand.size() >= player.handLimit.value()) {
-      console.log("Cannot draw card due to hand limit");
+      console.log('Cannot draw card due to hand limit');
       return false;
     }
     let card = player.deck.draw();
     player.hand.add(card);
-    console.log("Drawing card");
+    console.log('Drawing card');
     return true;
   }
 
@@ -26,7 +27,7 @@ export class Actions {
     Actions.player().deck.shuffle();
   }
 
-  static playCard(card:Card, target:UniqueObject) {
+  static playCard(card: Card, target: UniqueObject) {
     let checkCtx = card.getContext();
     if (!checkCtx.validTarget(target)) {
       console.log(`${target.uuid} is invalid target for ${card.title}`);
@@ -48,16 +49,16 @@ export class Actions {
     card.play(ctx);
   }
 
-  static discardCard(card:Card) {
-    if(Actions.player().hand.remove(card)) {
+  static discardCard(card: Card) {
+    if (Actions.player().hand.remove(card)) {
       console.log(`Discarded ${card.title}`);
     } else {
       console.log(`Failed to discard ${card.title}`);
     }
   }
 
-  static discardCardForMana(card:Card) {
-    if(Actions.player().hand.remove(card)) {
+  static discardCardForMana(card: Card) {
+    if (Actions.player().hand.remove(card)) {
       let manaGain = card.manaGain;
       Actions.player().mana.add(manaGain);
       console.log(`Discarded ${card.title} for ${manaGain} mana`);
@@ -67,16 +68,16 @@ export class Actions {
   }
 
   static drawToHandSize() {
-    console.log("Drawing up to hand size...");
+    console.log('Drawing up to hand size...');
     while (this.drawCard()) {}
-    console.log("Drawed up to hand size");
+    console.log('Drawed up to hand size');
   }
 
-  static gainMana(amount=1) {
+  static gainMana(amount = 1) {
     Actions.player().mana.add(amount);
   }
 
-  static dealDamageToPlayer(amount=1) {
+  static dealDamageToPlayer(amount = 1) {
     let dmg = new Damage(amount);
     Actions.dealDamage(Actions.player().entity, dmg);
   }
@@ -84,4 +85,6 @@ export class Actions {
   static dealDamage(target: Entity, damage: Damage) {
     target.takeDamage(damage);
   }
+
+  static spawnEnemy(target: Entity, field: Field) {}
 }

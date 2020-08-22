@@ -12,8 +12,8 @@ export class PlayContext {
 export class Card extends UniqueObject {
   cost: number = 0;
   manaGain = 1;
-  title = "Dummy text";
-  description = "Lorem ipsum";
+  title = 'Dummy text';
+  description = 'Lorem ipsum';
 
   constructor() {
     super();
@@ -25,11 +25,9 @@ export class Card extends UniqueObject {
     return ctx;
   }
 
-  protected getPossibleTargets() : Array<UniqueObject> {
-    return [ Target.board() ];
+  protected getPossibleTargets(): Array<UniqueObject> {
+    return [Target.board()];
   }
 
-  play(ctx:PlayContext) {
-
-  }
+  play(ctx: PlayContext) {}
 }

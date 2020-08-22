@@ -5,6 +5,7 @@ import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
 import { Actions } from './actions';
 import { Board } from './board';
+import { Cheats } from './cheats';
 
 export class Player {
   deck: Deck = new PlayerDeck();
@@ -57,11 +58,10 @@ export class GameState {
       return;
     }
     Actions.discardCardForMana(card);
-
   }
 
   doCheat(cheat: string) {
-
+    Cheats.addMana();
   }
 
   getPossibleTargetsForCard(cardId: string): string[] {
@@ -72,6 +72,6 @@ export class GameState {
     }
 
     let ctx = card.getContext();
-    return ctx.targets.map( target => target.uuid );
+    return ctx.targets.map((target) => target.uuid);
   }
 }

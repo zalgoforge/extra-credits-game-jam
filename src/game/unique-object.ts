@@ -3,16 +3,14 @@ import { v4 as uuidv4 } from 'uuid';
 export class UniqueObject {
   uuid = uuidv4();
 
-
   //TODO leak
-  private static ids: { [uuid: string]: UniqueObject; } = {};
+  private static ids: { [uuid: string]: UniqueObject } = {};
 
   static findId(uuid: string) {
     return UniqueObject.ids[uuid];
   }
 
-  constructor()
-  {
+  constructor() {
     UniqueObject.ids[this.uuid] = this;
   }
 }

@@ -9,7 +9,7 @@ import { Snipe } from '../cards/snipe';
 export class PlayerDeck extends Deck {
   constructor() {
     super();
-    for(let i = 0; i < 6; i ++) {
+    for (let i = 0; i < 6; i++) {
       this.add(new Draw());
       this.add(new GainMana());
       this.add(new HurtSelf());

@@ -12,11 +12,17 @@ export class Target {
 
   static anyField() {
     let fields = new Array<Field>();
-    for (let lane of Target.anyLane() )
-    {
+    for (let lane of Target.anyLane()) {
       fields = fields.concat(lane.fields);
     }
     return fields;
   }
-}
 
+  static lastFields() {
+    let fields = new Array<Field>();
+    for (let lane of Target.anyLane()) {
+      fields.push(lane.fields[lane.fields.length - 1]);
+    }
+    return fields;
+  }
+}
