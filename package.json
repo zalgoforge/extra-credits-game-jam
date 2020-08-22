@@ -48,6 +48,7 @@
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@types/shuffle-array": "^1.0.0",
     "fp-ts": "^2.8.1",
+    "pick-random-weighted": "^1.2.3",
     "pixi.js": "^5.2.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

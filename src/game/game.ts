@@ -7,6 +7,7 @@ import { Actions } from './actions';
 import { Board } from './board';
 import { Cheats } from './cheats';
 import { Signal } from 'signal-slot';
+import { SpawnEnemies } from './enemiesCards/spawn-enemies';
 
 export class Player {
   deck: Deck = new PlayerDeck();
@@ -22,6 +23,7 @@ export class Player {
 
 export class GameState {
   player = new Player();
+  passiveEffects = new Deck();
   board = new Board();
   gameOver = false;
   onGameOver = new Signal<number>();
@@ -39,6 +41,7 @@ export class GameState {
     Actions.shuffleDeck();
     Actions.drawToHandSize();
     Cheats.addTestEnemy();
+    this.passiveEffects.add(new SpawnEnemies());
   }
 
   endTurn() {
@@ -47,6 +50,8 @@ export class GameState {
     Actions.loseAllMana();
     Actions.drawToHandSize();
     this.board.endOfTurn();
+    this.player.hand.endOfTurn();
+    this.passiveEffects.endOfTurn();
 
     if (this.player.entity.hp.value() <= 0) {
       this.gameOver = true;

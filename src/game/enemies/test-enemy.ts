@@ -3,6 +3,7 @@ import { Enemy } from './enemy';
 export class TestEnemy extends Enemy {
   constructor() {
     super();
-    this.name = "Test";
+    this.name = "TestEnemy";
+    this.hp.set(4);
   }
 }

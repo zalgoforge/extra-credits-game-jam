@@ -2649,6 +2649,7 @@ __metadata:
     file-loader: ^6.0.0
     fp-ts: ^2.8.1
     html-webpack-plugin: ^4.3.0
+    pick-random-weighted: ^1.2.3
     pixi.js: ^5.2.4
     pnp-webpack-plugin: ^1.6.4
     prettier: ^2.0.5
@@ -6592,6 +6593,13 @@ fsevents@^1.2.7:
   version: 2.1.0
   resolution: "performance-now@npm:2.1.0"
   checksum: 2/bb4ebed0b03d6c3ad3ae4eddd1182c895d385cff9096af441c19c130aaae3ea70229438ebc3297dfc52c86022f6becf177a810050823d01bf5280779cd2de624
+  languageName: node
+  linkType: hard
+
+"pick-random-weighted@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "pick-random-weighted@npm:1.2.3"
+  checksum: 2/ec5e68c4bca36cf441235b4932be06972ae9566a6613e916c41edf2120e2037f3ef16daa2d451ced57f6d21fa4e4f6d7acf9da571382f2d091bfeb71157b4a34
   languageName: node
   linkType: hard
 

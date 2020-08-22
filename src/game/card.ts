@@ -38,5 +38,7 @@ export class Card extends UniqueObject {
     return [Target.board()];
   }
 
+  endOfTurn() { }
+
   play(ctx: PlayContext) {}
 }

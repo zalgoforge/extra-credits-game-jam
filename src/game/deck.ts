@@ -40,4 +40,10 @@ export class Deck {
   size() {
     return this.cards.length;
   }
+
+  endOfTurn() {
+    for (let card of this.cards) {
+      card.endOfTurn();
+    }
+  }
 }

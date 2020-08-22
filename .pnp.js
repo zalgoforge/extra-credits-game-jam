@@ -110,6 +110,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:4.3.0"
       ],
       [
+        "pick-random-weighted",
+        "npm:1.2.3"
+      ],
+      [
         "pixi.js",
         "npm:5.2.4"
       ],
@@ -197,6 +201,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-loader", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:6.0.0"],
             ["fp-ts", "npm:2.8.1"],
             ["html-webpack-plugin", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:4.3.0"],
+            ["pick-random-weighted", "npm:1.2.3"],
             ["pixi.js", "npm:5.2.4"],
             ["pnp-webpack-plugin", "npm:1.6.4"],
             ["prettier", "npm:2.0.5"],
@@ -3251,6 +3256,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-loader", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:6.0.0"],
             ["fp-ts", "npm:2.8.1"],
             ["html-webpack-plugin", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:4.3.0"],
+            ["pick-random-weighted", "npm:1.2.3"],
             ["pixi.js", "npm:5.2.4"],
             ["pnp-webpack-plugin", "npm:1.6.4"],
             ["prettier", "npm:2.0.5"],
@@ -7691,6 +7697,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/performance-now-npm-2.1.0-45e3ce7e49-2.zip/node_modules/performance-now/",
           "packageDependencies": [
             ["performance-now", "npm:2.1.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["pick-random-weighted", [
+        ["npm:1.2.3", {
+          "packageLocation": "./.yarn/cache/pick-random-weighted-npm-1.2.3-404d940058-2.zip/node_modules/pick-random-weighted/",
+          "packageDependencies": [
+            ["pick-random-weighted", "npm:1.2.3"]
           ],
           "linkType": "HARD",
         }]
