@@ -3,6 +3,7 @@ export interface Card {
   title: string;
   description: string;
   cost: number;
+  manaGain: number;
 }
 
 export interface Enemy {

@@ -19,7 +19,7 @@ interface Props {
   app: PIXI.Application;
 }
 
-const HAND_Y_POSITION = 500;
+const HAND_Y_POSITION = 480;
 const HAND_X_POSITION = 10;
 const CARD_WIDTH = 100;
 const CARD_HEIGHT = 180;
@@ -44,6 +44,7 @@ const getCards = () => {
     title: c.title,
     description: c.description,
     cost: c.cost,
+    manaGain: c.manaGain,
   }));
 };
 
@@ -257,7 +258,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       >
         <Text text={'Discard here'} style={{ fontSize: 10 }} />
       </DroppableContainer>
-      {state.cards.map(({ id, title, description, cost }, index) => {
+      {state.cards.map(({ id, title, description, cost, manaGain }, index) => {
         const targets = GameState.instance().getPossibleTargetsForCard(id);
         const boardLaneIds = GameState.instance().board.lanes.map((l) => l.uuid);
         const fieldIds = GameState.instance()
@@ -298,6 +299,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               title={title}
               description={description}
               cost={cost}
+              manaGain={manaGain}
               hasManaToPlay={cost <= state.mana}
             />
           </DraggableContainer>
