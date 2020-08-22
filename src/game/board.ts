@@ -1,5 +1,6 @@
 import { UniqueObject } from './unique-object';
 import { Entity } from './entity';
+import { Card } from './card';
 import { Signal } from 'signal-slot';
 
 export class Field extends UniqueObject {
@@ -7,6 +8,7 @@ export class Field extends UniqueObject {
   fieldIdx: number;
   private _board: Board;
   private _entity: Entity | null = null;
+  private _card: Card | null = null;
 
   constructor(board: Board, idx: number, laneIdx: number) {
     super();
@@ -15,8 +17,12 @@ export class Field extends UniqueObject {
     this.laneIdx = laneIdx;
   }
 
-  entity() : Entity | null {
+  entity() {
     return this._entity;
+  }
+
+  card() {
+    return this._card;
   }
 
   board() {
@@ -68,6 +74,9 @@ export class Board extends UniqueObject {
 
   onEntityAdded = new Signal<Entity>();
   onEntityRemoved = new Signal<Entity>();
+
+  onCardAdded = new Signal<Card>();
+  onCardRemoved = new Signal<Card>();
 
   lanes = Array<Lane>();
   entities = Array<Entity>();
