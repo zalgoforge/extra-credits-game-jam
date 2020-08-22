@@ -96,6 +96,9 @@ export class Actions {
   static dealDamage(target: Entity, damage: Damage) {
     console.log(`Dealing ${damage.amount} dmg to ${target.name}`);
     target.takeDamage(damage);
+    if (target.hp.value() <= 0) {
+      Actions.killEntity(target);
+    }
   }
 
   static spawnEnemy(entity: Entity, field: Field) {
