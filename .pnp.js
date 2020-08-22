@@ -54,6 +54,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:16.13.0"
       ],
       [
+        "@tweenjs/tween.js",
+        "npm:18.6.0"
+      ],
+      [
         "@types/classnames",
         "npm:2.2.10"
       ],
@@ -187,6 +191,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:7.9.4"],
             ["@babel/preset-typescript", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:7.9.0"],
             ["@hot-loader/react-dom", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:16.13.0"],
+            ["@tweenjs/tween.js", "npm:18.6.0"],
             ["@types/classnames", "npm:2.2.10"],
             ["@types/node", "npm:13.11.0"],
             ["@types/react", "npm:16.9.34"],
@@ -2271,6 +2276,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@tweenjs/tween.js", [
+        ["npm:18.6.0", {
+          "packageLocation": "./.yarn/cache/@tweenjs-tween.js-npm-18.6.0-226c592290-2.zip/node_modules/@tweenjs/tween.js/",
+          "packageDependencies": [
+            ["@tweenjs/tween.js", "npm:18.6.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@types/anymatch", [
         ["npm:1.3.1", {
           "packageLocation": "./.yarn/cache/@types-anymatch-npm-1.3.1-b86e9de5d9-2.zip/node_modules/@types/anymatch/",
@@ -3242,6 +3256,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-react", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:7.9.4"],
             ["@babel/preset-typescript", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:7.9.0"],
             ["@hot-loader/react-dom", "virtual:421776eab6474739f38d59385256d841d3c541ead01525b68e55bd876559d95358fcb2c965266a65b8538097b92d90e33cf2c21b27251ab98a971ce988cd7c72#npm:16.13.0"],
+            ["@tweenjs/tween.js", "npm:18.6.0"],
             ["@types/classnames", "npm:2.2.10"],
             ["@types/node", "npm:13.11.0"],
             ["@types/react", "npm:16.9.34"],

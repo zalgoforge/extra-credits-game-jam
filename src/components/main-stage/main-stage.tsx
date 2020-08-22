@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stage, Text, Container } from 'react-pixi-fiber';
+import { Stage, Text } from 'react-pixi-fiber';
 import { hot } from 'react-hot-loader/root';
 import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
@@ -14,6 +14,7 @@ import { EntityGraphics } from '../entity';
 import { Card } from '../card';
 import { Entity } from '../../game/entity';
 import { Token } from '../token';
+import { AnimatedContainer } from '../animated-container';
 
 interface Props {
   app: PIXI.Application;
@@ -236,13 +237,13 @@ const StageComponent: React.FC<Props> = ({ app }) => {
             .map(({ id, enemies }, index) => {
               const reverseIndex = fields.length - index;
               return enemies.length ? (
-                <Container
-                  key={id}
+                <AnimatedContainer
+                  key={enemies[0].id}
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                 >
                   <EntityGraphics hp={enemies[0].hp} />
-                </Container>
+                </AnimatedContainer>
               ) : null;
             })
             .filter((e) => !!e)

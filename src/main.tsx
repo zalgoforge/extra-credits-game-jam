@@ -3,14 +3,21 @@ import * as ReactDOM from 'react-dom';
 import { MainStage } from './components/main-stage';
 import { useState } from 'react';
 import * as PIXI from 'pixi.js';
+import TWEEN from '@tweenjs/tween.js';
 
 const createApp = (canvas: HTMLCanvasElement) => {
-  return new PIXI.Application({
+  const app = new PIXI.Application({
     backgroundColor: 0x10bb99,
     height: 512 + 128 + 24,
     width: 1024,
     view: canvas,
   });
+
+  app.ticker.add((delta) => {
+    TWEEN.update(TWEEN.now());
+  });
+
+  return app;
 };
 
 const CanvasComponent = ({ MainComponent }: any) => {
