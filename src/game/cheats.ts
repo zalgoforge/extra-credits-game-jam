@@ -10,7 +10,10 @@ export class Cheats {
   static addTestEnemy() {
     let enemy = new TestEnemy;
     let field = Target.randomLastEmptyField();
-    if (!field) return;
+    if (!field) {
+      console.log("Missing space to spawn enemy!");
+      return;
+    }
     Actions.spawnEnemy(enemy, field);
   }
 }

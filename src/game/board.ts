@@ -25,7 +25,7 @@ export class Field extends UniqueObject {
   }
 
   _setEntity(entity: Entity | null) {
-    if (this.entity()) {
+    if (entity && this.entity()) {
       console.error("Wanted to add entity to field, but field is not empty");
       return false;
     }
