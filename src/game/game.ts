@@ -3,6 +3,7 @@ import { PlayerDeck } from './decks/PlayerDeck';
 import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
 import { Actions } from './actions';
+import { Board } from './board';
 
 export class Player {
   deck: Deck = new PlayerDeck();
@@ -14,6 +15,7 @@ export class Player {
 
 export class GameState {
   player = new Player();
+  board = new Board();
 
   private static _instance: GameState;
   static instance(): GameState {
