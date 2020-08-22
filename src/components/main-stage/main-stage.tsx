@@ -12,6 +12,7 @@ import { Button } from '../button';
 import { GameState } from '../../game/game';
 import { Background } from '../background';
 import { Entity } from '../../game/entity';
+import { Card } from '../card';
 
 interface Props {
   app: PIXI.Application;
@@ -255,16 +256,13 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               }));
             }}
           >
-            <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
-            <Text x={3} y={3} text={title} style={{ fontSize: 9 }} />
-            <Text
-              x={80}
-              y={30}
-              text={tags.map((t) => t.slice(0, 1)).join(',')}
-              style={{ fontSize: 9 }}
+            <Card
+              width={CARD_WIDTH}
+              height={CARD_HEIGHT}
+              title={title}
+              description={description}
+              cost={cost}
             />
-            <Text x={3} y={80} text={description} style={{ fontSize: 9 }} />
-            <Text x={80} y={3} text={`${cost}`} style={{ fontSize: 20 }} />
           </DraggableContainer>
         );
       })}
