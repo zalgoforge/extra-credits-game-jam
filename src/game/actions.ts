@@ -1,7 +1,8 @@
 import { Entity } from './entity';
 import { Damage } from './damage';
 import { GameState } from './game';
-import { Card } from './card';
+import { Card, PlayContext } from './card';
+import { UniqueObject } from './unique-object';
 
 export class Actions {
   private static player() {
@@ -25,7 +26,7 @@ export class Actions {
     Actions.player().deck.shuffle();
   }
 
-  static playCard(card:Card) {
+  static playCard(card:Card, target:UniqueObject) {
     if (!Actions.player().mana.tryToPay(card.cost)) {
       console.log(`Cannot pay cost to play ${card.title}`);
       return;
@@ -34,7 +35,11 @@ export class Actions {
     console.log(`Playing ${card.title}`);
     // remove card from hand, if user has it in hand
     Actions.player().hand.remove(card);
-    card.play();
+    let ctx = new PlayContext();
+    if (target) {
+      ctx.targets.push(target);
+    }
+    card.play(ctx);
   }
 
   static discardCard(card:Card) {

@@ -1,4 +1,4 @@
-import { Card } from '../card';
+import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
 
 export class HurtSelf extends Card {
@@ -8,7 +8,7 @@ export class HurtSelf extends Card {
     this.description = "Take 1 dmg";
   }
 
-  play() {
+  play(ctx:PlayContext) {
     Actions.dealDamageToPlayer();
   }
 }

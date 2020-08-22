@@ -1,4 +1,4 @@
-import { Card } from '../card';
+import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
 
 export class GainMana extends Card {
@@ -9,7 +9,7 @@ export class GainMana extends Card {
     this.cost = 1;
   }
 
-  play() {
+  play(ctx:PlayContext) {
     Actions.gainMana(3);
   }
 }

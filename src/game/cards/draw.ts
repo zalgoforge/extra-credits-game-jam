@@ -1,4 +1,4 @@
-import { Card } from '../card';
+import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
 
 export class Draw extends Card {
@@ -8,7 +8,7 @@ export class Draw extends Card {
     this.description = "Draw a card";
   }
 
-  play() {
+  play(ctx:PlayContext) {
     Actions.drawCard();
   }
 }

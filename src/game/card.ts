@@ -21,7 +21,7 @@ export class Card extends UniqueObject {
     return ctx;
   }
 
-  private getPossibleTargets() : Array<UniqueObject> {
+  protected getPossibleTargets() : Array<UniqueObject> {
     return [];
   }
 

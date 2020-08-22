@@ -7,6 +7,10 @@ export class UniqueObject {
   //TODO leak
   private static ids: { [uuid: string]: UniqueObject; } = {};
 
+  static findId(uuid: string) {
+    return UniqueObject.ids[uuid];
+  }
+
   constructor()
   {
     UniqueObject.ids[this.uuid] = this;

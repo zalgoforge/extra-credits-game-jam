@@ -1,4 +1,5 @@
 import { Deck } from './deck';
+import { UniqueObject } from './unique-object';
 import { PlayerDeck } from './decks/PlayerDeck';
 import { SignalizingVariable } from './util/SignalizingVariable';
 import { Entity } from './entity';
@@ -43,7 +44,8 @@ export class GameState {
       return;
     }
 
-    Actions.playCard(card);
+    let target = UniqueObject.findId(targetId);
+    Actions.playCard(card, target);
   }
 
   discardCard(cardId: string) {
