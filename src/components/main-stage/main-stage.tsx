@@ -10,6 +10,7 @@ import { Rect } from '../rect';
 import { Button } from '../button';
 
 import { GameState } from '../../game/game';
+import { Background } from '../background';
 
 interface Props {
   app: PIXI.Application;
@@ -82,6 +83,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
 
   return (
     <Stage app={app}>
+      <Background />
       <Text x={10} y={10} text={`${state.mana}`} style={{ fontSize: 32 }} />
       <DroppableContainer
         x={5}
