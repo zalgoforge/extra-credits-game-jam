@@ -3,19 +3,19 @@ import { Actions } from '../actions';
 import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
 
-export class ThrowRock extends Card {
+export class Snipe extends Card {
   constructor() {
     super();
-    this.title = "Throw rock";
-    this.description = "Deal 2 dmg to first enemy in lane";
+    this.title = "Snipe";
+    this.description = "Deal 2 dmg to enemy in field";
   }
 
   protected getPossibleTargets() : Array<UniqueObject> {
-    return Target.anyLane();
+    return Target.anyField();
   }
 
   play(ctx:PlayContext) {
     // TODO implement effect
-    console.log(`Playing ThrowRock on ${ctx.targets[0].uuid}`);
+    console.log(`Playing Snipe on ${ctx.targets[0].uuid}`);
   }
 }

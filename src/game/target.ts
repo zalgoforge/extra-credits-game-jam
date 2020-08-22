@@ -9,5 +9,14 @@ export class Target {
   static anyLane() {
     return GameState.instance().board.lanes;
   }
+
+  static anyField() {
+    let fields = new Array<Field>();
+    for (let lane of Target.anyLane() )
+    {
+      fields = fields.concat(lane.fields);
+    }
+    return fields;
+  }
 }
 
