@@ -81,6 +81,16 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   return (
     <Stage app={app}>
       <Text x={10} y={10} text={`${state.mana}`} style={{ fontSize: 32 }} />
+      <DroppableContainer
+        x={5}
+        y={60}
+        width={800}
+        height={420}
+        debugColor={0x333333}
+        onDrop={({ cardId }) => {
+          GameState.instance().playCard(cardId, GameState.instance().board.uuid);
+        }}
+      />
       {state.lanes.map(({ id, fields }, index) => (
         <DroppableContainer
           key={id}
