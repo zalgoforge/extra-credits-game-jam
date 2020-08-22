@@ -77,6 +77,10 @@ export class Actions {
     console.log('Drawed up to hand size');
   }
 
+  static loseAllMana() {
+    Actions.player().mana.set(0);
+  }
+
   static gainMana(amount = 1) {
     Actions.player().mana.add(amount);
   }

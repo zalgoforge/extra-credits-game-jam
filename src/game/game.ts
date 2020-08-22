@@ -44,6 +44,7 @@ export class GameState {
   endTurn() {
     if (this.gameOver) return;
     this.player.entity.endOfTurn();
+    Actions.loseAllMana();
     Actions.drawToHandSize();
     this.board.endOfTurn();
 
