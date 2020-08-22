@@ -6,13 +6,13 @@ import * as PIXI from 'pixi.js';
 import { DroppableContainer } from '../droppable-container';
 import { State } from './types';
 import { useEffect, useState } from 'react';
-import { Rect } from '../rect';
 import { Button } from '../button';
 
 import { GameState } from '../../game/game';
 import { Background } from '../background';
-import { Entity } from '../../game/entity';
+import { EntityGraphics } from '../entity';
 import { Card } from '../card';
+import { Entity } from '../../game/entity';
 
 interface Props {
   app: PIXI.Application;
@@ -100,7 +100,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }));
       })
       .bind();
-      GameState.instance()
+    GameState.instance()
       .board.onEntityRemoved.do(() => {
         setState((prev) => ({
           ...prev,
@@ -200,11 +200,11 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               const reverseIndex = fields.length - index;
               return enemies.length ? (
                 <Container
+                  key={id}
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
-                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6 - 72}
+                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                 >
-                  <Text text={`${enemies[0].hp}`} />
-                  <Rect key={id} width={88} height={120} alpha={0.5} fill={0xff0000} />
+                  <EntityGraphics hp={enemies[0].hp} />
                 </Container>
               ) : null;
             })
