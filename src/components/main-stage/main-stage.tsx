@@ -11,6 +11,7 @@ import { Button } from '../button';
 
 import { GameState } from '../../game/game';
 import { Background } from '../background';
+import { Entity } from '../../game/entity';
 
 interface Props {
   app: PIXI.Application;
@@ -98,6 +99,30 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }));
       })
       .bind();
+    Entity.onEntityHPChanged
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          lanes: getLanes(),
+        }));
+      })
+      .bind();
+    Entity.onEntityHPChanged
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          lanes: getLanes(),
+        }));
+      })
+      .bind();
+    Entity.onEntityMoved
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          lanes: getLanes(),
+        }));
+      })
+      .bind();
   }, []);
 
   return (
@@ -132,35 +157,39 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       ))}
       {state.lanes
         .map(({ fields }, laneIndex) =>
-          fields.map(({ id }, index) => {
-            const reverseIndex = fields.length - index;
-            return (
-              <DroppableContainer
-                key={id}
-                x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
-                y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6}
-                width={88}
-                height={48}
-                acceptTags={['field-targatable']}
-                alpha={
-                  state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 0.4
-                }
-                debugColor={0x0099ee}
-                onDrop={({ cardId }) => {
-                  GameState.instance().playCard(cardId, id);
-                }}
-              />
-            );
-          })
+          fields
+            .slice()
+            .reverse()
+            .map(({ id }, index) => {
+              const reverseIndex = fields.length - index;
+              return (
+                <DroppableContainer
+                  key={id}
+                  x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
+                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6}
+                  width={88}
+                  height={48}
+                  acceptTags={['field-targatable']}
+                  alpha={
+                    state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 0.4
+                  }
+                  debugColor={0x0099ee}
+                  onDrop={({ cardId }) => {
+                    GameState.instance().playCard(cardId, id);
+                  }}
+                />
+              );
+            })
         )
         .flat(1)}
       {state.lanes
         .map(({ fields }, laneIndex) =>
           fields
-            .filter((f) => f.enemies.length)
+            .slice()
+            .reverse()
             .map(({ id, enemies }, index) => {
               const reverseIndex = fields.length - index;
-              return (
+              return enemies.length ? (
                 <Container
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 6 - 72}
@@ -168,8 +197,9 @@ const StageComponent: React.FC<Props> = ({ app }) => {
                   <Text text={`${enemies[0].hp}`} />
                   <Rect key={id} width={88} height={120} alpha={0.5} fill={0xff0000} />
                 </Container>
-              );
+              ) : null;
             })
+            .filter((e) => !!e)
         )
         .flat(1)}
       <DroppableContainer
