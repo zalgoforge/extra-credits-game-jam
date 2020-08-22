@@ -27,6 +27,7 @@ const LANE_SPACER = 10;
 
 const DISCARD_PILE = { x: 760, y: 500, width: 140, height: 140 };
 const END_TURN_BUTTON = { x: 860, y: 460, width: 120, height: 30 };
+const DO_CHEAT_BUTTON = { x: 860, y: 420, width: 120, height: 30 };
 
 GameState.instance();
 
@@ -57,6 +58,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
     cards: getCards(),
     lanes: getLanes(),
     mana: getMana(),
+    highlightedTargets: undefined,
   });
 
   useEffect(() => {
@@ -88,6 +90,12 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         height={420}
         debugColor={0x333333}
         acceptTags={['board-targatable']}
+        alpha={
+          state.highlightedTargets &&
+          !state.highlightedTargets.includes(GameState.instance().board.uuid)
+            ? 0.2
+            : 1
+        }
         onDrop={({ cardId }) => {
           GameState.instance().playCard(cardId, GameState.instance().board.uuid);
         }}
@@ -100,6 +108,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
           acceptTags={['lane-targatable']}
+          alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 1}
           onDrop={({ cardId }) => {
             GameState.instance().playCard(cardId, id);
           }}
@@ -112,6 +121,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               width={88}
               height={48}
               acceptTags={['field-targatable']}
+              alpha={state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 1}
               debugColor={0x0099ee}
               onDrop={({ cardId }) => {
                 GameState.instance().playCard(cardId, id);
@@ -123,6 +133,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       <DroppableContainer
         {...DISCARD_PILE}
         debugColor={0xdd1111}
+        acceptTags={['board-targatable', 'lane-targatable', 'field-targatable']}
         onDrop={({ cardId }) => {
           GameState.instance().discardCard(cardId);
         }}
@@ -151,6 +162,18 @@ const StageComponent: React.FC<Props> = ({ app }) => {
             tags={tags}
             x={HAND_X_POSITION + (CARD_WIDTH + CARD_SPACE_BETWEEN) * index}
             y={HAND_Y_POSITION}
+            onDragStart={() => {
+              setState((prev) => ({
+                ...prev,
+                highlightedTargets: GameState.instance().getPossibleTargetsForCard(id),
+              }));
+            }}
+            onDragStop={() => {
+              setState((prev) => ({
+                ...prev,
+                highlightedTargets: undefined,
+              }));
+            }}
           >
             <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill={0xeeff00} />
             <Text x={3} y={3} text={title} style={{ fontSize: 9 }} />
@@ -167,6 +190,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       })}
       <Button
         {...END_TURN_BUTTON}
+        text={'Do Cheat'}
+        graphics={'button.png'}
+        onClick={() => {
+          GameState.instance().doCheat('');
+        }}
+      />
+      <Button
+        {...DO_CHEAT_BUTTON}
         text={'Next Turn'}
         graphics={'button.png'}
         onClick={() => {
