@@ -17,7 +17,6 @@ export class ThrowRock extends Card {
   }
 
   play(ctx: PlayContext) {
-    // TODO implement effect
     let lane = ctx.lane();
     console.log(`Playing ThrowRock on lane ${lane.idx}`);
     let target = lane.firstNonEmptyField();
