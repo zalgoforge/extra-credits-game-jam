@@ -1,13 +1,8 @@
-import { Entity } from '../entity';
-import { Actions } from '../actions';
+import { Enemy } from './enemy';
 
-export class TestEnemy extends Entity {
+export class TestEnemy extends Enemy {
   constructor() {
     super();
     this.name = "Test";
-  }
-
-  endOfTurn() {
-    Actions.moveForward(this);
   }
 }

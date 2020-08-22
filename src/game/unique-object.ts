@@ -13,4 +13,8 @@ export class UniqueObject {
   constructor() {
     UniqueObject.ids[this.uuid] = this;
   }
+
+  destroy() {
+    delete UniqueObject.ids[this.uuid];
+  }
 }

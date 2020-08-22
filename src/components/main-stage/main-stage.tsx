@@ -99,6 +99,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }));
       })
       .bind();
+      GameState.instance()
+      .board.onEntityRemoved.do(() => {
+        setState((prev) => ({
+          ...prev,
+          lanes: getLanes(),
+        }));
+      })
+      .bind();
     Entity.onEntityHPChanged
       .do(() => {
         setState((prev) => ({

@@ -102,6 +102,10 @@ export class Actions {
     return Actions.board().addEntity(entity, field);
   }
 
+  static killEntity(entity: Entity) {
+    return Actions.board().destroyEntity(entity);
+  }
+
   static moveForward(entity: Entity) {
     let field = entity.field();
     if (!field) return;

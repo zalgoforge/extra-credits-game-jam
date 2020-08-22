@@ -5,12 +5,12 @@ import { Signal } from 'signal-slot';
 export class Field extends UniqueObject {
   laneIdx: number;
   fieldIdx: number;
-  private board: Board;
+  private _board: Board;
   private _entity: Entity | null = null;
 
   constructor(board: Board, idx: number, laneIdx: number) {
     super();
-    this.board = board;
+    this._board = board;
     this.fieldIdx = idx;
     this.laneIdx = laneIdx;
   }
@@ -19,9 +19,13 @@ export class Field extends UniqueObject {
     return this._entity;
   }
 
+  board() {
+    return this._board;
+  }
+
   nextField() {
     if (this.fieldIdx == 0) return null;
-    return this.board.field(this.laneIdx, this.fieldIdx-1)
+    return this._board.field(this.laneIdx, this.fieldIdx-1)
   }
 
   _setEntity(entity: Entity | null) {
@@ -81,7 +85,7 @@ export class Board extends UniqueObject {
     return true;
   }
 
-  entityDestroyed(entity: Entity) {
+  destroyEntity(entity: Entity) {
     let index = this.entities.indexOf(entity, 0);
     if (index == -1) return false;
 
@@ -89,6 +93,7 @@ export class Board extends UniqueObject {
     let field = entity.field();
     field?._setEntity(null);
     entity._setField(null);
+    entity.destroy();
 
     this.onEntityRemoved.emit(entity);
     return true;
@@ -110,8 +115,11 @@ export class Board extends UniqueObject {
   }
 
   endOfTurn() {
-    for (let entity of this.entities) {
-      entity.endOfTurn();
+    for (let i = 0; i < Board.lanesSize; i ++) {
+      for (let i2 = 0; i2 < Board.lanesCount; i2 ++) {
+        let field = this.field(i2, i);
+        field.entity()?.endOfTurn();
+      }
     }
   }
 
