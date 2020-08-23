@@ -64,6 +64,7 @@ const getLanes = () => {
               hp: f.entity()!.hp.value(),
               name: f.entity()!.name,
               isSoaked: f.entity()!.statuses.getValue(Status.Soak) !== 0,
+              isPoisoned: f.entity()!.statuses.getValue(Status.Poison) !== 0,
             },
           ]
         : [],
@@ -299,6 +300,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                   isSoaked={enemies[0].isSoaked}
+                  isPoisoned={enemies[0].isPoisoned}
                   hp={enemies[0].hp}
                   name={enemies[0].name}
                 />
