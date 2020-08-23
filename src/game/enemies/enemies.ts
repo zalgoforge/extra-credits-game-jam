@@ -1,5 +1,7 @@
 import { Enemy } from './enemy';
 import { Actions } from '../actions';
+import { Target } from '../target';
+import { Entity } from '../entity';
 
 let additionalHP = 2;
 
@@ -30,6 +32,12 @@ export class HealerEnemy extends Enemy {
   }
 
   endOfTurn() {
+    let fields = Target.allFieldsInLane(this.field()?.laneIdx || 0);
+    let otherEnemies = fields.filter( f => { f.entity() && f.entity() != this } ).map( f => f.entity() as Entity );
+    for(let enemy of otherEnemies) {
+      Actions.addMaxHealth(enemy, this.healAmount);
+    }
+
     super.endOfTurn();
   }
 }

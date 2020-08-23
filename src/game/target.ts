@@ -27,6 +27,10 @@ export class Target {
     return fields;
   }
 
+  static allFieldsInLane(idx:number) {
+    return Target.anyLane()[idx].fields;
+  }
+
   static anyFieldWithEnemy() {
     return Target.anyField().filter(f => f.entity());
   }

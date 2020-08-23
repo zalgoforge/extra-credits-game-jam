@@ -17,18 +17,18 @@ let testWaves: Wave[] = [
   {
     enemies: () => [new TestEnemy, new TestEnemy],
     weight: 2,
-    delay: 3,
+    delay: 2,
   },
   {
     enemies: () => [new TestEnemy],
     weight: 2,
-    delay: 2,
+    delay: 1,
   },
 
   {
     enemies: () => [new FastEnemy, new FastEnemy],
     weight: 2,
-    delay: 3,
+    delay: 2,
   },
 
   {
@@ -40,7 +40,7 @@ let testWaves: Wave[] = [
   {
     enemies: () => [new BigEnemy],
     weight: 2,
-    delay: 4,
+    delay: 3,
   },
 
 
