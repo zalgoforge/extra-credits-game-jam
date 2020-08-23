@@ -13,7 +13,7 @@ const ANCHOR_POINT = new PIXI.Point(0.5, 0.5);
 export const EndStage: React.FC<Props> = ({ score = 0, onComplete }) => {
   return (
     <Container>
-      <Rect width={1200} height={900} fill={0x000000} interactive={true} onClick={onComplete} />
+      <Rect width={1200} height={900} fill={0x000000} interactive={true} />
       <Text
         x={500}
         y={350}
