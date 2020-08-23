@@ -19,6 +19,7 @@ export type AnimatedContainerInstance = PIXI.Container & {
   __oldY: number;
   __oldAlpha?: number;
   __tweenPosition: any;
+  __coords: any;
   __tweenAlpha: any;
   _destroyed: boolean;
   __onMoveFinished?: () => void;
@@ -35,17 +36,17 @@ export const behavior = {
   },
   customApplyProps: (instance: AnimatedContainerInstance, oldProps: Props, newProps: Props) => {
     if (!oldProps || oldProps.x !== newProps.x || oldProps.y !== newProps.y) {
-      const coords = { x: instance.__oldX, y: instance.__oldY };
+      instance.__coords = { x: instance.__oldX, y: instance.__oldY };
       if (instance.__tweenPosition) {
-        instance.__tweenPosition.end();
+        instance.__tweenPosition.stop().end();
       }
-      instance.__tweenPosition = new TWEEN.Tween(coords)
+      instance.__tweenPosition = new TWEEN.Tween(instance.__coords)
         .to({ x: newProps.x, y: newProps.y }, 1000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(() => {
           if (!instance._destroyed) {
-            instance.x = coords.x;
-            instance.y = coords.y;
+            instance.x = instance.__coords.x;
+            instance.y = instance.__coords.y;
           }
         })
         .onComplete(() => {
