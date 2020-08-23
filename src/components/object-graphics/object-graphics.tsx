@@ -1,0 +1,26 @@
+import React from 'react';
+import { Sprite, Container } from 'react-pixi-fiber';
+import * as PIXI from 'pixi.js';
+import bearTrapGraphics from '../../assets/img/bear_trap.png';
+
+interface Props {
+  x?: number;
+  y?: number;
+  nameId: string;
+}
+
+const ANCHOR_POINT = new PIXI.Point(0, 0.5);
+const mipmapOption = { mipmap: PIXI.MIPMAP_MODES.ON };
+
+export const ObjectGraphics: React.FC<Props> = ({ x = 0, y = 0 }) => {
+  return (
+    <Container x={x} y={y}>
+      <Sprite
+        texture={PIXI.Texture.from(bearTrapGraphics, mipmapOption)}
+        width={266 / 4}
+        height={224 / 4}
+        anchor={ANCHOR_POINT}
+      />
+    </Container>
+  );
+};

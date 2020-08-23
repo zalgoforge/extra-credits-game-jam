@@ -12,9 +12,15 @@ export interface Enemy {
   name: string;
 }
 
+export interface GameObject {
+  id: string;
+  nameId: string;
+}
+
 export interface Slot {
   id: string;
   enemies: Enemy[];
+  objects: GameObject[];
 }
 
 export interface Lane {

@@ -10,12 +10,13 @@ import { Button } from '../button';
 
 import { GameState } from '../../game/game';
 import { Background } from '../background';
-import { EntityGraphics } from '../entity';
+import { EntityGraphics } from '../entity-graphics';
 import { Card } from '../card';
 import { Entity } from '../../game/entity';
 import { Token } from '../token';
 import { AnimatedContainer } from '../animated-container';
 import { ManaWhirl } from '../mana-whirl';
+import { ObjectGraphics } from '../object-graphics';
 
 interface Props {
   app: PIXI.Application;
@@ -60,6 +61,14 @@ const getLanes = () => {
               id: f.entity()!.uuid,
               hp: f.entity()!.hp.value(),
               name: f.entity()!.name,
+            },
+          ]
+        : [],
+      objects: f.card()
+        ? [
+            {
+              id: f.card()!.uuid,
+              nameId: f.card()!.id,
             },
           ]
         : [],
@@ -150,6 +159,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }));
       })
       .bind();
+    GameState.instance()
+      .board.onCardAdded.do(() => {
+        setState((prev) => ({
+          ...prev,
+          lanes: getLanes(),
+        }));
+      })
+      .bind();
   }, []);
 
   return (
@@ -201,6 +218,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           }}
         />
       ))}
+      {/* fields */}
       {state.lanes
         .map(({ fields }, laneIndex) =>
           fields
@@ -244,6 +262,27 @@ const StageComponent: React.FC<Props> = ({ app }) => {
             })
         )
         .flat(1)}
+      {/* objects */}
+      {state.lanes
+        .map(({ fields }, laneIndex) =>
+          fields
+            .slice()
+            .reverse()
+            .map(({ id, objects }, index) => {
+              const reverseIndex = fields.length - index;
+              return objects.length ? (
+                <ObjectGraphics
+                  key={objects[0].id}
+                  x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
+                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
+                  nameId={objects[0].nameId}
+                />
+              ) : null;
+            })
+            .filter((e) => !!e)
+        )
+        .flat(1)}
+      {/* Enemies */}
       {state.lanes
         .map(({ fields }, laneIndex) =>
           fields
