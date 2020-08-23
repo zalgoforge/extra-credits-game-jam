@@ -48,6 +48,43 @@ export class Strategize extends Card {
   }
 }
 
+class DrawAfterDiscard extends Card {
+  usedThisTurn = false;
+
+  constructor() {
+    super();
+    this.id = "DrawAfterDiscard";
+  }
+
+  onAddedAsPassive() {
+    Actions.player().onDiscardedCard.do((data: Card) => {
+      if (this.usedThisTurn) return;
+      Actions.drawCard();
+      this.usedThisTurn = true;
+    }).bind();
+  }
+
+  endOfTurn() {
+    super.endOfTurn();
+    this.usedThisTurn = false;
+  }
+}
+
+export class Rations extends Card {
+  constructor() {
+    super();
+    this.id = "rations";
+    this.cost = 4;
+    this.title = 'Rations';
+    this.description = `Gain "After first discard each turn, draw a card"`;
+  }
+
+  play(ctx: PlayContext) {
+    Actions.removeCardFromGame(this);
+    Actions.addPassive(new DrawAfterDiscard);
+  }
+}
+
 
 export function CreateSet() {
   return [
@@ -56,5 +93,7 @@ export function CreateSet() {
 
     new Strategize,
     new Strategize,
+
+    new Rations,
    ];
 }

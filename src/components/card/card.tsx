@@ -14,6 +14,8 @@ import dubstep from '../../assets/img/cards/dubstep.png';
 import depressite from '../../assets/img/cards/depressite.png';
 import numerology from '../../assets/img/cards/numerology.png';
 
+import rations from '../../assets/img/cards/rations.png';
+
 import { Container, Sprite, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 
@@ -65,6 +67,9 @@ const nameIdImgMap: any = {
   },
   ['numerology']: {
     texture: PIXI.Texture.from(numerology),
+  },
+  ['rations']: {
+    texture: PIXI.Texture.from(rations),
   },
 };
 

@@ -7,11 +7,11 @@ import { Card, PlayContext } from './card';
 import { UniqueObject } from './unique-object';
 
 export class Actions {
-  private static player() {
+  static player() {
     return GameState.instance().player;
   }
 
-  private static board() {
+  static board() {
     return GameState.instance().board;
   }
 
@@ -83,20 +83,16 @@ export class Actions {
   static discardCard(card: Card) {
     if (Actions.player().hand.remove(card)) {
       Actions.player().discard.add(card);
-      console.log(`Discarded ${card.title}`);
+      Actions.player().onDiscardedCard.emit(card);
+      return true;
     } else {
-      console.log(`Failed to discard ${card.title}`);
+      return false;
     }
   }
 
   static discardCardForMana(card: Card) {
-    if (Actions.player().hand.remove(card)) {
-      Actions.player().discard.add(card);
-      let manaGain = card.manaGain;
-      Actions.player().mana.add(manaGain);
-      console.log(`Discarded ${card.title} for ${manaGain} mana`);
-    } else {
-      console.log(`Failed to discard ${card.title}`);
+    if (Actions.discardCard(card)) {
+      Actions.player().mana.add(card.manaGain);
     }
   }
 

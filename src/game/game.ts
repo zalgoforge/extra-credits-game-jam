@@ -1,4 +1,5 @@
 import { Deck } from './deck';
+import { Card } from './card';
 import { UniqueObject } from './unique-object';
 import { PlayerDeck } from './decks/PlayerDeck';
 import { SignalizingVariable } from './util/SignalizingVariable';
@@ -16,6 +17,8 @@ export class Player {
   mana = new SignalizingVariable();
   handLimit = new SignalizingVariable(6);
   entity = new Entity();
+
+  onDiscardedCard = new Signal<Card>();
 
   constructor() {
     this.entity.name = "Player";

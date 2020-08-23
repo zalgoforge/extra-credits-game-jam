@@ -125,14 +125,13 @@ export class Schadenfreude extends Card {
     this.id = "schadenfreude";
     this.cost = 4;
     this.title = 'Schadenfreude';
-    this.description = `Gain "+1 mana when you soak first enemy each turn"`;
+    this.description = `Gain "When you soak first enemy each turn, +1 mana"`;
   }
 
   play(ctx: PlayContext) {
     Actions.removeCardFromGame(this);
     Actions.addPassive(new GainManaAfterSoak);
   }
-
 }
 
 export function CreateSet() {
