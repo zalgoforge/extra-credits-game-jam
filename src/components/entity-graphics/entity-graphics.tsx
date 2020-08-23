@@ -84,11 +84,11 @@ const getEnemySaying = (name: string) => {
 
 const getTint = (isSoaked: boolean, isPoisoned: boolean) => {
   if (isSoaked && isPoisoned) {
-    return { tint: 0x00ffff };
+    return { tint: 0xA0ffff };
   } else if (isSoaked) {
-    return { tint: 0x0000ff };
+    return { tint: 0xA0A0ff };
   } else if (isPoisoned) {
-    return { tint: 0x00ff00 };
+    return { tint: 0xA0ffA0 };
   } else {
     return {};
   }
