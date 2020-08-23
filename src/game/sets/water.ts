@@ -72,12 +72,36 @@ export class ElectricEel extends Card {
   }
 }
 
+export class Puddle extends Card {
+  soak = 2;
 
+  constructor() {
+    super();
+    this.id = "puddle";
+    this.cost = 4;
+    this.title = 'Puddle';
+    this.description = `Applies ${this.soak} soak to enemy who steps into it`;
+  }
+
+  protected getPossibleTargets(): Array<UniqueObject> {
+    return Target.anyFieldWithoutEnemy();
+  }
+
+  play(ctx: PlayContext) {
+    Actions.placeCardOnField(this, ctx.field());
+  }
+
+  entityMovedInto(entity:Entity) {
+    Actions.addStatus(entity, Status.Soak, this.soak);
+  }
+
+}
 
 export function CreateSet() {
   return [
     new WaterPistol,
     new WaterBallon,
     new ElectricEel,
+    new Puddle,
    ];
 }
