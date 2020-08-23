@@ -1,4 +1,4 @@
-import { Field, Lane } from './board';
+import { Field, Lane, Board } from './board';
 import { GameState } from './game';
 import shuffle from 'shuffle-array';
 
@@ -35,16 +35,16 @@ export class Target {
     return Target.anyField().filter(f => !f.entity());
   }
 
-  static lastFields() {
-    let fields = new Array<Field>();
-    for (let lane of Target.anyLane()) {
-      fields.push(lane.fields[lane.fields.length - 1]);
-    }
-    return fields;
+  static firstFields(columns = 1) {
+    return Target.anyField().filter( field => field.fieldIdx < columns );
   }
 
-  static randomLastEmptyField() {
-    let fields = Target.lastFields().filter(f => !f.entity());
+  static lastFields(columns = 1) {
+    return Target.anyField().filter( field => field.fieldIdx >= Board.lanesSize - columns );
+  }
+
+  static randomLastEmptyField(columns = 1) {
+    let fields = Target.lastFields(columns).filter(f => !f.entity());
     shuffle(fields);
     if (fields.length == 0) return null;
     return fields[0];

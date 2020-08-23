@@ -84,7 +84,7 @@ export class Puddle extends Card {
   }
 
   protected getPossibleTargets(): Array<UniqueObject> {
-    return Target.anyFieldWithoutEnemy();
+    return Target.firstFields(4).filter( field => !field.entity() );
   }
 
   play(ctx: PlayContext) {

@@ -14,39 +14,28 @@ class Wave {
   delay = 2;
 };
 
-/*
-    const enemyWaves = [
-      [() => [new TestEnemy, new TestEnemy], 2],
-      [() => [new TestEnemy, new TestEnemy, new TestEnemy], 2],
-      [() => [new FastEnemy, new TestEnemy], 2],
-      [() => [new BigEnemy], 1]
-    ];
-
-*/
-
-
 let testWaves: Wave[] = [
   {
     enemies: () => [new TestEnemy, new TestEnemy],
     weight: 2,
-    delay: 2,
+    delay: 3,
   },
   {
     enemies: () => [new TestEnemy],
     weight: 2,
-    delay: 1,
+    delay: 2,
   },
 
   {
     enemies: () => [new FastEnemy, new FastEnemy],
     weight: 2,
-    delay: 2,
+    delay: 3,
   },
 
   {
     enemies: () => [new BigEnemy],
     weight: 2,
-    delay: 3,
+    delay: 4,
   },
 
 
@@ -61,6 +50,7 @@ function PickRandomWaveFromWaves(waves: Wave[]) : Wave {
 export class SpawnEnemies extends Card {
   delay = 1;
   turn = 0;
+  availableColumns = 2;
 
   constructor() {
     super();
@@ -81,7 +71,7 @@ export class SpawnEnemies extends Card {
   }
 
   spawnEnemiesAtBack() {
-    let field = Target.randomLastEmptyField();
+    let field = Target.randomLastEmptyField(this.availableColumns);
     if (!field) {
       return false;
     }
@@ -92,7 +82,7 @@ export class SpawnEnemies extends Card {
 
     for(let enemy of enemies) {
       Actions.spawnEnemy(enemy, field);
-      field = Target.randomLastEmptyField();
+      field = Target.randomLastEmptyField(this.availableColumns);
       if (!field) {
         return true;
       }
