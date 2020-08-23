@@ -33,10 +33,12 @@ const behavior = {
     instance.__onDragLeave = newProps.onDragLeave;
     instance.__acceptTags = newProps.acceptTags || [];
     const { width, height } = newProps;
-    instance.clear();
-    instance.beginFill(newProps.debugColor || 0x00ff00);
-    instance.drawRect(0, 0, width, height);
-    instance.endFill();
+    if (newProps.debugColor) {
+      instance.clear();
+      instance.beginFill(newProps.debugColor);
+      instance.drawRect(0, 0, width, height);
+      instance.endFill();
+    }
     (this as any).applyDisplayObjectProps(oldProps, newProps);
   },
 };
