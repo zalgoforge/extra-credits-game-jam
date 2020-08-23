@@ -97,6 +97,8 @@ export class Puddle extends Card {
 }
 
 class GainManaAfterSoak extends Card {
+  gainedManainThisTurn = false;
+
   constructor() {
     super();
     this.id = "GainManaAfterSoak";
@@ -105,10 +107,16 @@ class GainManaAfterSoak extends Card {
   onAddedAsPassive() {
     Entity.onEntityStatusChanged.do((data: EntityStatusUpdate) => {
       if (data.status != Status.Soak || data.change <= 0) return;
+      if (this.gainedManainThisTurn) return;
       Actions.gainMana();
+      this.gainedManainThisTurn = true;
     }).bind();
   }
 
+  endOfTurn() {
+    super.endOfTurn();
+    this.gainedManainThisTurn = false;
+  }
 }
 
 export class Schadenfreude extends Card {
