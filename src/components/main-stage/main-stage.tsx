@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stage, Text } from 'react-pixi-fiber';
+import { Stage } from 'react-pixi-fiber';
 import { hot } from 'react-hot-loader/root';
 import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
@@ -15,6 +15,7 @@ import { Card } from '../card';
 import { Entity } from '../../game/entity';
 import { Token } from '../token';
 import { AnimatedContainer } from '../animated-container';
+import { ManaWhirl } from '../mana-whirl';
 
 interface Props {
   app: PIXI.Application;
@@ -33,9 +34,9 @@ const LANE_SHIFT = 30;
 
 const FIELD_WIDTH = 90;
 
-const DISCARD_PILE = { x: 720, y: 500, width: 140, height: 140 };
-const END_TURN_BUTTON = { x: 890, y: 560, width: 120, height: 30 };
-const DO_CHEAT_BUTTON = { x: 890, y: 520, width: 120, height: 30 };
+const DISCARD_PILE = { x: 690, y: 480, width: 180, height: 180 };
+const END_TURN_BUTTON = { x: 920, y: 560 };
+const DO_CHEAT_BUTTON = { x: 1060, y: 560 };
 
 GameState.instance();
 
@@ -155,7 +156,6 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   return (
     <Stage app={app}>
       <Background />
-      <Token x={240} y={310} counter={state.mana} type={'mana'} />
       <Token x={280} y={310} counter={state.health} type={'health'} />
       <DroppableContainer
         x={0}
@@ -176,6 +176,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           y={LANE_OFFSET.y + index * (LANE_DIMENSIONS.height + LANE_SPACER)}
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
+          debugColor={0x00ff00}
           acceptTags={['lane-targatable']}
           alpha={
             state.hoveredTarget === id
@@ -266,14 +267,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         .flat(1)}
       <DroppableContainer
         {...DISCARD_PILE}
-        debugColor={0xdd1111}
         acceptTags={['board-targatable', 'lane-targatable', 'field-targatable']}
+        debugColor={0x00ff00}
+        alpha={state.highlightedTargets ? 0.3 : 0}
         onDrop={({ cardId }) => {
           GameState.instance().discardCard(cardId);
         }}
-      >
-        <Text text={'Discard here'} style={{ fontSize: 10 }} />
-      </DroppableContainer>
+      />
+      <ManaWhirl x={DISCARD_PILE.x} y={DISCARD_PILE.y} mana={state.mana} />
       {state.cards.map(({ id, title, description, cost, manaGain }, index) => {
         const targets = GameState.instance().getPossibleTargetsForCard(id);
         const boardLaneIds = GameState.instance().board.lanes.map((l) => l.uuid);
@@ -326,16 +327,14 @@ const StageComponent: React.FC<Props> = ({ app }) => {
 
       <Button
         {...DO_CHEAT_BUTTON}
-        text={'Do Cheat'}
-        graphics={'button.png'}
+        type={'cheat'}
         onClick={() => {
           GameState.instance().doCheat('');
         }}
       />
       <Button
         {...END_TURN_BUTTON}
-        text={'Next Turn'}
-        graphics={'button.png'}
+        type={'next-turn'}
         onClick={() => {
           GameState.instance().endTurn();
         }}
