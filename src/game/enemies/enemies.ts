@@ -1,11 +1,13 @@
 import { Enemy } from './enemy';
 import { Actions } from '../actions';
 
+let additionalHP = 2;
+
 export class TestEnemy extends Enemy {
   constructor() {
     super();
     this.name = "TestEnemy";
-    this.hp.setMax(5);
+    this.hp.setMax(5 + additionalHP);
   }
 }
 
@@ -14,7 +16,7 @@ export class FastEnemy extends Enemy {
     super();
     this.name = "FastEnemy";
     this.speed = 2;
-    this.hp.setMax(3);
+    this.hp.setMax(3 + additionalHP);
   }
 }
 
@@ -24,7 +26,7 @@ export class HealerEnemy extends Enemy {
   constructor() {
     super();
     this.name = "HealerEnemy";
-    this.hp.setMax(6);
+    this.hp.setMax(6 + additionalHP);
   }
 
   endOfTurn() {
@@ -39,7 +41,7 @@ export class BigEnemy extends Enemy {
   constructor() {
     super();
     this.name = "BigEnemy";
-    this.hp.setMax(12);
+    this.hp.setMax(12 + additionalHP);
   }
 
   endOfTurn() {

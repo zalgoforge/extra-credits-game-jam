@@ -47,7 +47,6 @@ export class GameState {
   protected initialize() {
     Actions.shuffleDeck();
     Actions.drawToHandSize();
-    Cheats.addTestEnemy();
     Actions.addPassive(new SpawnEnemies());
   }
 

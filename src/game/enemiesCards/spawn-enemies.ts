@@ -3,6 +3,7 @@ import { Actions } from '../actions';
 import { TestEnemy, FastEnemy, BigEnemy, HealerEnemy } from '../enemies/enemies';
 import { Enemy } from '../enemies/enemy';
 import { Target } from '../target';
+import { GameState } from '../game';
 const pick = require('pick-random-weighted');
 
 class Wave {
@@ -66,9 +67,16 @@ export class SpawnEnemies extends Card {
 
   }
 
+  onAddedAsPassive() {
+    this.spawnEnemiesAtBack();
+  }
+
   endOfTurn() {
-    // TODO each(3).turns() would be a good api...
     this.turn ++;
+    if (GameState.instance().board.entities.length == 0) {
+      this.turn = this.delay;
+    }
+
     if (this.turn < this.delay) return;
     if (!this.spawnEnemiesAtBack()) return;
     this.turn = 0;
