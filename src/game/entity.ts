@@ -6,6 +6,17 @@ import { Field } from './board';
 import { Actions } from './actions';
 import { Signal } from 'signal-slot';
 
+export class EntityStatusUpdate {
+  entity: Entity;
+  status: Status;
+  change: number;
+  constructor(entity: Entity, status: Status, change: number) {
+    this.entity = entity;
+    this.status = status;
+    this.change = change;
+  }
+}
+
 export class Entity extends UniqueObject {
   name = "Unknown";
   // TODO add maxHP
@@ -16,7 +27,7 @@ export class Entity extends UniqueObject {
 
   static onEntityHPChanged = new Signal<Entity>();
   static onEntityMoved = new Signal<Entity>();
-  static onEntityStatusChanged = new Signal<Entity>();
+  static onEntityStatusChanged = new Signal<EntityStatusUpdate>();
 
   takeDamage(damage: Damage) {
     let oldHP = this.hp.value();

@@ -42,7 +42,7 @@ export class GameState {
     Actions.shuffleDeck();
     Actions.drawToHandSize();
     Cheats.addTestEnemy();
-    this.passiveEffects.add(new SpawnEnemies());
+    Actions.addPassive(new SpawnEnemies());
   }
 
   endTurn() {

@@ -4,7 +4,7 @@ import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
 import { Damage } from '../damage';
 import { Status } from '../status';
-import { Entity } from '../entity';
+import { Entity, EntityStatusUpdate } from '../entity';
 
 export class WaterPistol extends Card {
   damage = 2;
@@ -94,6 +94,36 @@ export class Puddle extends Card {
   entityMovedInto(entity:Entity) {
     Actions.addStatus(entity, Status.Soak, this.soak);
   }
+}
+
+class GainManaAfterSoak extends Card {
+  constructor() {
+    super();
+    this.id = "GainManaAfterSoak";
+  }
+
+  onAddedAsPassive() {
+    Entity.onEntityStatusChanged.do((data: EntityStatusUpdate) => {
+      if (data.status != Status.Soak || data.change <= 0) return;
+      Actions.gainMana();
+    }).bind();
+  }
+
+}
+
+export class Schadenfreude extends Card {
+  constructor() {
+    super();
+    this.id = "schadenfreude";
+    this.cost = 4;
+    this.title = 'Schadenfreude';
+    this.description = `Play to gain "+1 mana when you soak first enemy each turn"`;
+  }
+
+  play(ctx: PlayContext) {
+    Actions.removeCardFromGame(this);
+    Actions.addPassive(new GainManaAfterSoak);
+  }
 
 }
 
@@ -103,5 +133,6 @@ export function CreateSet() {
     new WaterBallon,
     new ElectricEel,
     new Puddle,
+    new Schadenfreude,
    ];
 }

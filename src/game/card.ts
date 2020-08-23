@@ -41,6 +41,9 @@ export class Card extends UniqueObject {
     return [Target.board()];
   }
 
+  onAddedAsPassive() {
+  }
+
   field() {
     return this._field;
   }

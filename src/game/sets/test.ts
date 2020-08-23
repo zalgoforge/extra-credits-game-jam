@@ -37,9 +37,5 @@ export function CreateSet() {
   return [
     new BearTrap,
     new BearTrap,
-    new BearTrap,
-    new BearTrap,
-    new BearTrap,
-    new BearTrap,
    ];
 }

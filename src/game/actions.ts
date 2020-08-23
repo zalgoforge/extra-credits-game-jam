@@ -1,4 +1,4 @@
-import { Entity } from './entity';
+import { Entity, EntityStatusUpdate } from './entity';
 import { Damage } from './damage';
 import { GameState } from './game';
 import { Status } from './status';
@@ -81,7 +81,6 @@ export class Actions {
     Actions.board().discardCard(card);
   }
 
-
   static discardCard(card: Card) {
     if (Actions.player().hand.remove(card)) {
       Actions.player().discard.add(card);
@@ -100,6 +99,16 @@ export class Actions {
     } else {
       console.log(`Failed to discard ${card.title}`);
     }
+  }
+
+  static addPassive(card: Card) {
+    GameState.instance().passiveEffects.add(card);
+    card.onAddedAsPassive();
+  }
+
+  static removeCardFromGame(card: Card) {
+    // should remove from any deck
+    return Actions.player().hand.remove(card);
   }
 
   static loseAllMana() {
@@ -150,12 +159,14 @@ export class Actions {
 
   static addStatus(entity: Entity, status: Status, amount: number = 1) {
     entity.statuses.add(status, amount);
-    Entity.onEntityStatusChanged.emit(entity);
+    let data = new EntityStatusUpdate(entity, status, amount);
+    Entity.onEntityStatusChanged.emit(data);
   }
 
   static substractStatus(entity: Entity, status: Status, amount: number = 1) {
     entity.statuses.substract(status, amount);
-    Entity.onEntityStatusChanged.emit(entity);
+    let data = new EntityStatusUpdate(entity, status, -amount);
+    Entity.onEntityStatusChanged.emit(data);
   }
 
   static moveForward(entity: Entity) {
