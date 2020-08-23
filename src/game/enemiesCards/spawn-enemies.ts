@@ -1,6 +1,6 @@
 import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
-import { TestEnemy, FastEnemy, BigEnemy, HealerEnemy } from '../enemies/enemies';
+import { TestEnemy, FastEnemy, BigEnemy, HealerEnemy, ToughEnemy } from '../enemies/enemies';
 import { Enemy } from '../enemies/enemy';
 import { Target } from '../target';
 import { GameState } from '../game';
@@ -33,6 +33,12 @@ let testWaves: Wave[] = [
 
   {
     enemies: () => [new HealerEnemy, new HealerEnemy],
+    weight: 2,
+    delay: 2,
+  },
+
+  {
+    enemies: () => [new ToughEnemy, new ToughEnemy],
     weight: 2,
     delay: 2,
   },

@@ -2,6 +2,7 @@ import { Enemy } from './enemy';
 import { Actions } from '../actions';
 import { Target } from '../target';
 import { Entity } from '../entity';
+import { Status } from '../status';
 
 let additionalHP = 2;
 
@@ -42,6 +43,16 @@ export class HealerEnemy extends Enemy {
   }
 }
 
+export class ToughEnemy extends Enemy {
+  healAmount = 2;
+
+  constructor() {
+    super();
+    this.name = "ToughEnemy";
+    this.hp.setMax(6 + additionalHP);
+    this.statuses.add(Status.Tough, 2);
+  }
+}
 
 export class BigEnemy extends Enemy {
   regen = 2;

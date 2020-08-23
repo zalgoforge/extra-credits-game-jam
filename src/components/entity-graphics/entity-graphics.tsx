@@ -16,7 +16,8 @@ import headhunterGraphics from '../../assets/img/enemies/headhunter.png';
 import headhunterCierpiGraphics from '../../assets/img/enemies/headhunter_cierpi.png';
 import inkwizytorGraphics from '../../assets/img/enemies/inkwizytor.png';
 import inkwizytorCierpiGraphics from '../../assets/img/enemies/inkwizytor_cierpi.png';
-
+import wiedzmaGraphics from '../../assets/img/enemies/wiedzma.png';
+import wiedzmaCierpiGraphics from '../../assets/img/enemies/wiedzma_cierpi.png';
 
 
 interface Props {
@@ -43,6 +44,7 @@ interface NameMapping {
   FastEnemy: EnemyData;
   BigEnemy: EnemyData;
   HealerEnemy: EnemyData;
+  ToughEnemy: EnemyData;
 }
 
 const ANCHOR_POINT = new PIXI.Point(0, 1);
@@ -81,6 +83,13 @@ const nameMapping: NameMapping = {
       isDmg: PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption),
     },
     sayings: ['Do you want to talk about Jesus?'],
+  },
+  ToughEnemy: {
+    texture: {
+      isOk: PIXI.Texture.from(wiedzmaGraphics, mipmapOption),
+      isDmg: PIXI.Texture.from(wiedzmaCierpiGraphics, mipmapOption),
+    },
+    sayings: ['Do you have any sugar, neighbor?'],
   },
 };
 

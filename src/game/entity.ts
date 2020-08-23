@@ -1,6 +1,6 @@
 import { Stat } from './util/Stat';
 import { Status, Statuses } from './status';
-import { Damage } from './damage';
+import { DamageType, Damage } from './damage';
 import { UniqueObject } from './unique-object';
 import { Field } from './board';
 import { Actions } from './actions';
@@ -34,6 +34,11 @@ export class Entity extends UniqueObject {
 
     // add damage for each soak token
     damage.amount += this.statuses.getValue(Status.Soak);
+    if (damage.type != DamageType.PiercingDamage) {
+      damage.amount -= this.statuses.getValue(Status.Tough);
+    }
+
+    if (damage.amount < 0) damage.amount = 0;
 
     this.hp.substract(damage.amount);
     let damageDealt = oldHP - this.hp.value();
@@ -55,6 +60,6 @@ export class Entity extends UniqueObject {
     Actions.substractStatus(this, Status.Soak);
 
     let poison = this.statuses.getValue(Status.Poison);
-    if (poison) Actions.dealDamage(this, new Damage(poison));
+    if (poison) Actions.dealDamage(this, new Damage(poison, DamageType.Normal));
   }
 }

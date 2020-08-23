@@ -3,7 +3,8 @@ import { Stat } from './util/Stat';
 export enum Status {
   Soak,
   Stun,
-  Poison
+  Poison,
+  Tough,
 }
 
 export class Statuses {
@@ -11,6 +12,7 @@ export class Statuses {
     [Status.Soak]: Stat.CreateEmptyWithMax(1000),
     [Status.Stun]: Stat.CreateEmptyWithMax(1),
     [Status.Poison]: Stat.CreateEmptyWithMax(1000),
+    [Status.Tough]: Stat.CreateEmptyWithMax(1000),
   };
 
   getValue(type: Status) {
