@@ -18,6 +18,7 @@ interface Props {
   x?: number;
   y?: number;
   hp: number;
+  isSoaked: boolean;
   name: string;
 }
 
@@ -110,7 +111,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
   const [state, setState] = useState<EntityState>('isOk');
   const previousHp = useRef<number>();
 
-  const { x = 0, y = 0, hp, name } = props;
+  const { x = 0, y = 0, hp, name, isSoaked } = props;
 
   useEffect(() => {
     if (previousHp.current !== undefined && hp !== previousHp.current) {
@@ -152,6 +153,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
         texture={getEnemyTexture(name, state)}
         width={300 / 3}
         height={400 / 3}
+        {...(isSoaked ? { tint: 0x0000ff } : {})}
         anchor={ANCHOR_POINT}
       />
       <Container x={30} y={-160}>
