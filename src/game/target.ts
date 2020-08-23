@@ -31,6 +31,10 @@ export class Target {
     return Target.anyField().filter(f => f.entity());
   }
 
+  static anyFieldWithoutEnemy() {
+    return Target.anyField().filter(f => !f.entity());
+  }
+
   static lastFields() {
     let fields = new Array<Field>();
     for (let lane of Target.anyLane()) {

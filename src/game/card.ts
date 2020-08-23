@@ -1,5 +1,6 @@
 import { UniqueObject } from './unique-object';
 import { Target } from './target';
+import { Entity } from './entity';
 import { Field, Lane } from './board';
 
 export class PlayContext {
@@ -23,6 +24,7 @@ export class Card extends UniqueObject {
   manaGain = 1;
   title = 'Dummy text';
   description = 'Lorem ipsum';
+  private _field: Field | null = null;
 
   constructor() {
     super();
@@ -36,6 +38,18 @@ export class Card extends UniqueObject {
 
   protected getPossibleTargets(): Array<UniqueObject> {
     return [Target.board()];
+  }
+
+  field() {
+    return this._field;
+  }
+
+  _setField(field: Field | null) {
+    this._field = field;
+  }
+
+  entityMovedInto(entity:Entity) {
+
   }
 
   endOfTurn() { }

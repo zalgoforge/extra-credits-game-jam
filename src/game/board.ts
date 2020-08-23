@@ -2,6 +2,7 @@ import { UniqueObject } from './unique-object';
 import { Entity } from './entity';
 import { Card } from './card';
 import { Signal } from 'signal-slot';
+import { GameState } from './game';
 
 export class Field extends UniqueObject {
   laneIdx: number;
@@ -47,6 +48,15 @@ export class Field extends UniqueObject {
     this._entity = entity;
     return true;
   }
+
+  _setCard(card: Card | null) {
+    if (card && this.entity()) {
+      console.error("Wanted to add card to field, but field is not empty");
+      return false;
+    }
+    this._card = card;
+    return true;
+  }
 }
 
 export class Lane extends UniqueObject {
@@ -73,6 +83,7 @@ export class Board extends UniqueObject {
 
   lanes = Array<Lane>();
   entities = Array<Entity>();
+  cards = Array<Card>();
 
   constructor() {
     super();
@@ -89,6 +100,9 @@ export class Board extends UniqueObject {
 
     this.entities.push(entity);
     this.onEntityAdded.emit(entity);
+
+    field.card()?.entityMovedInto(entity);
+
     return true;
   }
 
@@ -117,6 +131,35 @@ export class Board extends UniqueObject {
     field._setEntity(entity);
 
     entity._onMoved(field);
+    field.card()?.entityMovedInto(entity);
+
+    return true;
+  }
+
+  addCard(card: Card, field: Field) {
+    let oldCard = field.card();
+    if (oldCard) {
+      this.discardCard(oldCard);
+    }
+
+    card._setField(field);
+    field._setCard(card);
+
+    this.cards.push(card);
+    this.onCardAdded.emit(card);
+    return true;
+  }
+
+  // this removes card from board, and moves card to player discard
+  discardCard(card: Card) {
+    let index = this.cards.indexOf(card, 0);
+    if (index == -1) return false;
+    this.cards.splice(index, 1);
+
+    let field = card.field();
+    field?._setCard(null);
+    card._setField(null);
+    GameState.instance().player.discard.add(card);
 
     return true;
   }
@@ -127,6 +170,10 @@ export class Board extends UniqueObject {
         let field = this.field(i2, i);
         field?.entity()?.endOfTurn();
       }
+    }
+
+    for (let card of this.cards) {
+      card.endOfTurn();
     }
   }
 

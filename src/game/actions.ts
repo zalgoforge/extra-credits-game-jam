@@ -57,17 +57,29 @@ export class Actions {
     }
 
     console.log(`Playing ${card.title}`);
-    // remove card from hand, if user has it in hand
-    if (Actions.player().hand.remove(card)) {
-      Actions.player().discard.add(card);
-    }
 
     let ctx = new PlayContext();
     if (target) {
       ctx.targets.push(target);
     }
     card.play(ctx);
+
+    // TODO should be remove from current deck, if deck doesn't changed from before
+    if (Actions.player().hand.remove(card)) {
+      Actions.player().discard.add(card);
+    }
   }
+
+  static placeCardOnField(card: Card, field: Field) {
+    // remove card from hand, if user has it in hand (TODO should be remove from current deck)
+    Actions.player().hand.remove(card);
+    Actions.board().addCard(card, field);
+  }
+
+  static discardCardFromField(card: Card) {
+    Actions.board().discardCard(card);
+  }
+
 
   static discardCard(card: Card) {
     if (Actions.player().hand.remove(card)) {
