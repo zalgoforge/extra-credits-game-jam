@@ -9,6 +9,7 @@ export class WaterPistol extends Card {
 
   constructor() {
     super();
+    this.id = "water-pistol";
     this.title = 'Water Pistol';
     this.description = `Deal ${this.damage} dmg to first enemy in lane`;
   }
@@ -30,6 +31,7 @@ export class WaterBallon extends Card {
 
   constructor() {
     super();
+    this.id = "water-ballon";
     this.cost = 2;
     this.title = 'Water Balloon';
     this.description = `Deal ${this.damage} to field and all neighbors`;
@@ -51,6 +53,7 @@ export class ElectricEel extends Card {
   constructor() {
     super();
     this.cost = 3;
+    this.id = "electric-eel";
     this.title = 'Electric Eel';
     this.description = `Deal ${this.damage} to all soaked enemies`;
   }

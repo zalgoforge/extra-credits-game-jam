@@ -10,6 +10,7 @@ export class BearTrap extends Card {
 
   constructor() {
     super();
+    this.id = "bear-trap";
     this.cost = 2;
     this.title = 'Bear Trap';
     this.description = `Deal ${this.damage} dmg to first enemy that steps into it`;
