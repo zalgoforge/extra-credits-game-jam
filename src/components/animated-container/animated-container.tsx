@@ -9,6 +9,8 @@ interface Props extends React.PropsWithChildren<any> {
   initialX?: number;
   initialY?: number;
   alpha?: number;
+  onMoveStarted?: () => void;
+  onMoveFinished?: () => void;
 }
 
 export type AnimatedContainerInstance = PIXI.Container & {
@@ -16,6 +18,7 @@ export type AnimatedContainerInstance = PIXI.Container & {
   __oldY: number;
   __tween: any;
   _destroyed: boolean;
+  __onMoveFinished?: () => void;
 };
 
 const TYPE = 'AnimatedContainer';
@@ -27,23 +30,34 @@ export const behavior = {
     return instance;
   },
   customApplyProps: (instance: AnimatedContainerInstance, oldProps: Props, newProps: Props) => {
-    const coords = { x: instance.__oldX, y: instance.__oldY };
-    if (instance.__tween) {
-      instance.__tween.end();
+    if (!oldProps || oldProps.x !== newProps.x || oldProps.y !== newProps.y) {
+      const coords = { x: instance.__oldX, y: instance.__oldY };
+      if (instance.__tween) {
+        instance.__tween.end();
+      }
+      console.log(`updating ${coords.x}px, ${newProps.x}px)`);
+      instance.__tween = new TWEEN.Tween(coords)
+        .to({ x: newProps.x, y: newProps.y }, 1000)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onUpdate(() => {
+          if (!instance._destroyed) {
+            instance.x = coords.x;
+            instance.y = coords.y;
+          }
+        })
+        .onComplete(() => {
+          if (instance.__onMoveFinished) {
+            instance.__onMoveFinished();
+          }
+        })
+        .start(TWEEN.now());
+      instance.__oldX = newProps.x;
+      instance.__oldY = newProps.y;
+      if (newProps.onMoveStarted) {
+        newProps.onMoveStarted();
+      }
     }
-    console.log(`updating ${coords.x}px, ${newProps.x}px)`);
-    instance.__tween = new TWEEN.Tween(coords)
-      .to({ x: newProps.x, y: newProps.y }, 1000)
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .onUpdate(() => {
-        if (!instance._destroyed) {
-          instance.x = coords.x;
-          instance.y = coords.y;
-        }
-      })
-      .start(TWEEN.now());
-    instance.__oldX = newProps.x;
-    instance.__oldY = newProps.y;
+    instance.__onMoveFinished = newProps.onMoveFinished;
   },
 };
 
