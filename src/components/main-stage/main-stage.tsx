@@ -169,11 +169,18 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       <DroppableContainer
         x={0}
         y={0}
-        width={1000}
-        height={500}
+        width={1200}
+        height={470}
         debugColor={0x333333}
         acceptTags={['board-targatable']}
-        alpha={0}
+        alpha={
+          state.hoveredTarget === GameState.instance().board.uuid
+            ? 1
+            : state.highlightedTargets &&
+              state.highlightedTargets.includes(GameState.instance().board.uuid)
+            ? 0.3
+            : 0
+        }
         onDrop={({ cardId }) => {
           GameState.instance().playCard(cardId, GameState.instance().board.uuid);
         }}
