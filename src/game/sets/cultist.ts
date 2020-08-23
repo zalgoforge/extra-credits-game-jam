@@ -43,7 +43,7 @@ export class Raze extends Card {
   play(ctx: PlayContext) {
     let fields = Target.allFieldsInColumn(ctx.field().fieldIdx);
     for(let field of fields) {
-      Actions.dealDamageToField(field, this.damage);
+      Actions.dealDamageToField(field, new Damage(this.damage));
     }
 
   }

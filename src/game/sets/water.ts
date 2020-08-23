@@ -2,7 +2,7 @@ import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
 import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
-import { Damage } from '../damage';
+import { Damage, DamageType } from '../damage';
 import { Status } from '../status';
 import { Entity, EntityStatusUpdate } from '../entity';
 
@@ -47,7 +47,7 @@ export class WaterBallon extends Card {
 
   play(ctx: PlayContext) {
     let fields = Target.fieldsInCrossShape(ctx.field());
-    Actions.dealDamageToFields(fields, this.damage);
+    Actions.dealDamageToFields(fields, new Damage(this.damage));
     for (let field of fields) {
       if (field.entity())
         Actions.addStatus(field.entity() as Entity, Status.Soak, this.soak);
@@ -63,12 +63,12 @@ export class ElectricEel extends Card {
     this.cost = 3;
     this.id = "electric-eel";
     this.title = 'Electric Eel';
-    this.description = `Deal ${this.damage} to all soaked enemies`;
+    this.description = `Deal ${this.damage} piercing to all soaked enemies`;
   }
 
   play(ctx: PlayContext) {
     let fields = Target.anyField().filter( field => ( field.entity() && field.entity()?.statuses.getValue(Status.Soak) )  );
-    Actions.dealDamageToFields(fields, this.damage);
+    Actions.dealDamageToFields(fields, new Damage(this.damage, DamageType.PiercingDamage));
   }
 }
 

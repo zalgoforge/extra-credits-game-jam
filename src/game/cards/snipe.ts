@@ -2,6 +2,7 @@ import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
 import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
+import { Damage } from '../damage';
 
 export class Snipe extends Card {
   static damage = 2;
@@ -17,6 +18,6 @@ export class Snipe extends Card {
   }
 
   play(ctx: PlayContext) {
-    Actions.dealDamageToField(ctx.field(), Snipe.damage);
+    Actions.dealDamageToField(ctx.field(), new Damage(Snipe.damage));
   }
 }
