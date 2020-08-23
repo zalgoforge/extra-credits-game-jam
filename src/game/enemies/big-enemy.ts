@@ -4,6 +4,6 @@ export class BigEnemy extends Enemy {
   constructor() {
     super();
     this.name = "BigEnemy";
-    this.hp.set(12);
+    this.hp.setMax(12);
   }
 }

@@ -5,5 +5,6 @@ export class FastEnemy extends Enemy {
     super();
     this.name = "FastEnemy";
     this.speed = 2;
+    this.hp.setMax(3);
   }
 }

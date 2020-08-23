@@ -1,4 +1,4 @@
-import { SignalizingVariable } from './util/SignalizingVariable';
+import { Stat } from './util/Stat';
 import { Damage } from './damage';
 import { UniqueObject } from './unique-object';
 import { Field } from './board';
@@ -7,8 +7,8 @@ import { Signal } from 'signal-slot';
 export class Entity extends UniqueObject {
   name = "Unknown";
   // TODO add maxHP
-  hp = new SignalizingVariable(10);
-  attack = new SignalizingVariable(1);
+  hp = new Stat(10);
+  //attack = new SignalizingVariable(1);
   private _field: Field | null = null;
 
   static onEntityHPChanged = new Signal<Entity>();
