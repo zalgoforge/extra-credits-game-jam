@@ -148,7 +148,7 @@ export const Card: React.FC<Props> = ({
         x={width * 0.75}
         y={height * 0.06}
         digit={cost}
-        {...(!hasManaToPlay ? { tint: 0xff0000 } : {})}
+        tint={hasManaToPlay ? 0xffffff : 0xff0000}
       />
     </Container>
   );
