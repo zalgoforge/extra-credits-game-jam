@@ -48,10 +48,11 @@ export const Card: React.FC<Props> = ({
         x={width * 0.5}
         y={height * 0.62}
         text={title}
+        resolution={8}
         anchor={ANCHOR_POINT}
         style={{
           align: 'center',
-          fontSize: 18,
+          fontSize: 14,
           fill: 0xffffff,
           stroke: 'black',
           strokeThickness: 5,
@@ -61,13 +62,13 @@ export const Card: React.FC<Props> = ({
         x={width * 0.135}
         y={height * 0.68}
         text={description}
-        resolution={20}
+        resolution={8}
         style={{
-          fontSize: 11,
+          fontSize: 10,
           align: 'center',
           fontWeight: 'bold',
           wordWrap: true,
-          wordWrapWidth: width * 0.78,
+          wordWrapWidth: width * 0.75,
         }}
       />
       <Text
