@@ -130,7 +130,7 @@ export class Board extends UniqueObject {
     entity._setField(field);
     field._setEntity(entity);
 
-    entity._onMoved(field);
+    Entity.onEntityMoved.emit(entity);
     field.card()?.entityMovedInto(entity);
 
     return true;

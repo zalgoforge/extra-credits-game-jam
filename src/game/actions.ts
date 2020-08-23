@@ -81,7 +81,7 @@ export class Actions {
 
   static placeCardOnField(card: Card, field: Field) {
     // remove card from hand, if user has it in hand (TODO should be remove from current deck)
-    Actions.player().hand.remove(card);
+    Actions.removeCardFromGame(card);
     Actions.board().addCard(card, field);
   }
 
@@ -125,7 +125,13 @@ export class Actions {
   }
 
   static heal(entity: Entity, amount = 1) {
-    entity.heal(amount);
+    entity.hp.add(amount);
+    Entity.onEntityHPChanged.emit(entity);
+  }
+
+  static addMaxHealth(entity: Entity, amount = 1) {
+    entity.hp.addMax(amount);
+    Entity.onEntityHPChanged.emit(entity);
   }
 
   static healPlayer(amount = 1) {

@@ -36,6 +36,11 @@ export class Stat {
     return this.set(this._value + value);
   }
 
+  addMax(value: number) {
+    this._max += value;
+    return this.set(this._value + value);
+  }
+
   substract(value: number) {
     return this.set(this._value - value);
   }

@@ -43,21 +43,12 @@ export class Entity extends UniqueObject {
     Entity.onEntityHPChanged.emit(this);
   }
 
-  heal(amount: number) {
-    this.hp.add(amount);
-    Entity.onEntityHPChanged.emit(this);
-  }
-
   field() {
     return this._field;
   }
 
   _setField(field: Field | null) {
     this._field = field;
-  }
-
-  _onMoved(field: Field) {
-    Entity.onEntityMoved.emit(this);
   }
 
   endOfTurn() {
