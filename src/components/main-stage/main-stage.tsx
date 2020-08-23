@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Stage, Text } from 'react-pixi-fiber';
-import { hot } from 'react-hot-loader/root';
+import { Text, Container } from 'react-pixi-fiber';
 import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
 import { DroppableContainer } from '../droppable-container';
@@ -17,11 +16,11 @@ import { HpIndicator } from '../hp-indicator';
 import { AnimatedContainer } from '../animated-container';
 import { ManaWhirl } from '../mana-whirl';
 import { ObjectGraphics } from '../object-graphics';
-import { GameOverScreen } from '../game-over-screen';
 import { Status } from '../../game/status';
 
 interface Props {
   app: PIXI.Application;
+  onComplete: (score: number) => void;
 }
 
 const HAND_Y_POSITION = 480;
@@ -93,14 +92,13 @@ const getTurnCount = () => {
   return GameState.instance().turnCount.value();
 };
 
-const StageComponent: React.FC<Props> = ({ app }) => {
+export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
     lanes: getLanes(),
     mana: getMana(),
     health: getHealth(),
     turnCount: getTurnCount(),
-    isGameOver: false,
     highlightedTargets: undefined,
     hoveredTarget: undefined,
   });
@@ -134,10 +132,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
       .bind();
     game.onGameOver
       .do(() => {
-        setState((prev) => ({
-          ...prev,
-          isGameOver: true,
-        }));
+        onComplete(getTurnCount());
       })
       .bind();
     game.turnCount.onValueChanged
@@ -167,7 +162,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   }, []);
 
   return (
-    <Stage app={app}>
+    <Container>
       <Background />
       <Text x={500} y={10} text={`Turn count: ${state.turnCount}`} />
       <HpIndicator x={220} y={233} counter={state.health} />
@@ -377,13 +372,11 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           GameState.instance().endTurn();
         }}
       />
-      {state.isGameOver ? (
+      {/*{state.isGameOver ? (
         <AnimatedContainer x={0} y={0} alpha={1} initialAlpha={0}>
           <GameOverScreen width={1100} height={700} turnCount={state.turnCount} />
         </AnimatedContainer>
-      ) : null}
-    </Stage>
+      ) : null}*/}
+    </Container>
   );
 };
-
-export const MainStage = hot(StageComponent);
