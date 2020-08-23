@@ -8,7 +8,7 @@ import { Target } from '../target';
 const pick = require('pick-random-weighted');
 
 class Wave {
-  enemies: Enemy[] = [];
+  enemies: () => Enemy[] = () => [];
   weight: number = 1;
 
   delay = 2;
@@ -27,12 +27,12 @@ class Wave {
 
 let testWaves: Wave[] = [
   {
-    enemies: [new TestEnemy, new TestEnemy],
+    enemies: () => [new TestEnemy, new TestEnemy],
     weight: 2,
     delay: 2,
   },
   {
-    enemies: [new TestEnemy],
+    enemies: () => [new TestEnemy],
     weight: 2,
     delay: 1,
   },
@@ -75,8 +75,9 @@ export class SpawnEnemies extends Card {
 
     let wave = PickRandomWaveFromWaves(testWaves);
     this.delay = wave.delay;
+    let enemies = wave.enemies();
 
-    for(let enemy of wave.enemies) {
+    for(let enemy of enemies) {
       Actions.spawnEnemy(enemy, field);
       field = Target.randomLastEmptyField();
       if (!field) {
