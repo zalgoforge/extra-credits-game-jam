@@ -19,7 +19,7 @@ export type DragContainerInstance = PIXI.Container & {
   __desiredXPos: number;
   __desiredYPos: number;
   __isDragged: boolean;
-  __dragStart: () => void;
+  __dragStart: (event: any) => void;
   __dragEnd: (e: any) => void;
   __dragMove: (e: any) => void;
   __notifyContainerAt: (
@@ -30,6 +30,8 @@ export type DragContainerInstance = PIXI.Container & {
   __onDragStart?: () => void;
   __onDragStop?: () => void;
   _destroyed: boolean;
+  __fromPositionX: number;
+  __fromPositionY: number;
 };
 
 const TYPE = 'DraggableContainer';
@@ -73,10 +75,12 @@ const behavior = {
 
     let draggedObject: DragContainerInstance | undefined;
     let draggedOverContainer: DroppableContainerInstance | undefined;
-    instance.__dragStart = () => {
+    instance.__dragStart = (event: any) => {
       draggedObject = instance;
       draggedObject.zIndex = 2000;
       draggedObject.__isDragged = true;
+      draggedObject.__fromPositionX = event.data.originalEvent.offsetX;
+      draggedObject.__fromPositionY = event.data.originalEvent.offsetY;
       if (draggedObject.__onDragStart) {
         draggedObject.__onDragStart();
       }
@@ -108,8 +112,10 @@ const behavior = {
         return;
       }
 
-      draggedObject.position.x += event.data.originalEvent.movementX;
-      draggedObject.position.y += event.data.originalEvent.movementY;
+      draggedObject.position.x += event.data.originalEvent.offsetX - draggedObject.__fromPositionX;
+      draggedObject.position.y += event.data.originalEvent.offsetY - draggedObject.__fromPositionY;
+      draggedObject.__fromPositionX = event.data.originalEvent.offsetX;
+      draggedObject.__fromPositionY = event.data.originalEvent.offsetY;
 
       const container = instance.__notifyContainerAt(event.data.global);
       if (draggedOverContainer !== container) {
