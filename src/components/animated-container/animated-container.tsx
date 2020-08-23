@@ -9,6 +9,7 @@ interface Props extends React.PropsWithChildren<any> {
   initialX?: number;
   initialY?: number;
   alpha?: number;
+  duration?: number;
   initialAlpha?: number;
   onMoveStarted?: () => void;
   onMoveFinished?: () => void;
@@ -36,14 +37,13 @@ export const behavior = {
   },
   customApplyProps: (instance: AnimatedContainerInstance, oldProps: Props, newProps: Props) => {
     if (!oldProps || oldProps.x !== newProps.x || oldProps.y !== newProps.y) {
-
       if (instance.__tweenPosition) {
         instance.__tweenPosition.stop();
       } else {
         instance.__coords = { x: instance.__oldX, y: instance.__oldY };
       }
       instance.__tweenPosition = new TWEEN.Tween(instance.__coords)
-        .to({ x: newProps.x, y: newProps.y }, 1000)
+        .to({ x: newProps.x, y: newProps.y }, newProps.duration || 1000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(() => {
           if (!instance._destroyed) {
@@ -69,7 +69,7 @@ export const behavior = {
         instance.__tweenAlpha.end();
       }
       instance.__tweenAlpha = new TWEEN.Tween(coords)
-        .to({ alpha: newProps.alpha }, 1000)
+        .to({ alpha: newProps.alpha }, newProps.duration || 1000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(() => {
           if (!instance._destroyed && coords.alpha) {

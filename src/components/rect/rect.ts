@@ -9,6 +9,7 @@ interface Props {
   height: number;
   alpha?: number;
   interactive?: boolean;
+  onClick?: () => void;
 }
 
 const TYPE = 'Rect';
@@ -21,6 +22,9 @@ export const behavior = {
     instance.drawRect(x || 0, y || 0, width, height);
     instance.endFill();
     instance.interactive = newProps.interactive || false;
+    if (newProps.onClick) {
+      (instance as any).click = newProps.onClick;
+    }
   },
 };
 

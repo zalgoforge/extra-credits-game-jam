@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { MainStage } from './components/main-stage';
+import { StageManager } from './components/stage-manager';
 import { useState } from 'react';
 import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
@@ -41,10 +41,10 @@ const renderApp = (Main: React.FC<any>) => {
   ReactDOM.render(<CanvasComponent MainComponent={Main} />, document.getElementById('root'));
 };
 
-renderApp(MainStage);
+renderApp(StageManager);
 
 if (module.hot) {
-  module.hot.accept('./components/main-stage', () => {
-    renderApp(require('./components/main-stage').Stage);
+  module.hot.accept('./components/stage-manager', () => {
+    renderApp(require('./components/stage-manager').StageManager);
   });
 }
