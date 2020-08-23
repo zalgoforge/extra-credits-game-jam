@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import chmurkaGraphics from '../../assets/img/chmurka.png';
 import elfikGraphics from '../../assets/img/elfik.png';
+import elfikCierpiGraphics from '../../assets/img/elfik_cierpi.png';
 import ogrGraphics from '../../assets/img/ogr.png';
+import ogrCierpiGraphics from '../../assets/img/ogr_cierpi.png';
+import headhunterGraphics from '../../assets/img/headhunter.png';
+import headhunterCierpiGraphics from '../../assets/img/headhunter_cierpi.png';
 import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { AnimatedContainer } from '../animated-container';
@@ -16,28 +20,61 @@ interface Props {
   name: string;
 }
 
+type EntityState = 'isOk' | 'isDmg';
+
+interface EnemyData {
+  texture: {
+    isOk: PIXI.Texture;
+    isDmg: PIXI.Texture;
+  };
+  sayings: string[];
+}
+
+interface NameMapping {
+  Enemy: EnemyData;
+  FastEnemy: EnemyData;
+  BigEnemy: EnemyData;
+}
+
 const ANCHOR_POINT = new PIXI.Point(0, 1);
 
-const nameMapping: any = {
+const nameMapping: NameMapping = {
   Enemy: {
-    texture: PIXI.Texture.from(elfikGraphics),
+    texture: {
+      isOk: PIXI.Texture.from(elfikGraphics),
+      isDmg: PIXI.Texture.from(elfikCierpiGraphics),
+    },
     sayings: ['Delivery from Fantazon', 'Package for mr. J. P. Swanson'],
   },
-  FastEnemy: { texture: PIXI.Texture.from(ogrGraphics), sayings: ['...', 'Nothing to say'] },
-  BigEnemy: { texture: PIXI.Texture.from(ogrGraphics), sayings: ['...', "I'm Hungry"] },
+  FastEnemy: {
+    texture: {
+      isOk: PIXI.Texture.from(headhunterGraphics),
+      isDmg: PIXI.Texture.from(headhunterCierpiGraphics),
+    },
+    sayings: [
+      'Looking for Java Developers',
+      'Do You know JavaScript maybe?',
+      'Hello mr <PasteNameHere>!',
+    ],
+  },
+  BigEnemy: {
+    texture: { isOk: PIXI.Texture.from(ogrGraphics), isDmg: PIXI.Texture.from(ogrCierpiGraphics) },
+    sayings: ['Need to measure your water reading', 'Sir, did you check your pipes?'],
+  },
 };
 
-const getEnemyTexture = (name: string) => {
-  return (nameMapping[name] || nameMapping.Enemy).texture;
+const getEnemyTexture = (name: string, state: 'isOk' | 'isDmg') => {
+  const enemy = (nameMapping as any)[name] || nameMapping.Enemy;
+  return enemy.texture[state];
 };
 
 const getEnemySaying = (name: string) => {
-  const sayings = (nameMapping[name] || nameMapping.Enemy).sayings;
+  const sayings = ((nameMapping as any)[name] || nameMapping.Enemy).sayings;
   const sayingIndex = getRandomInt(0, sayings.length - 1);
   return sayings[sayingIndex];
 };
 
-const shouldSaySomething = () => getRandomInt(0, 10) >= 7;
+const shouldSaySomething = () => getRandomInt(0, 10) >= 8;
 
 const renderEffect = (props: Props, e: any) => {
   if (e.type === 'show-message') {
@@ -49,11 +86,11 @@ const renderEffect = (props: Props, e: any) => {
           y={10}
           text={`${e.message}`}
           style={{
-            fontSize: 14,
+            fontSize: 11,
             fontWeight: 'bold',
             fontFamily: 'Sans',
             wordWrap: true,
-            wordWrapWidth: 80,
+            wordWrapWidth: 70,
           }}
         />
       </Container>
@@ -64,8 +101,17 @@ const renderEffect = (props: Props, e: any) => {
 
 export const EntityGraphics: React.FC<Props> = (props) => {
   const [effects, setEffects] = useState<any[]>([]);
+  const [state, setState] = useState<EntityState>('isOk');
+  const previousHp = useRef<number>();
 
   const { x = 0, y = 0, hp, name } = props;
+
+  useEffect(() => {
+    if (previousHp.current !== undefined && hp !== previousHp.current) {
+      setState('isDmg');
+    }
+    previousHp.current = hp;
+  }, [hp]);
 
   return (
     <AnimatedContainer
@@ -91,7 +137,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
       }}
     >
       <Sprite
-        texture={getEnemyTexture(name)}
+        texture={getEnemyTexture(name, state)}
         width={300 / 3}
         height={400 / 3}
         anchor={ANCHOR_POINT}
@@ -119,6 +165,14 @@ export const EntityGraphics: React.FC<Props> = (props) => {
           </TimedContainer>
         );
       })}
+      {state === 'isDmg' && (
+        <TimedContainer
+          timeout={700}
+          onTimeout={() => {
+            setState('isOk');
+          }}
+        />
+      )}
     </AnimatedContainer>
   );
 };

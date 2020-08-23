@@ -10,6 +10,7 @@ export type TimedContainerInstance = PIXI.Container & {
   __isDone: boolean;
   __timer: any;
   __onTimeout: () => void;
+  _destroyed: boolean;
 };
 
 const TYPE = 'TimedContainer';
@@ -30,7 +31,9 @@ export const behavior = {
         clearTimeout(instance.__timer);
         instance.__timer = setTimeout(() => {
           instance.__isDone = true;
-          instance.__onTimeout();
+          if (!instance._destroyed) {
+            instance.__onTimeout();
+          }
         }, newTimeout);
       }
     }
