@@ -17,6 +17,7 @@ import { Token } from '../token';
 import { AnimatedContainer } from '../animated-container';
 import { ManaWhirl } from '../mana-whirl';
 import { ObjectGraphics } from '../object-graphics';
+import { GameOverScreen } from '../game-over-screen';
 
 interface Props {
   app: PIXI.Application;
@@ -84,12 +85,18 @@ const getHealth = () => {
   return GameState.instance().player.entity.hp.value();
 };
 
+const getTurnCount = () => {
+  return GameState.instance().turnCount.value();
+};
+
 const StageComponent: React.FC<Props> = ({ app }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
     lanes: getLanes(),
     mana: getMana(),
     health: getHealth(),
+    turnCount: getTurnCount(),
+    isGameOver: false,
     highlightedTargets: undefined,
     hoveredTarget: undefined,
   });
@@ -97,27 +104,46 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   useEffect(() => {
     const game = GameState.instance();
 
-    game.player.hand.onCardsChanged.do(() => {
+    game.player.hand.onCardsChanged
+      .do(() => {
         setState((prev) => ({
           ...prev,
           cards: getCards(),
         }));
       })
       .bind();
-    game.player.mana.onValueChanged.do(() => {
+    game.player.mana.onValueChanged
+      .do(() => {
         setState((prev) => ({
           ...prev,
           mana: getMana(),
         }));
       })
       .bind();
-    game.player.entity.hp.onValueChanged.do(() => {
-      setState((prev) => ({
-        ...prev,
-        health: getHealth(),
-      }));
-    })
-    .bind();
+    game.player.entity.hp.onValueChanged
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          health: getHealth(),
+        }));
+      })
+      .bind();
+    game.onGameOver
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          isGameOver: true,
+        }));
+      })
+      .bind();
+    game.turnCount.onValueChanged
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          turnCount: getTurnCount(),
+        }));
+      })
+      .bind();
 
     let updateLanes = () => {
       setState((prev) => ({
@@ -131,12 +157,8 @@ const StageComponent: React.FC<Props> = ({ app }) => {
     game.board.onCardAdded.do(updateLanes).bind();
     game.board.onCardRemoved.do(updateLanes).bind();
 
-    Entity.onEntityHPChanged
-      .do(updateLanes)
-      .bind();
-    Entity.onEntityMoved
-      .do(updateLanes)
-      .bind();
+    Entity.onEntityHPChanged.do(updateLanes).bind();
+    Entity.onEntityMoved.do(updateLanes).bind();
   }, []);
 
   return (
@@ -339,6 +361,11 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           GameState.instance().endTurn();
         }}
       />
+      {state.isGameOver ? (
+        <AnimatedContainer x={0} y={0} alpha={1} initialAlpha={0}>
+          <GameOverScreen width={1100} height={700} turnCount={state.turnCount} />
+        </AnimatedContainer>
+      ) : null}
     </Stage>
   );
 };
