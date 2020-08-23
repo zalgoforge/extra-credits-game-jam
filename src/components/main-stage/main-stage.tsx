@@ -45,6 +45,7 @@ GameState.instance();
 const getCards = () => {
   return GameState.instance().player.hand.cards.map((c) => ({
     id: c.uuid,
+    nameId: c.id,
     title: c.title,
     description: c.description,
     cost: c.cost,
@@ -319,7 +320,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         }}
       />
       <ManaWhirl x={DISCARD_PILE.x} y={DISCARD_PILE.y} mana={state.mana} />
-      {state.cards.map(({ id, title, description, cost, manaGain }, index) => {
+      {state.cards.map(({ id, title, description, cost, manaGain, nameId }, index) => {
         const targets = GameState.instance().getPossibleTargetsForCard(id);
         const boardLaneIds = GameState.instance().board.lanes.map((l) => l.uuid);
         const fieldIds = GameState.instance()
@@ -358,6 +359,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
               <Card
                 width={CARD_WIDTH}
                 height={CARD_HEIGHT}
+                nameId={nameId}
                 title={title}
                 description={description}
                 cost={cost}
