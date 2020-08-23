@@ -34,13 +34,13 @@ let testWaves: Wave[] = [
   {
     enemies: () => [new HealerEnemy, new HealerEnemy],
     weight: 2,
-    delay: 3,
+    delay: 2,
   },
 
   {
     enemies: () => [new BigEnemy],
     weight: 2,
-    delay: 3,
+    delay: 2,
   },
 
 
