@@ -180,7 +180,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           alpha={
             state.hoveredTarget === id
               ? 1
-              : state.highlightedTargets && !state.highlightedTargets.includes(id)
+              : state.highlightedTargets && state.highlightedTargets.includes(id)
               ? 0.3
               : 0
           }
@@ -188,14 +188,12 @@ const StageComponent: React.FC<Props> = ({ app }) => {
             GameState.instance().playCard(cardId, id);
           }}
           onDragEnter={() => {
-            console.log('on drag enter');
             setState((prev) => ({
               ...prev,
               hoveredTarget: id,
             }));
           }}
           onDragLeave={() => {
-            console.log('on drag leave');
             setState((prev) => ({
               ...prev,
               hoveredTarget: undefined,
@@ -219,8 +217,24 @@ const StageComponent: React.FC<Props> = ({ app }) => {
                   height={48}
                   acceptTags={['field-targatable']}
                   alpha={
-                    state.highlightedTargets && !state.highlightedTargets.includes(id) ? 0.2 : 0
+                    state.hoveredTarget === id
+                      ? 1
+                      : state.highlightedTargets && state.highlightedTargets.includes(id)
+                      ? 0.3
+                      : 0
                   }
+                  onDragEnter={() => {
+                    setState((prev) => ({
+                      ...prev,
+                      hoveredTarget: id,
+                    }));
+                  }}
+                  onDragLeave={() => {
+                    setState((prev) => ({
+                      ...prev,
+                      hoveredTarget: undefined,
+                    }));
+                  }}
                   debugColor={0x0099ee}
                   onDrop={({ cardId }) => {
                     GameState.instance().playCard(cardId, id);
