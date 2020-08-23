@@ -1,7 +1,7 @@
 import { Entity } from './entity';
 import { Damage } from './damage';
 import { GameState } from './game';
-import { Status } from './state';
+import { Status } from './status';
 import { Field } from './board';
 import { Card, PlayContext } from './card';
 import { UniqueObject } from './unique-object';

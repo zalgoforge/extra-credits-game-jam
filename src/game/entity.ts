@@ -1,5 +1,5 @@
 import { Stat } from './util/Stat';
-import { Statuses } from './state';
+import { Statuses } from './status';
 import { Damage } from './damage';
 import { UniqueObject } from './unique-object';
 import { Field } from './board';
