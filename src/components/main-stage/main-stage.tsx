@@ -13,7 +13,7 @@ import { Background } from '../background';
 import { EntityGraphics } from '../entity-graphics';
 import { Card } from '../card';
 import { Entity } from '../../game/entity';
-import { Token } from '../token';
+import { HpIndicator } from '../hp-indicator';
 import { AnimatedContainer } from '../animated-container';
 import { ManaWhirl } from '../mana-whirl';
 import { ObjectGraphics } from '../object-graphics';
@@ -165,7 +165,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
     <Stage app={app}>
       <Background />
       <Text x={500} y={10} text={`Turn count: ${state.turnCount}`} />
-      <Token x={280} y={310} counter={state.health} type={'health'} />
+      <HpIndicator x={220} y={233} counter={state.health} />
       <DroppableContainer
         x={0}
         y={0}
