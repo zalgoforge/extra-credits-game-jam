@@ -36,9 +36,11 @@ export const behavior = {
   },
   customApplyProps: (instance: AnimatedContainerInstance, oldProps: Props, newProps: Props) => {
     if (!oldProps || oldProps.x !== newProps.x || oldProps.y !== newProps.y) {
-      instance.__coords = { x: instance.__oldX, y: instance.__oldY };
+
       if (instance.__tweenPosition) {
-        instance.__tweenPosition.stop().end();
+        instance.__tweenPosition.stop();
+      } else {
+        instance.__coords = { x: instance.__oldX, y: instance.__oldY };
       }
       instance.__tweenPosition = new TWEEN.Tween(instance.__coords)
         .to({ x: newProps.x, y: newProps.y }, 1000)
