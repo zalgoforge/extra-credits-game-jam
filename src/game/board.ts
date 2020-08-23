@@ -59,13 +59,6 @@ export class Lane extends UniqueObject {
       this.fields.push(new Field(board, i, idx));
     }
   }
-
-  firstNonEmptyField() {
-    for(let field of this.fields) {
-      if (field.entity()) return field;
-    }
-    return null;
-  }
 }
 
 export class Board extends UniqueObject {
@@ -132,12 +125,15 @@ export class Board extends UniqueObject {
     for (let i = 0; i < Board.lanesSize; i ++) {
       for (let i2 = 0; i2 < Board.lanesCount; i2 ++) {
         let field = this.field(i2, i);
-        field.entity()?.endOfTurn();
+        field?.entity()?.endOfTurn();
       }
     }
   }
 
   field(laneIdx:number, fieldIdx:number) {
+    if (laneIdx < 0 || laneIdx > Board.lanesCount-1) return null;
+    if (fieldIdx < 0 || fieldIdx > Board.lanesSize-1) return null;
+
     return this.lanes[laneIdx].fields[fieldIdx];
   }
 }

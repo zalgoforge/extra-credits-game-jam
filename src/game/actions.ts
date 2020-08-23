@@ -106,6 +106,12 @@ export class Actions {
     Actions.dealDamage(Actions.player().entity, dmg);
   }
 
+  static dealDamageToFields(fields: Field[], amount = 1) {
+    for(let field of fields) {
+      Actions.dealDamageToField(field, amount);
+    }
+  }
+
   static dealDamageToField(field: Field, amount = 1) {
     let entity = field.entity();
     if (!entity) return;

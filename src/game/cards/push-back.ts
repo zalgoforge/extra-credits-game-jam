@@ -15,13 +15,7 @@ export class PushBack extends Card {
   }
 
   play(ctx: PlayContext) {
-    let lane = ctx.lane();
-    let target = lane.firstNonEmptyField();
-    if (!target) {
-      console.log(`Nobody to hit`);
-      return;
-    }
-    let entity = target.entity()
+    let entity = Target.firstEnemyInLane(ctx.lane());
     if (!entity) return;
     Actions.moveBackward(entity);
   }

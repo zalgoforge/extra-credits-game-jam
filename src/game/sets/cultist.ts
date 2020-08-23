@@ -2,6 +2,7 @@ import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
 import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
+import { Damage } from '../damage';
 
 export class Fear extends Card {
   constructor() {
@@ -17,10 +18,7 @@ export class Fear extends Card {
   play(ctx: PlayContext) {
     Actions.gainMana(1);
 
-    let target = ctx.lane().firstNonEmptyField();
-    if (!target) return;
-
-    let entity = target.entity()
+    let entity = Target.firstEnemyInLane(ctx.lane());
     if (!entity) return;
     Actions.moveBackward(entity);
   }
@@ -64,10 +62,11 @@ export class DrainHP extends Card {
   }
 
   play(ctx: PlayContext) {
-    let target = ctx.lane().firstNonEmptyField();
-    if (!target) return;
+    let entity = Target.firstEnemyInLane(ctx.lane());
+    if (!entity) return;
 
-    Actions.dealDamageToField(target, DrainHP.damage);
+    let dmg = new Damage(DrainHP.damage);
+    Actions.dealDamage(entity, dmg);
     // TODO heal only amount of damage dealt
     Actions.healPlayer(DrainHP.damage);
   }

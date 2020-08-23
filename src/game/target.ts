@@ -1,4 +1,4 @@
-import { Field } from './board';
+import { Field, Lane } from './board';
 import { GameState } from './game';
 import shuffle from 'shuffle-array';
 
@@ -44,5 +44,28 @@ export class Target {
     shuffle(fields);
     if (fields.length == 0) return null;
     return fields[0];
+  }
+
+  static firstEnemyInLane(lane: Lane) {
+    for(let field of lane.fields) {
+      if (field.entity()) return field.entity();
+    }
+    return null;
+  }
+
+  static fieldsInCrossShape(field: Field) {
+    let fields = [field];
+
+    let addIfExists = (laneIdx: number, fieldIdx: number) => {
+      let field = Target.board().field(laneIdx, fieldIdx);
+      if (field) fields.push(field);
+    };
+
+    addIfExists(field.laneIdx - 1, field.fieldIdx);
+    addIfExists(field.laneIdx + 1, field.fieldIdx);
+    addIfExists(field.laneIdx, field.fieldIdx - 1);
+    addIfExists(field.laneIdx, field.fieldIdx + 1);
+
+    return fields;
   }
 }

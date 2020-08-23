@@ -2,6 +2,7 @@ import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
 import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
+import { Damage } from '../damage';
 
 export class ThrowRock extends Card {
   static damage = 2;
@@ -17,10 +18,8 @@ export class ThrowRock extends Card {
   }
 
   play(ctx: PlayContext) {
-    let target = ctx.lane().firstNonEmptyField();
-    if (!target) {
-      return;
-    }
-    Actions.dealDamageToField(target, ThrowRock.damage);
+    let entity = Target.firstEnemyInLane(ctx.lane());
+    if (!entity) return;
+    Actions.dealDamage(entity, new Damage(ThrowRock.damage));
   }
 }
