@@ -22,6 +22,7 @@ export class PlayContext {
 export class Card extends UniqueObject {
   cost: number = 0;
   manaGain = 1;
+  id = "<none>";
   title = 'Dummy text';
   description = 'Lorem ipsum';
   private _field: Field | null = null;
