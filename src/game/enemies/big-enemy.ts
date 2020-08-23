@@ -1,5 +1,5 @@
 import { Enemy } from './enemy';
-import { Actions } from 'game/actions';
+import { Actions } from '../actions';
 
 export class BigEnemy extends Enemy {
   regen = 2;

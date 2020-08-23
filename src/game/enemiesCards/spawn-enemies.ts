@@ -37,6 +37,19 @@ let testWaves: Wave[] = [
     delay: 1,
   },
 
+  {
+    enemies: () => [new FastEnemy, new FastEnemy],
+    weight: 2,
+    delay: 2,
+  },
+
+  {
+    enemies: () => [new BigEnemy],
+    weight: 2,
+    delay: 3,
+  },
+
+
 ];
 
 
