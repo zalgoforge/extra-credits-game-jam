@@ -169,7 +169,6 @@ export const EntityGraphics: React.FC<Props> = (props) => {
             key={e.id}
             timeout={e.timeout}
             onTimeout={() => {
-              console.log('timeout');
               setEffects((prev) => prev.filter((prevEffect) => prevEffect.id !== e.id));
             }}
           >
