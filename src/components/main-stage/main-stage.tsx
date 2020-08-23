@@ -18,6 +18,7 @@ import { AnimatedContainer } from '../animated-container';
 import { ManaWhirl } from '../mana-whirl';
 import { ObjectGraphics } from '../object-graphics';
 import { GameOverScreen } from '../game-over-screen';
+import { Status } from '../../game/status';
 
 interface Props {
   app: PIXI.Application;
@@ -62,6 +63,8 @@ const getLanes = () => {
               id: f.entity()!.uuid,
               hp: f.entity()!.hp.value(),
               name: f.entity()!.name,
+              isSoaked: f.entity()!.statuses.getValue(Status.Soak) !== 0,
+              isPoisoned: f.entity()!.statuses.getValue(Status.Poison) !== 0,
             },
           ]
         : [],
@@ -159,6 +162,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
 
     Entity.onEntityHPChanged.do(updateLanes).bind();
     Entity.onEntityMoved.do(updateLanes).bind();
+    Entity.onEntityStatusChanged.do(updateLanes).bind();
   }, []);
 
   return (
@@ -295,6 +299,8 @@ const StageComponent: React.FC<Props> = ({ app }) => {
                   key={enemies[0].id}
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
+                  isSoaked={enemies[0].isSoaked}
+                  isPoisoned={enemies[0].isPoisoned}
                   hp={enemies[0].hp}
                   name={enemies[0].name}
                 />

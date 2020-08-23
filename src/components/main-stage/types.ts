@@ -10,6 +10,8 @@ export interface Enemy {
   id: string;
   hp: number;
   name: string;
+  isSoaked: boolean;
+  isPoisoned: boolean;
 }
 
 export interface GameObject {

@@ -18,6 +18,8 @@ interface Props {
   x?: number;
   y?: number;
   hp: number;
+  isSoaked: boolean;
+  isPoisoned: boolean;
   name: string;
 }
 
@@ -80,6 +82,18 @@ const getEnemySaying = (name: string) => {
   return sayings[sayingIndex];
 };
 
+const getTint = (isSoaked: boolean, isPoisoned: boolean) => {
+  if (isSoaked && isPoisoned) {
+    return { tint: 0x00ffff };
+  } else if (isSoaked) {
+    return { tint: 0x0000ff };
+  } else if (isPoisoned) {
+    return { tint: 0x00ff00 };
+  } else {
+    return {};
+  }
+};
+
 const shouldSaySomething = () => getRandomInt(0, 10) >= 8;
 
 const renderEffect = (props: Props, e: any) => {
@@ -110,7 +124,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
   const [state, setState] = useState<EntityState>('isOk');
   const previousHp = useRef<number>();
 
-  const { x = 0, y = 0, hp, name } = props;
+  const { x = 0, y = 0, hp, name, isSoaked, isPoisoned } = props;
 
   useEffect(() => {
     if (previousHp.current !== undefined && hp !== previousHp.current) {
@@ -152,6 +166,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
         texture={getEnemyTexture(name, state)}
         width={300 / 3}
         height={400 / 3}
+        {...getTint(isSoaked, isPoisoned)}
         anchor={ANCHOR_POINT}
       />
       <Container x={30} y={-160}>
