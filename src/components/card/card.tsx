@@ -6,6 +6,14 @@ import waterPistolGraphics from '../../assets/img/cards/water_pistol.png';
 import waterBallonGraphics from '../../assets/img/cards/water_baloon.png';
 import bearTrapGraphics from '../../assets/img/cards/beartrap_card.png';
 import electricEel from '../../assets/img/cards/electric_eel.png';
+import puddle from '../../assets/img/cards/puddle.png';
+import schaden from '../../assets/img/cards/schaden.png';
+
+import strategize from '../../assets/img/cards/strategize.png';
+import dubstep from '../../assets/img/cards/dubstep.png';
+import depressite from '../../assets/img/cards/depressite.png';
+import numerology from '../../assets/img/cards/numerology.png';
+
 import { Container, Sprite, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 
@@ -39,6 +47,24 @@ const nameIdImgMap: any = {
   },
   ['electric-eel']: {
     texture: PIXI.Texture.from(electricEel),
+  },
+  ['puddle']: {
+    texture: PIXI.Texture.from(puddle),
+  },
+  ['schadenfreude']: {
+    texture: PIXI.Texture.from(schaden),
+  },
+  ['strategize']: {
+    texture: PIXI.Texture.from(strategize),
+  },
+  ['dubstep']: {
+    texture: PIXI.Texture.from(dubstep),
+  },
+  ['depressite']: {
+    texture: PIXI.Texture.from(depressite),
+  },
+  ['numerology']: {
+    texture: PIXI.Texture.from(numerology),
   },
 };
 

@@ -31,11 +31,30 @@ export class BearTrap extends Card {
 
 }
 
+export class Strategize extends Card {
+  static manaGain = 3;
+
+  constructor() {
+    super();
+    this.id = "strategize";
+    this.title = 'Strategize';
+    this.description = `Draw card`;
+    this.manaGain = 2;
+    this.cost = 0;
+  }
+
+  play(ctx: PlayContext) {
+    Actions.drawCard();
+  }
+}
 
 
 export function CreateSet() {
   return [
     new BearTrap,
     new BearTrap,
+
+    new Strategize,
+    new Strategize,
    ];
 }

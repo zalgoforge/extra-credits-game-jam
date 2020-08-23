@@ -59,16 +59,15 @@ export class Actions {
 
     console.log(`Playing ${card.title}`);
 
+    if (Actions.player().hand.remove(card)) {
+      Actions.player().discard.add(card);
+    }
+
     let ctx = new PlayContext();
     if (target) {
       ctx.targets.push(target);
     }
     card.play(ctx);
-
-    // TODO should be remove from current deck, if deck doesn't changed from before
-    if (Actions.player().hand.remove(card)) {
-      Actions.player().discard.add(card);
-    }
   }
 
   static placeCardOnField(card: Card, field: Field) {
@@ -108,7 +107,8 @@ export class Actions {
 
   static removeCardFromGame(card: Card) {
     // should remove from any deck
-    return Actions.player().hand.remove(card);
+    Actions.player().hand.remove(card);
+    Actions.player().discard.remove(card);
   }
 
   static loseAllMana() {
