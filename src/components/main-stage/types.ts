@@ -33,6 +33,8 @@ export interface State {
   lanes: Lane[];
   mana: number;
   health: number;
+  isGameOver: boolean;
+  turnCount: number;
   highlightedTargets: undefined | string[];
   hoveredTarget: undefined | string;
 }

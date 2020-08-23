@@ -8,6 +8,7 @@ interface Props {
   width: number;
   height: number;
   alpha?: number;
+  interactive?: boolean;
 }
 
 const TYPE = 'Rect';
@@ -19,6 +20,7 @@ export const behavior = {
     instance.beginFill(fill, alpha);
     instance.drawRect(x || 0, y || 0, width, height);
     instance.endFill();
+    instance.interactive = newProps.interactive || false;
   },
 };
 
