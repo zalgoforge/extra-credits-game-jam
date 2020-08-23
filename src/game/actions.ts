@@ -1,6 +1,7 @@
 import { Entity } from './entity';
 import { Damage } from './damage';
 import { GameState } from './game';
+import { Status } from './state';
 import { Field } from './board';
 import { Card, PlayContext } from './card';
 import { UniqueObject } from './unique-object';
@@ -145,6 +146,16 @@ export class Actions {
 
   static killEntity(entity: Entity) {
     return Actions.board().destroyEntity(entity);
+  }
+
+  static addStatusOnEntity(entity: Entity, status: Status, amount: number = 1) {
+    entity.statuses.add(status, amount);
+    Entity.onEntityStatusChanged.emit(entity);
+  }
+
+  static substractStatusOnEntity(entity: Entity, status: Status, amount: number = 1) {
+    entity.statuses.substract(status, amount);
+    Entity.onEntityStatusChanged.emit(entity);
   }
 
   static moveForward(entity: Entity) {

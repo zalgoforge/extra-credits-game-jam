@@ -1,5 +1,5 @@
 import { Stat } from './util/Stat';
-import { Status } from './Status';
+import { Statuses } from './state';
 import { Damage } from './damage';
 import { UniqueObject } from './unique-object';
 import { Field } from './board';
@@ -9,12 +9,13 @@ export class Entity extends UniqueObject {
   name = "Unknown";
   // TODO add maxHP
   hp = new Stat(10);
-  status = new Status();
+  statuses = new Statuses();
   //attack = new SignalizingVariable(1);
   private _field: Field | null = null;
 
   static onEntityHPChanged = new Signal<Entity>();
   static onEntityMoved = new Signal<Entity>();
+  static onEntityStatusChanged = new Signal<Entity>();
 
   takeDamage(damage: Damage) {
     let oldHP = this.hp.value();
