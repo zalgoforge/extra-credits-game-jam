@@ -12,7 +12,6 @@ import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
 import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
 import headhunterGraphics from '../../assets/img/enemies/headhunter.png';
 import headhunterCierpiGraphics from '../../assets/img/enemies/headhunter_cierpi.png';
-import inkwizytorGraphics from '../../assets/img/enemies/inkwizytor.png';
 import inkwizytorCierpiGraphics from '../../assets/img/enemies/inkwizytor_cierpi.png';
 import wiedzmaGraphics from '../../assets/img/enemies/wiedzma.png';
 import wiedzmaCierpiGraphics from '../../assets/img/enemies/wiedzma_cierpi.png';
@@ -30,6 +29,15 @@ import ogrFrame0000 from '../../assets/img/animated_enemies/ogr/frame_0000.png';
 import ogrFrame0001 from '../../assets/img/animated_enemies/ogr/frame_0001.png';
 import ogrFrame0002 from '../../assets/img/animated_enemies/ogr/frame_0002.png';
 import ogrFrame0003 from '../../assets/img/animated_enemies/ogr/frame_0003.png';
+
+import inkwizytorFrame0000 from '../../assets/img/animated_enemies/inkwizytor/frame_0000.png';
+import inkwizytorFrame0001 from '../../assets/img/animated_enemies/inkwizytor/frame_0001.png';
+import inkwizytorFrame0002 from '../../assets/img/animated_enemies/inkwizytor/frame_0002.png';
+import inkwizytorFrame0003 from '../../assets/img/animated_enemies/inkwizytor/frame_0003.png';
+import inkwizytorFrame0004 from '../../assets/img/animated_enemies/inkwizytor/frame_0004.png';
+import inkwizytorFrame0005 from '../../assets/img/animated_enemies/inkwizytor/frame_0005.png';
+import inkwizytorFrame0006 from '../../assets/img/animated_enemies/inkwizytor/frame_0006.png';
+import inkwizytorFrame0007 from '../../assets/img/animated_enemies/inkwizytor/frame_0007.png';
 
 import { AnimatedSprite } from '../animated-sprite';
 
@@ -110,7 +118,16 @@ const nameMapping: NameMapping = {
   },
   HealerEnemy: {
     texture: {
-      isOk: [PIXI.Texture.from(inkwizytorGraphics, mipmapOption)],
+      isOk: [
+        PIXI.Texture.from(inkwizytorFrame0000, mipmapOption),
+        PIXI.Texture.from(inkwizytorFrame0001, mipmapOption),
+        PIXI.Texture.from(inkwizytorFrame0002, mipmapOption),
+        PIXI.Texture.from(inkwizytorFrame0003, mipmapOption),
+        PIXI.Texture.from(inkwizytorFrame0004, mipmapOption),
+        PIXI.Texture.from(inkwizytorFrame0005, mipmapOption),
+        PIXI.Texture.from(inkwizytorFrame0006, mipmapOption),
+        PIXI.Texture.from(inkwizytorFrame0007, mipmapOption),
+      ],
       isDmg: [PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption)],
     },
     sayings: ['Do you want to talk about Jesus?'],
