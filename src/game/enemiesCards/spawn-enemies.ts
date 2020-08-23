@@ -3,11 +3,50 @@ import { Actions } from '../actions';
 import { TestEnemy } from '../enemies/test-enemy';
 import { FastEnemy } from '../enemies/fast-enemy';
 import { BigEnemy } from '../enemies/big-enemy';
+import { Enemy } from '../enemies/enemy';
 import { Target } from '../target';
 const pick = require('pick-random-weighted');
 
+class Wave {
+  enemies: Enemy[] = [];
+  weight: number = 1;
+
+  delay = 2;
+};
+
+/*
+    const enemyWaves = [
+      [() => [new TestEnemy, new TestEnemy], 2],
+      [() => [new TestEnemy, new TestEnemy, new TestEnemy], 2],
+      [() => [new FastEnemy, new TestEnemy], 2],
+      [() => [new BigEnemy], 1]
+    ];
+
+*/
+
+
+let testWaves: Wave[] = [
+  {
+    enemies: [new TestEnemy, new TestEnemy],
+    weight: 2,
+    delay: 2,
+  },
+  {
+    enemies: [new TestEnemy],
+    weight: 2,
+    delay: 1,
+  },
+
+];
+
+
+function PickRandomWaveFromWaves(waves: Wave[]) : Wave {
+  let input = waves.map( wave => [wave, wave.weight]);
+  return pick(input);
+}
+
 export class SpawnEnemies extends Card {
-  delay = 3;
+  delay = 1;
   turn = 0;
 
   constructor() {
@@ -34,16 +73,10 @@ export class SpawnEnemies extends Card {
       return false;
     }
 
-    const enemyWaves = [
-      [() => [new TestEnemy, new TestEnemy], 2],
-      [() => [new TestEnemy, new TestEnemy, new TestEnemy], 2],
-      [() => [new FastEnemy, new TestEnemy], 2],
-      [() => [new BigEnemy], 1]
-    ];
+    let wave = PickRandomWaveFromWaves(testWaves);
+    this.delay = wave.delay;
 
-    let enemies = pick(enemyWaves)();
-
-    for(let enemy of enemies) {
+    for(let enemy of wave.enemies) {
       Actions.spawnEnemy(enemy, field);
       field = Target.randomLastEmptyField();
       if (!field) {

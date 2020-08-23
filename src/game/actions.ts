@@ -119,8 +119,12 @@ export class Actions {
     Actions.player().mana.add(amount);
   }
 
+  static heal(entity: Entity, amount = 1) {
+    entity.heal(amount);
+  }
+
   static healPlayer(amount = 1) {
-    Actions.player().entity.heal(amount);
+    Actions.heal(Actions.player().entity, amount);
   }
 
   static dealDamageToPlayer(amount = 1) {
