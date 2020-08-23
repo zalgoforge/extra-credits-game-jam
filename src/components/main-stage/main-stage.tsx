@@ -176,7 +176,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
         y={0}
         width={1200}
         height={470}
-        debugColor={0x333333}
+        debugColor={0x0099ee}
         acceptTags={['board-targatable']}
         alpha={
           state.hoveredTarget === GameState.instance().board.uuid
@@ -197,7 +197,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           y={LANE_OFFSET.y + index * (LANE_DIMENSIONS.height + LANE_SPACER)}
           width={LANE_DIMENSIONS.width}
           height={LANE_DIMENSIONS.height}
-          debugColor={0x00ff00}
+          debugColor={0x0099ee}
           acceptTags={['lane-targatable']}
           alpha={
             state.hoveredTarget === id
