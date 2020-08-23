@@ -6,7 +6,6 @@ import * as PIXI from 'pixi.js';
 import TWEEN from '@tweenjs/tween.js';
 
 const createApp = (canvas: HTMLCanvasElement) => {
-  PIXI.settings.MIPMAP_TEXTURES = PIXI.MIPMAP_MODES.ON;
 
   const app = new PIXI.Application({
     backgroundColor: 0x10bb99,

@@ -38,18 +38,20 @@ interface NameMapping {
 
 const ANCHOR_POINT = new PIXI.Point(0, 1);
 
+const mipmapOption = { mipmap: PIXI.MIPMAP_MODES.ON };
+
 const nameMapping: NameMapping = {
   Enemy: {
     texture: {
-      isOk: PIXI.Texture.from(elfikGraphics),
-      isDmg: PIXI.Texture.from(elfikCierpiGraphics),
+      isOk: PIXI.Texture.from(elfikGraphics, mipmapOption),
+      isDmg: PIXI.Texture.from(elfikCierpiGraphics, mipmapOption),
     },
     sayings: ['Delivery from Fantazon', 'Package for mr. J. P. Swanson'],
   },
   FastEnemy: {
     texture: {
-      isOk: PIXI.Texture.from(headhunterGraphics),
-      isDmg: PIXI.Texture.from(headhunterCierpiGraphics),
+      isOk: PIXI.Texture.from(headhunterGraphics, mipmapOption),
+      isDmg: PIXI.Texture.from(headhunterCierpiGraphics, mipmapOption),
     },
     sayings: [
       'Looking for Java Developers',
@@ -58,7 +60,7 @@ const nameMapping: NameMapping = {
     ],
   },
   BigEnemy: {
-    texture: { isOk: PIXI.Texture.from(ogrGraphics), isDmg: PIXI.Texture.from(ogrCierpiGraphics) },
+    texture: { isOk: PIXI.Texture.from(ogrGraphics, mipmapOption), isDmg: PIXI.Texture.from(ogrCierpiGraphics, mipmapOption) },
     sayings: ['Need to measure your water reading', 'Sir, did you check your pipes?'],
   },
 };
