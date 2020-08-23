@@ -6,6 +6,7 @@ import ogrGraphics from '../../assets/img/ogr.png';
 import ogrCierpiGraphics from '../../assets/img/ogr_cierpi.png';
 import headhunterGraphics from '../../assets/img/headhunter.png';
 import headhunterCierpiGraphics from '../../assets/img/headhunter_cierpi.png';
+import cienPodPostacGraphics from '../../assets/img/cien_pod_postac.png';
 import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { AnimatedContainer } from '../animated-container';
@@ -60,7 +61,10 @@ const nameMapping: NameMapping = {
     ],
   },
   BigEnemy: {
-    texture: { isOk: PIXI.Texture.from(ogrGraphics, mipmapOption), isDmg: PIXI.Texture.from(ogrCierpiGraphics, mipmapOption) },
+    texture: {
+      isOk: PIXI.Texture.from(ogrGraphics, mipmapOption),
+      isDmg: PIXI.Texture.from(ogrCierpiGraphics, mipmapOption),
+    },
     sayings: ['Need to measure your water reading', 'Sir, did you check your pipes?'],
   },
 };
@@ -138,6 +142,12 @@ export const EntityGraphics: React.FC<Props> = (props) => {
         });
       }}
     >
+      <Sprite
+        texture={PIXI.Texture.from(cienPodPostacGraphics)}
+        width={244 / 2.6}
+        height={58 / 2.6}
+        anchor={ANCHOR_POINT}
+      />
       <Sprite
         texture={getEnemyTexture(name, state)}
         width={300 / 3}
