@@ -16,6 +16,8 @@ interface Props {
   hasManaToPlay: boolean;
 }
 
+const ANCHOR_POINT = new PIXI.Point(0.5, 0.5);
+
 export const Card: React.FC<Props> = ({
   x = 0,
   y = 0,
@@ -35,7 +37,7 @@ export const Card: React.FC<Props> = ({
           <Sprite
             key={`${index}`}
             x={width / 2 - (manaGain * 20) / 2 + index * 20}
-            y={height * 0.58}
+            y={height * 0.92}
             texture={PIXI.Texture.from(kropkaGraphics)}
             width={40 / 2}
             height={36 / 2}
@@ -43,16 +45,30 @@ export const Card: React.FC<Props> = ({
         );
       })}
       <Text
-        x={width * 0.1}
-        y={height * 0.07}
+        x={width * 0.5}
+        y={height * 0.62}
         text={title}
-        style={{ fontSize: 9, fill: 0xffffff }}
+        anchor={ANCHOR_POINT}
+        style={{
+          align: 'center',
+          fontSize: 18,
+          fill: 0xffffff,
+          stroke: 'black',
+          strokeThickness: 5,
+        }}
       />
       <Text
-        x={12}
+        x={width * 0.135}
         y={height * 0.68}
         text={description}
-        style={{ fontSize: 9, align: 'center', wordWrap: true, wordWrapWidth: 80 }}
+        resolution={20}
+        style={{
+          fontSize: 11,
+          align: 'center',
+          fontWeight: 'bold',
+          wordWrap: true,
+          wordWrapWidth: width * 0.78,
+        }}
       />
       <Text
         x={width * 0.77}

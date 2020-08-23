@@ -23,9 +23,9 @@ interface Props {
 
 const HAND_Y_POSITION = 480;
 const HAND_X_POSITION = 10;
-const CARD_WIDTH = 100;
+const CARD_WIDTH = 115;
 const CARD_HEIGHT = 180;
-const CARD_SPACE_BETWEEN = 10;
+const CARD_SPACE_BETWEEN = 5;
 
 const LANE_OFFSET = { x: 400, y: 220 };
 const LANE_DIMENSIONS = { width: 700, height: 60 };
@@ -34,9 +34,8 @@ const LANE_SHIFT = 30;
 
 const FIELD_WIDTH = 90;
 
-const DISCARD_PILE = { x: 690, y: 480, width: 180, height: 180 };
-const END_TURN_BUTTON = { x: 920, y: 560 };
-const DO_CHEAT_BUTTON = { x: 1060, y: 560 };
+const DISCARD_PILE = { x: 730, y: 480, width: 180, height: 180 };
+const END_TURN_BUTTON = { x: 960, y: 590 };
 
 GameState.instance();
 
@@ -324,14 +323,6 @@ const StageComponent: React.FC<Props> = ({ app }) => {
           </DraggableContainer>
         );
       })}
-
-      <Button
-        {...DO_CHEAT_BUTTON}
-        type={'cheat'}
-        onClick={() => {
-          GameState.instance().doCheat('');
-        }}
-      />
       <Button
         {...END_TURN_BUTTON}
         type={'next-turn'}
