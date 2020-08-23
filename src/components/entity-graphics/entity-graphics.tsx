@@ -9,7 +9,6 @@ import { TimedContainer } from '../timed-container';
 import { getRandomInt } from '../../utils';
 
 import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
-import ogrGraphics from '../../assets/img/enemies/ogr.png';
 import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
 import headhunterGraphics from '../../assets/img/enemies/headhunter.png';
 import headhunterCierpiGraphics from '../../assets/img/enemies/headhunter_cierpi.png';
@@ -26,6 +25,11 @@ import elfikFrame0004 from '../../assets/img/animated_enemies/elfik/frame_0004.p
 import elfikFrame0005 from '../../assets/img/animated_enemies/elfik/frame_0005.png';
 import elfikFrame0006 from '../../assets/img/animated_enemies/elfik/frame_0006.png';
 import elfikFrame0007 from '../../assets/img/animated_enemies/elfik/frame_0007.png';
+
+import ogrFrame0000 from '../../assets/img/animated_enemies/ogr/frame_0000.png';
+import ogrFrame0001 from '../../assets/img/animated_enemies/ogr/frame_0001.png';
+import ogrFrame0002 from '../../assets/img/animated_enemies/ogr/frame_0002.png';
+import ogrFrame0003 from '../../assets/img/animated_enemies/ogr/frame_0003.png';
 
 import { AnimatedSprite } from '../animated-sprite';
 
@@ -90,7 +94,12 @@ const nameMapping: NameMapping = {
   },
   BigEnemy: {
     texture: {
-      isOk: [PIXI.Texture.from(ogrGraphics, mipmapOption)],
+      isOk: [
+        PIXI.Texture.from(ogrFrame0000, mipmapOption),
+        PIXI.Texture.from(ogrFrame0001, mipmapOption),
+        PIXI.Texture.from(ogrFrame0002, mipmapOption),
+        PIXI.Texture.from(ogrFrame0003, mipmapOption),
+      ],
       isDmg: [PIXI.Texture.from(ogrCierpiGraphics, mipmapOption)],
     },
     sayings: [
