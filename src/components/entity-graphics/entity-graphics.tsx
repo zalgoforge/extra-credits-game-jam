@@ -112,7 +112,7 @@ const getTint = (isSoaked: boolean, isPoisoned: boolean) => {
   } else if (isPoisoned) {
     return { tint: 0xA0ffA0 };
   } else {
-    return {};
+    return { tint: 0xffffff };
   }
 };
 
