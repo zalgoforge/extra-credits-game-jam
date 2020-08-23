@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stage } from 'react-pixi-fiber';
+import { Stage, Text } from 'react-pixi-fiber';
 import { hot } from 'react-hot-loader/root';
 import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
@@ -164,6 +164,7 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   return (
     <Stage app={app}>
       <Background />
+      <Text x={500} y={10} text={`Turn count: ${state.turnCount}`} />
       <Token x={280} y={310} counter={state.health} type={'health'} />
       <DroppableContainer
         x={0}
