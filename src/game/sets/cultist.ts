@@ -78,7 +78,12 @@ export class DrainHP extends Card {
 export function CreateSet() {
   return [
     new Fear,
+    new Fear,
+
     new Raze,
+    new Raze,
+
+    new DrainHP,
     new DrainHP,
    ];
 }

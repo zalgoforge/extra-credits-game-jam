@@ -130,8 +130,14 @@ export class Schadenfreude extends Card {
 export function CreateSet() {
   return [
     new WaterPistol,
+    new WaterPistol,
+
     new WaterBallon,
+    new WaterBallon,
+
     new ElectricEel,
+    new ElectricEel,
+
     new Puddle,
     new Schadenfreude,
    ];
