@@ -144,7 +144,12 @@ export const Card: React.FC<Props> = ({
           wordWrapWidth: width * 0.75,
         }}
       />
-      <Digit x={width * 0.75} y={height * 0.06} digit={cost} />
+      <Digit
+        x={width * 0.75}
+        y={height * 0.06}
+        digit={cost}
+        tint={hasManaToPlay ? 0xffffff : 0xff0000}
+      />
     </Container>
   );
 };
