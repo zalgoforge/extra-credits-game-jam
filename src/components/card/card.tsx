@@ -19,6 +19,7 @@ import poisonJar from '../../assets/img/cards/jar.png';
 
 import { Container, Sprite, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
+import { Digit } from '../digit';
 
 interface Props {
   x?: number;
@@ -143,12 +144,7 @@ export const Card: React.FC<Props> = ({
           wordWrapWidth: width * 0.75,
         }}
       />
-      <Text
-        x={width * 0.77}
-        y={height * 0.05}
-        text={`${cost}`}
-        style={{ fontSize: 20, fill: hasManaToPlay ? 0x111111 : 0xff0000 }}
-      />
+      <Digit x={width * 0.75} y={height * 0.06} digit={cost} />
     </Container>
   );
 };
