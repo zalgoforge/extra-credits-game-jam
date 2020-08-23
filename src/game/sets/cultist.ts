@@ -7,7 +7,7 @@ import { Damage } from '../damage';
 export class Fear extends Card {
   constructor() {
     super();
-    this.id = "sow-fear";
+    this.id = "teen-poetry";
     this.title = 'Sow Fear';
     this.description = `Push first enemy in line and gain 1 mana`;
   }
@@ -30,7 +30,7 @@ export class Raze extends Card {
 
   constructor() {
     super();
-    this.id = "raze";
+    this.id = "drone-strike";
     this.title = 'Raze';
     this.cost = 1;
     this.description = `Deal ${this.damage} dmg to all enemies in column`;
@@ -54,7 +54,7 @@ export class DrainHP extends Card {
 
   constructor() {
     super();
-    this.id = "drain-hp";
+    this.id = "grumble";
     this.title = 'Drain Health';
     this.cost = 4;
     this.description = `Deal ${this.damage} dmg to first enemy in lane, and recover health`;
