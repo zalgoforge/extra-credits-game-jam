@@ -95,77 +95,47 @@ const StageComponent: React.FC<Props> = ({ app }) => {
   });
 
   useEffect(() => {
-    GameState.instance()
-      .player.hand.onCardsChanged.do(() => {
+    const game = GameState.instance();
+
+    game.player.hand.onCardsChanged.do(() => {
         setState((prev) => ({
           ...prev,
           cards: getCards(),
         }));
       })
       .bind();
-    GameState.instance()
-      .player.mana.onValueChanged.do(() => {
+    game.player.mana.onValueChanged.do(() => {
         setState((prev) => ({
           ...prev,
           mana: getMana(),
         }));
       })
       .bind();
-    GameState.instance()
-      .board.onEntityAdded.do(() => {
-        setState((prev) => ({
-          ...prev,
-          lanes: getLanes(),
-        }));
-      })
-      .bind();
-    GameState.instance()
-      .board.onEntityRemoved.do(() => {
-        setState((prev) => ({
-          ...prev,
-          lanes: getLanes(),
-        }));
-      })
-      .bind();
+    game.player.entity.hp.onValueChanged.do(() => {
+      setState((prev) => ({
+        ...prev,
+        health: getHealth(),
+      }));
+    })
+    .bind();
+
+    let updateLanes = () => {
+      setState((prev) => ({
+        ...prev,
+        lanes: getLanes(),
+      }));
+    };
+
+    game.board.onEntityAdded.do(updateLanes).bind();
+    game.board.onEntityRemoved.do(updateLanes).bind();
+    game.board.onCardAdded.do(updateLanes).bind();
+    game.board.onCardRemoved.do(updateLanes).bind();
+
     Entity.onEntityHPChanged
-      .do(() => {
-        setState((prev) => ({
-          ...prev,
-          lanes: getLanes(),
-        }));
-      })
-      .bind();
-    Entity.onEntityHPChanged
-      .do(() => {
-        setState((prev) => ({
-          ...prev,
-          lanes: getLanes(),
-        }));
-      })
+      .do(updateLanes)
       .bind();
     Entity.onEntityMoved
-      .do(() => {
-        setState((prev) => ({
-          ...prev,
-          lanes: getLanes(),
-        }));
-      })
-      .bind();
-    GameState.instance()
-      .player.entity.hp.onValueChanged.do(() => {
-        setState((prev) => ({
-          ...prev,
-          health: getHealth(),
-        }));
-      })
-      .bind();
-    GameState.instance()
-      .board.onCardAdded.do(() => {
-        setState((prev) => ({
-          ...prev,
-          lanes: getLanes(),
-        }));
-      })
+      .do(updateLanes)
       .bind();
   }, []);
 
