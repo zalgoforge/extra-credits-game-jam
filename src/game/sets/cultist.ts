@@ -26,14 +26,14 @@ export class Fear extends Card {
 }
 
 export class Raze extends Card {
-  static damage = 2;
+  damage = 2;
 
   constructor() {
     super();
     this.id = "raze";
     this.title = 'Raze';
     this.cost = 1;
-    this.description = `Deal ${Raze.damage} dmg to all enemies in column`;
+    this.description = `Deal ${this.damage} dmg to all enemies in column`;
   }
 
   protected getPossibleTargets(): Array<UniqueObject> {
@@ -43,21 +43,21 @@ export class Raze extends Card {
   play(ctx: PlayContext) {
     let fields = Target.allFieldsInColumn(ctx.field().fieldIdx);
     for(let field of fields) {
-      Actions.dealDamageToField(field, Raze.damage);
+      Actions.dealDamageToField(field, this.damage);
     }
 
   }
 }
 
 export class DrainHP extends Card {
-  static damage = 3;
+  damage = 3;
 
   constructor() {
     super();
     this.id = "drain-hp";
     this.title = 'Drain Health';
     this.cost = 4;
-    this.description = `Deal ${DrainHP.damage} dmg to first enemy in lane, and recover health`;
+    this.description = `Deal ${this.damage} dmg to first enemy in lane, and recover health`;
   }
 
   protected getPossibleTargets(): Array<UniqueObject> {
@@ -68,10 +68,9 @@ export class DrainHP extends Card {
     let entity = Target.firstEnemyInLane(ctx.lane());
     if (!entity) return;
 
-    let dmg = new Damage(DrainHP.damage);
+    let dmg = new Damage(this.damage);
     Actions.dealDamage(entity, dmg);
-    // TODO heal only amount of damage dealt
-    Actions.healPlayer(DrainHP.damage);
+    Actions.healPlayer(dmg.responseDamageDealt);
   }
 }
 

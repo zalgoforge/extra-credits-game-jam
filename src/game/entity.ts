@@ -15,7 +15,12 @@ export class Entity extends UniqueObject {
   static onEntityMoved = new Signal<Entity>();
 
   takeDamage(damage: Damage) {
+    let oldHP = this.hp.value();
     this.hp.substract(damage.amount);
+    let damageDealt = oldHP - this.hp.value();
+    if (damageDealt < 0) damageDealt = 0;
+    damage.responseDamageDealt = damageDealt;
+
     Entity.onEntityHPChanged.emit(this);
   }
 
