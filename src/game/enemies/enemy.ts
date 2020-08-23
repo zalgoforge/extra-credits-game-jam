@@ -16,6 +16,7 @@ export class Enemy extends Entity {
   }
 
   endOfTurn() {
+    super.endOfTurn();
     for (let i = 0; i < this.speed; i ++) {
       if (this.atLastField()) {
         Actions.dealDamageToPlayer(this.hp.value());

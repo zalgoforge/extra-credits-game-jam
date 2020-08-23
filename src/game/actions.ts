@@ -148,12 +148,12 @@ export class Actions {
     return Actions.board().destroyEntity(entity);
   }
 
-  static addStatusOnEntity(entity: Entity, status: Status, amount: number = 1) {
+  static addStatus(entity: Entity, status: Status, amount: number = 1) {
     entity.statuses.add(status, amount);
     Entity.onEntityStatusChanged.emit(entity);
   }
 
-  static substractStatusOnEntity(entity: Entity, status: Status, amount: number = 1) {
+  static substractStatus(entity: Entity, status: Status, amount: number = 1) {
     entity.statuses.substract(status, amount);
     Entity.onEntityStatusChanged.emit(entity);
   }

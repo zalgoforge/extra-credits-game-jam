@@ -1,8 +1,9 @@
 import { Stat } from './util/Stat';
-import { Statuses } from './status';
+import { Status, Statuses } from './status';
 import { Damage } from './damage';
 import { UniqueObject } from './unique-object';
 import { Field } from './board';
+import { Actions } from './actions';
 import { Signal } from 'signal-slot';
 
 export class Entity extends UniqueObject {
@@ -19,6 +20,10 @@ export class Entity extends UniqueObject {
 
   takeDamage(damage: Damage) {
     let oldHP = this.hp.value();
+
+    // add damage for each soak token
+    damage.amount += this.statuses.getValue(Status.Soak);
+
     this.hp.substract(damage.amount);
     let damageDealt = oldHP - this.hp.value();
     if (damageDealt < 0) damageDealt = 0;
@@ -44,5 +49,7 @@ export class Entity extends UniqueObject {
     Entity.onEntityMoved.emit(this);
   }
 
-  endOfTurn() {}
+  endOfTurn() {
+    Actions.substractStatus(this, Status.Soak);
+  }
 }
