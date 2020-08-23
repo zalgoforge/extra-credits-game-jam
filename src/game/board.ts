@@ -160,7 +160,7 @@ export class Board extends UniqueObject {
     field?._setCard(null);
     card._setField(null);
     GameState.instance().player.discard.add(card);
-
+    this.onCardRemoved.emit(card);
     return true;
   }
 
