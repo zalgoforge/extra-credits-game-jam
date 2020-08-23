@@ -25,6 +25,7 @@ export class Card extends UniqueObject {
   id = "<none>";
   title = 'Dummy text';
   description = 'Lorem ipsum';
+  temporary = false;
   private _field: Field | null = null;
 
   constructor() {

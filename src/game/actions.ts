@@ -15,8 +15,17 @@ export class Actions {
     return GameState.instance().board;
   }
 
+  static addToHand(card: Card) {
+    let player = Actions.player();
+    if (player.hand.size() >= player.handLimit.value()) {
+      console.log('Cannot add card due to hand limit');
+      return false;
+    }
+    player.hand.add(card);
+    return true;
+  }
+
   static drawCard() {
-    //TODO shuffle discard
     let player = Actions.player();
     if (player.hand.size() >= player.handLimit.value()) {
       console.log('Cannot draw card due to hand limit');
@@ -30,7 +39,7 @@ export class Actions {
     }
 
     let card = player.deck.draw();
-    player.hand.add(card);
+    Actions.addToHand(card);
     console.log('Drawing card');
     return true;
   }
@@ -60,7 +69,7 @@ export class Actions {
     console.log(`Playing ${card.title}`);
 
     if (Actions.player().hand.remove(card)) {
-      Actions.player().discard.add(card);
+      if (!card.temporary) Actions.player().discard.add(card);
     }
 
     let ctx = new PlayContext();
@@ -82,7 +91,7 @@ export class Actions {
 
   static discardCard(card: Card) {
     if (Actions.player().hand.remove(card)) {
-      Actions.player().discard.add(card);
+      if (!card.temporary) Actions.player().discard.add(card);
       Actions.player().onDiscardedCard.emit(card);
       return true;
     } else {

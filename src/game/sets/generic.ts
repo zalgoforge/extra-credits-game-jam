@@ -4,6 +4,7 @@ import { UniqueObject } from '../unique-object';
 import { Target } from '../target';
 import { Damage } from '../damage';
 import { Entity } from '../entity';
+import { Status } from '../status';
 
 export class BearTrap extends Card {
   damage = 5;
@@ -85,6 +86,66 @@ export class Rations extends Card {
   }
 }
 
+class TemporaryDubstep extends Card {
+  constructor() {
+    super();
+    this.id = "dubstep";
+    this.title = 'Dubstep';
+    this.description = `Push first enemy`;
+    this.manaGain = 0;
+    this.temporary = true;
+  }
+
+  protected getPossibleTargets(): Array<UniqueObject> {
+    return Target.anyLane();
+  }
+
+  play(ctx: PlayContext) {
+    let entity = Target.firstEnemyInLane(ctx.lane());
+    if (!entity) return;
+    Actions.moveBackward(entity);
+  }
+}
+
+export class Dubstep extends Card {
+  constructor() {
+    super();
+    this.id = "dubstep";
+    this.title = 'Dubstep';
+    this.description = `Push first enemy, and add "Dubstep" to hand`;
+  }
+
+  protected getPossibleTargets(): Array<UniqueObject> {
+    return Target.anyLane();
+  }
+
+  play(ctx: PlayContext) {
+    Actions.addToHand(new TemporaryDubstep);
+    let entity = Target.firstEnemyInLane(ctx.lane());
+    if (!entity) return;
+    Actions.moveBackward(entity);
+  }
+}
+
+export class PoisonJar extends Card {
+  poison = 2;
+
+  constructor() {
+    super();
+    this.id = "poison-jar";
+    this.cost = 2;
+    this.title = 'Jar of farts';
+    this.description = `Apply ${this.poison} poison to enemy`;
+  }
+
+  protected getPossibleTargets(): Array<UniqueObject> {
+    return Target.anyFieldWithEnemy();
+  }
+
+  play(ctx: PlayContext) {
+    Actions.addStatus(ctx.field().entity() as Entity, Status.Poison, this.poison);
+  }
+}
 
 export function CreateSet() {
   return [
@@ -94,6 +155,10 @@ export function CreateSet() {
     new Strategize,
     new Strategize,
 
+    new Dubstep,
+    new Dubstep,
+
+    new PoisonJar,
     new Rations,
    ];
 }

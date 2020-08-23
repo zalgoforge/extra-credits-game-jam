@@ -62,5 +62,8 @@ export class Entity extends UniqueObject {
 
   endOfTurn() {
     Actions.substractStatus(this, Status.Soak);
+
+    let poison = this.statuses.getValue(Status.Poison);
+    if (poison) Actions.dealDamage(this, new Damage(poison));
   }
 }
