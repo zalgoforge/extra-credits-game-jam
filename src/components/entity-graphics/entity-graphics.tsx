@@ -1,11 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import chmurkaGraphics from '../../assets/img/chmurka.png';
-import elfikGraphics from '../../assets/img/elfik.png';
-import elfikCierpiGraphics from '../../assets/img/elfik_cierpi.png';
-import ogrGraphics from '../../assets/img/ogr.png';
-import ogrCierpiGraphics from '../../assets/img/ogr_cierpi.png';
-import headhunterGraphics from '../../assets/img/headhunter.png';
-import headhunterCierpiGraphics from '../../assets/img/headhunter_cierpi.png';
 import cienPodPostacGraphics from '../../assets/img/cien_pod_postac.png';
 import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
@@ -13,6 +7,17 @@ import { AnimatedContainer } from '../animated-container';
 import { v4 as uuidv4 } from 'uuid';
 import { TimedContainer } from '../timed-container';
 import { getRandomInt } from '../../utils';
+
+import elfikGraphics from '../../assets/img/enemies/elfik.png';
+import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
+import ogrGraphics from '../../assets/img/enemies/ogr.png';
+import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
+import headhunterGraphics from '../../assets/img/enemies/headhunter.png';
+import headhunterCierpiGraphics from '../../assets/img/enemies/headhunter_cierpi.png';
+import inkwizytorGraphics from '../../assets/img/enemies/inkwizytor.png';
+import inkwizytorCierpiGraphics from '../../assets/img/enemies/inkwizytor_cierpi.png';
+
+
 
 interface Props {
   x?: number;
@@ -37,6 +42,7 @@ interface NameMapping {
   Enemy: EnemyData;
   FastEnemy: EnemyData;
   BigEnemy: EnemyData;
+  HealerEnemy: EnemyData;
 }
 
 const ANCHOR_POINT = new PIXI.Point(0, 1);
@@ -58,7 +64,7 @@ const nameMapping: NameMapping = {
     },
     sayings: [
       'Looking for Java Developers',
-      'Do You know JavaScript maybe?',
+      'Do you know JavaScript maybe?',
       'Hello mr <PasteNameHere>!',
     ],
   },
@@ -67,7 +73,14 @@ const nameMapping: NameMapping = {
       isOk: PIXI.Texture.from(ogrGraphics, mipmapOption),
       isDmg: PIXI.Texture.from(ogrCierpiGraphics, mipmapOption),
     },
-    sayings: ['Need to measure your water reading', 'Sir, did you check your pipes?'],
+    sayings: ['There was a gas leak', 'Sir, did you check your pipes?', 'Gas can be hallucinogenic'],
+  },
+  HealerEnemy: {
+    texture: {
+      isOk: PIXI.Texture.from(inkwizytorGraphics, mipmapOption),
+      isDmg: PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption),
+    },
+    sayings: ['Do you want to talk about Jesus?'],
   },
 };
 

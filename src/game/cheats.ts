@@ -1,6 +1,6 @@
 import { Actions } from './actions';
 import { Target } from './target';
-import { TestEnemy } from './enemies/test-enemy';
+import { TestEnemy } from './enemies/enemies';
 
 export class Cheats {
   static addMana() {

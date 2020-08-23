@@ -1,8 +1,6 @@
 import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
-import { TestEnemy } from '../enemies/test-enemy';
-import { FastEnemy } from '../enemies/fast-enemy';
-import { BigEnemy } from '../enemies/big-enemy';
+import { TestEnemy, FastEnemy, BigEnemy, HealerEnemy } from '../enemies/enemies';
 import { Enemy } from '../enemies/enemy';
 import { Target } from '../target';
 const pick = require('pick-random-weighted');
@@ -28,6 +26,12 @@ let testWaves: Wave[] = [
 
   {
     enemies: () => [new FastEnemy, new FastEnemy],
+    weight: 2,
+    delay: 3,
+  },
+
+  {
+    enemies: () => [new HealerEnemy, new HealerEnemy],
     weight: 2,
     delay: 3,
   },
