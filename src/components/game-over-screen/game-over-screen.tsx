@@ -16,7 +16,7 @@ const ANCHOR_POINT = new PIXI.Point(0.5, 0.5);
 export const GameOverScreen: React.FC<Props> = ({ x = 0, y = 0, width, height, turnCount = 0 }) => {
   return (
     <Container x={x} y={y}>
-      <Rect width={width} height={height} fill={0x000000} />
+      <Rect width={width} height={height} fill={0x000000} interactive={true} />
       <Text
         x={width * 0.5}
         y={height * 0.5}
