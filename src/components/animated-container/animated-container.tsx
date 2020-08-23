@@ -46,14 +46,14 @@ export const behavior = {
           }
         })
         .onComplete(() => {
-          if (instance.__onMoveFinished) {
+          if (!instance._destroyed && instance.__onMoveFinished) {
             instance.__onMoveFinished();
           }
         })
         .start(TWEEN.now());
       instance.__oldX = newProps.x;
       instance.__oldY = newProps.y;
-      if (newProps.onMoveStarted) {
+      if (!instance._destroyed && newProps.onMoveStarted) {
         newProps.onMoveStarted();
       }
     }
