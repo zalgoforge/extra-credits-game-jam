@@ -23,11 +23,14 @@ export class Player {
 }
 
 export class GameState {
+  turnCount = new SignalizingVariable();
+
   player = new Player();
   passiveEffects = new Deck();
   board = new Board();
   gameOver = false;
   onGameOver = new Signal<number>();
+  onTurnEnd = new Signal<number>();
 
   private static _instance: GameState;
   static instance(): GameState {
@@ -47,9 +50,10 @@ export class GameState {
 
   endTurn() {
     if (this.gameOver) return;
-    this.player.entity.endOfTurn();
     Actions.loseAllMana();
     Actions.drawToHandSize();
+
+    this.player.entity.endOfTurn();
     this.board.endOfTurn();
     this.player.hand.endOfTurn();
     this.passiveEffects.endOfTurn();
@@ -58,6 +62,8 @@ export class GameState {
       this.gameOver = true;
       this.onGameOver.emit(0);
     }
+
+    this.turnCount.add(1);
     console.log('End Turn');
   }
 
