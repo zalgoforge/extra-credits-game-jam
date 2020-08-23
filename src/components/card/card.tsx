@@ -1,10 +1,11 @@
 import React from 'react';
 import kartaTloGraphics from '../../assets/img/karta_tlo.png';
 import kropkaGraphics from '../../assets/img/kropka.png';
-import rockGraphics from '../../assets/img/rock.png';
-import waterPistolGraphics from '../../assets/img/water_pistol.png';
-import waterBallonGraphics from '../../assets/img/water_baloon.png';
-import bearTrapGraphics from '../../assets/img/beartrap_card.png';
+import rockGraphics from '../../assets/img/cards/rock.png';
+import waterPistolGraphics from '../../assets/img/cards/water_pistol.png';
+import waterBallonGraphics from '../../assets/img/cards/water_baloon.png';
+import bearTrapGraphics from '../../assets/img/cards/beartrap_card.png';
+import electricEel from '../../assets/img/cards/electric_eel.png';
 import { Container, Sprite, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 
@@ -35,6 +36,9 @@ const nameIdImgMap: any = {
   },
   ['bear-trap']: {
     texture: PIXI.Texture.from(bearTrapGraphics),
+  },
+  ['electric-eel']: {
+    texture: PIXI.Texture.from(electricEel),
   },
 };
 
