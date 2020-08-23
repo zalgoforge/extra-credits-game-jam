@@ -15,6 +15,7 @@ interface Props {
   x?: number;
   y?: number;
   digit: number;
+  tint?: number;
 }
 
 const digitToImgMap: any = {
@@ -31,9 +32,10 @@ const digitToImgMap: any = {
 
 const SCALE = new PIXI.Point(0.5, 0.5);
 
-export const Digit: React.FC<Props> = ({ x = 0, y = 0, digit }) => {
+export const Digit: React.FC<Props> = ({ x = 0, y = 0, digit, tint }) => {
   return digit <= 8 ? (
     <Sprite
+      {...(tint !== undefined ? { tint } : {})}
       x={x}
       y={y}
       scale={SCALE}
