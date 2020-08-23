@@ -238,14 +238,13 @@ const StageComponent: React.FC<Props> = ({ app }) => {
             .map(({ id, enemies }, index) => {
               const reverseIndex = fields.length - index;
               return enemies.length ? (
-                <AnimatedContainer
+                <EntityGraphics
                   key={enemies[0].id}
-                  initialX={1200}
                   x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
-                >
-                  <EntityGraphics hp={enemies[0].hp} name={enemies[0].name} />
-                </AnimatedContainer>
+                  hp={enemies[0].hp}
+                  name={enemies[0].name}
+                />
               ) : null;
             })
             .filter((e) => !!e)
