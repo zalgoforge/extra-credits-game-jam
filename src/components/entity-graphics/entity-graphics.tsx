@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { TimedContainer } from '../timed-container';
 import { getRandomInt } from '../../utils';
 
-import elfikGraphics from '../../assets/img/enemies/elfik.png';
 import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
 import ogrGraphics from '../../assets/img/enemies/ogr.png';
 import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
@@ -19,6 +18,16 @@ import inkwizytorCierpiGraphics from '../../assets/img/enemies/inkwizytor_cierpi
 import wiedzmaGraphics from '../../assets/img/enemies/wiedzma.png';
 import wiedzmaCierpiGraphics from '../../assets/img/enemies/wiedzma_cierpi.png';
 
+import elfikFrame0000 from '../../assets/img/animated_enemies/elfik/frame_0000.png';
+import elfikFrame0001 from '../../assets/img/animated_enemies/elfik/frame_0001.png';
+import elfikFrame0002 from '../../assets/img/animated_enemies/elfik/frame_0002.png';
+import elfikFrame0003 from '../../assets/img/animated_enemies/elfik/frame_0003.png';
+import elfikFrame0004 from '../../assets/img/animated_enemies/elfik/frame_0004.png';
+import elfikFrame0005 from '../../assets/img/animated_enemies/elfik/frame_0005.png';
+import elfikFrame0006 from '../../assets/img/animated_enemies/elfik/frame_0006.png';
+import elfikFrame0007 from '../../assets/img/animated_enemies/elfik/frame_0007.png';
+
+import { AnimatedSprite } from '../animated-sprite';
 
 interface Props {
   x?: number;
@@ -33,8 +42,8 @@ type EntityState = 'isOk' | 'isDmg';
 
 interface EnemyData {
   texture: {
-    isOk: PIXI.Texture;
-    isDmg: PIXI.Texture;
+    isOk: PIXI.Texture[];
+    isDmg: PIXI.Texture[];
   };
   sayings: string[];
 }
@@ -54,15 +63,24 @@ const mipmapOption = { mipmap: PIXI.MIPMAP_MODES.ON };
 const nameMapping: NameMapping = {
   Enemy: {
     texture: {
-      isOk: PIXI.Texture.from(elfikGraphics, mipmapOption),
-      isDmg: PIXI.Texture.from(elfikCierpiGraphics, mipmapOption),
+      isOk: [
+        PIXI.Texture.from(elfikFrame0000, mipmapOption),
+        PIXI.Texture.from(elfikFrame0001, mipmapOption),
+        PIXI.Texture.from(elfikFrame0002, mipmapOption),
+        PIXI.Texture.from(elfikFrame0003, mipmapOption),
+        PIXI.Texture.from(elfikFrame0004, mipmapOption),
+        PIXI.Texture.from(elfikFrame0005, mipmapOption),
+        PIXI.Texture.from(elfikFrame0006, mipmapOption),
+        PIXI.Texture.from(elfikFrame0007, mipmapOption),
+      ],
+      isDmg: [PIXI.Texture.from(elfikCierpiGraphics, mipmapOption)],
     },
     sayings: ['Delivery from Fantazon', 'Package for mr. J. P. Swanson'],
   },
   FastEnemy: {
     texture: {
-      isOk: PIXI.Texture.from(headhunterGraphics, mipmapOption),
-      isDmg: PIXI.Texture.from(headhunterCierpiGraphics, mipmapOption),
+      isOk: [PIXI.Texture.from(headhunterGraphics, mipmapOption)],
+      isDmg: [PIXI.Texture.from(headhunterCierpiGraphics, mipmapOption)],
     },
     sayings: [
       'Looking for Java Developers',
@@ -72,22 +90,26 @@ const nameMapping: NameMapping = {
   },
   BigEnemy: {
     texture: {
-      isOk: PIXI.Texture.from(ogrGraphics, mipmapOption),
-      isDmg: PIXI.Texture.from(ogrCierpiGraphics, mipmapOption),
+      isOk: [PIXI.Texture.from(ogrGraphics, mipmapOption)],
+      isDmg: [PIXI.Texture.from(ogrCierpiGraphics, mipmapOption)],
     },
-    sayings: ['There was a gas leak', 'Sir, did you check your pipes?', 'Gas can be hallucinogenic'],
+    sayings: [
+      'There was a gas leak',
+      'Sir, did you check your pipes?',
+      'Gas can be hallucinogenic',
+    ],
   },
   HealerEnemy: {
     texture: {
-      isOk: PIXI.Texture.from(inkwizytorGraphics, mipmapOption),
-      isDmg: PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption),
+      isOk: [PIXI.Texture.from(inkwizytorGraphics, mipmapOption)],
+      isDmg: [PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption)],
     },
     sayings: ['Do you want to talk about Jesus?'],
   },
   ToughEnemy: {
     texture: {
-      isOk: PIXI.Texture.from(wiedzmaGraphics, mipmapOption),
-      isDmg: PIXI.Texture.from(wiedzmaCierpiGraphics, mipmapOption),
+      isOk: [PIXI.Texture.from(wiedzmaGraphics, mipmapOption)],
+      isDmg: [PIXI.Texture.from(wiedzmaCierpiGraphics, mipmapOption)],
     },
     sayings: ['Do you have any sugar, neighbor?'],
   },
@@ -106,11 +128,11 @@ const getEnemySaying = (name: string) => {
 
 const getTint = (isSoaked: boolean, isPoisoned: boolean) => {
   if (isSoaked && isPoisoned) {
-    return { tint: 0xA0ffff };
+    return { tint: 0xa0ffff };
   } else if (isSoaked) {
-    return { tint: 0xA0A0ff };
+    return { tint: 0xa0a0ff };
   } else if (isPoisoned) {
-    return { tint: 0xA0ffA0 };
+    return { tint: 0xa0ffa0 };
   } else {
     return { tint: 0xffffff };
   }
@@ -184,8 +206,8 @@ export const EntityGraphics: React.FC<Props> = (props) => {
         height={58 / 2.6}
         anchor={ANCHOR_POINT}
       />
-      <Sprite
-        texture={getEnemyTexture(name, state)}
+      <AnimatedSprite
+        textures={getEnemyTexture(name, state)}
         width={300 / 3}
         height={400 / 3}
         {...getTint(isSoaked, isPoisoned)}

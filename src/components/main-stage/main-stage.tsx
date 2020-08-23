@@ -372,11 +372,6 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
           GameState.instance().endTurn();
         }}
       />
-      {/*{state.isGameOver ? (
-        <AnimatedContainer x={0} y={0} alpha={1} initialAlpha={0}>
-          <GameOverScreen width={1100} height={700} turnCount={state.turnCount} />
-        </AnimatedContainer>
-      ) : null}*/}
     </Container>
   );
 };
