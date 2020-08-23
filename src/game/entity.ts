@@ -1,4 +1,5 @@
 import { Stat } from './util/Stat';
+import { Status } from './Status';
 import { Damage } from './damage';
 import { UniqueObject } from './unique-object';
 import { Field } from './board';
@@ -8,6 +9,7 @@ export class Entity extends UniqueObject {
   name = "Unknown";
   // TODO add maxHP
   hp = new Stat(10);
+  status = new Status();
   //attack = new SignalizingVariable(1);
   private _field: Field | null = null;
 

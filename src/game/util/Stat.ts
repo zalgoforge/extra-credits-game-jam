@@ -7,8 +7,14 @@ export class Stat {
 
   onValueChanged = new Signal<number>();
 
-  constructor(value:number) {
+  constructor(value: number) {
     this.setMax(value);
+  }
+
+  static CreateEmptyWithMax(max: number) {
+    let stat = new Stat(max);
+    stat.set(0);
+    return stat;
   }
 
   setMax(value: number) {
