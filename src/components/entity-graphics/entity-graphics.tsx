@@ -71,6 +71,7 @@ interface EnemyData {
     isOk: PIXI.Texture[];
     isDmg: PIXI.Texture[];
   };
+  animationSpeed: number;
   sayings: string[];
 }
 
@@ -102,6 +103,7 @@ const nameMapping: NameMapping = {
       ],
       isDmg: [PIXI.Texture.from(elfikCierpiGraphics, mipmapOption)],
     },
+    animationSpeed: 0.2,
     sayings: ['Delivery from Fantazon', 'Package for mr. J. P. Swanson'],
   },
   FastEnemy: {
@@ -118,6 +120,7 @@ const nameMapping: NameMapping = {
       ],
       isDmg: [PIXI.Texture.from(headhunterCierpiGraphics, mipmapOption)],
     },
+    animationSpeed: 0.15,
     sayings: [
       'Looking for Java Developers',
       'Do you know JavaScript maybe?',
@@ -134,6 +137,7 @@ const nameMapping: NameMapping = {
       ],
       isDmg: [PIXI.Texture.from(ogrCierpiGraphics, mipmapOption)],
     },
+    animationSpeed: 0.2,
     sayings: [
       'There was a gas leak',
       'Sir, did you check your pipes?',
@@ -154,6 +158,7 @@ const nameMapping: NameMapping = {
       ],
       isDmg: [PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption)],
     },
+    animationSpeed: 0.2,
     sayings: ['Do you want to talk about Jesus?'],
   },
   ToughEnemy: {
@@ -161,6 +166,7 @@ const nameMapping: NameMapping = {
       isOk: [PIXI.Texture.from(wiedzmaGraphics, mipmapOption)],
       isDmg: [PIXI.Texture.from(wiedzmaCierpiGraphics, mipmapOption)],
     },
+    animationSpeed: 0.2,
     sayings: ['Do you have any sugar, neighbor?'],
   },
 };
@@ -168,6 +174,11 @@ const nameMapping: NameMapping = {
 const getEnemyTexture = (name: string, state: 'isOk' | 'isDmg') => {
   const enemy = (nameMapping as any)[name] || nameMapping.Enemy;
   return enemy.texture[state];
+};
+
+const getEnemyAnimationSpeed = (name: string) => {
+  const enemy = (nameMapping as any)[name] || nameMapping.Enemy;
+  return enemy.animationSpeed;
 };
 
 const getEnemySaying = (name: string) => {
@@ -233,6 +244,7 @@ const renderEntity = (
       />
       {state === 'isOk' && ( <AnimatedSprite
         textures={getEnemyTexture(name, 'isOk')}
+        animationSpeed={getEnemyAnimationSpeed(name)}
         width={300 / 3}
         height={400 / 3}
         {...getTint(isSoaked, isPoisoned)}
@@ -240,6 +252,7 @@ const renderEntity = (
       /> ) }
       {state === 'isDmg' && ( <AnimatedSprite
         textures={getEnemyTexture(name, 'isDmg')}
+        animationSpeed={getEnemyAnimationSpeed(name)}
         width={300 / 3}
         height={400 / 3}
         {...getTint(isSoaked, isPoisoned)}

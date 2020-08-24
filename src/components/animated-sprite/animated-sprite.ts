@@ -6,13 +6,14 @@ interface Props extends Partial<React.PropsWithChildren<PIXI.AnimatedSprite>> {}
 
 export type AnimatedContainerInstance = PIXI.AnimatedSprite & {
   _destroyed: boolean;
+  animationSpeed: number;
 };
 
 const TYPE = 'AnimatedSprite';
 export const behavior = {
-  customDisplayObject: ({ textures }: AnimatedContainerInstance) => {
+  customDisplayObject: ({ textures, animationSpeed }: AnimatedContainerInstance) => {
     const instance = new PIXI.AnimatedSprite(textures) as AnimatedContainerInstance;
-    instance.animationSpeed = 0.2;
+    instance.animationSpeed = animationSpeed || 0.2;
     instance.play();
     return instance;
   },
