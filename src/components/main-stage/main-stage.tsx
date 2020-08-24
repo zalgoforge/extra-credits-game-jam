@@ -54,10 +54,12 @@ const getCards = () => {
 };
 
 const getPassives = () => {
-  return GameState.instance().passiveEffects.cards.filter(c => c.passiveDescription != "" ).map((c) => ({
-    id: c.uuid,
-    description: c.passiveDescription,
-  }));
+  return GameState.instance()
+    .passiveEffects.cards.filter((c) => c.passiveDescription != '')
+    .map((c) => ({
+      id: c.uuid,
+      description: c.passiveDescription,
+    }));
 };
 
 const getLanes = () => {
@@ -135,7 +137,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
         }));
       })
       .bind();
-      game.passiveEffects.onCardsChanged
+    game.passiveEffects.onCardsChanged
       .do(() => {
         setState((prev) => ({
           ...prev,
@@ -319,32 +321,6 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
             .filter((e) => !!e)
         )
         .flat(1)}
-      {/* Enemies */}
-      {state.lanes
-        .map(({ fields }, laneIndex) =>
-          fields
-            .slice()
-            .reverse()
-            .map(({ id, enemies }, index) => {
-              const reverseIndex = fields.length - index;
-              return enemies.length ? (
-                <EntityGraphics
-                  key={enemies[0].id}
-                  x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex + FIELD_WIDTH / 2}
-                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
-                  isSoaked={enemies[0].isSoaked}
-                  soaked={enemies[0].soaked}
-                  tough={enemies[0].tough}
-                  isPoisoned={enemies[0].isPoisoned}
-                  isDying={false}
-                  hp={enemies[0].hp}
-                  name={enemies[0].name}
-                />
-              ) : null;
-            })
-            .filter((e) => !!e)
-        )
-        .flat(1)}
       {/* Dying Enemies */}
       {state.dyingEnemies.map(({ id, name, laneIndex, fieldIndex }) => {
         return (
@@ -362,6 +338,38 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
           />
         );
       })}
+      {/* Enemies */}
+      {state.lanes
+        .map(({ fields }, laneIndex) =>
+          fields
+            .slice()
+            .reverse()
+            .map(({ id, enemies }, index) => {
+              const reverseIndex = fields.length - index;
+              return enemies.length ? (
+                <EntityGraphics
+                  key={enemies[0].id}
+                  x={
+                    LANE_OFFSET.x -
+                    laneIndex * LANE_SHIFT +
+                    FIELD_WIDTH * reverseIndex +
+                    FIELD_WIDTH / 2
+                  }
+                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
+                  isSoaked={enemies[0].isSoaked}
+                  soaked={enemies[0].soaked}
+                  tough={enemies[0].tough}
+                  isPoisoned={enemies[0].isPoisoned}
+                  isDying={false}
+                  hp={enemies[0].hp}
+                  name={enemies[0].name}
+                />
+              ) : null;
+            })
+            .filter((e) => !!e)
+        )
+        .flat(1)}
+
       <DroppableContainer
         {...DISCARD_PILE}
         acceptTags={['board-targatable', 'lane-targatable', 'field-targatable']}
@@ -375,24 +383,21 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
       {/* passives */}
       {state.passives.map(({ id, description }, index) => {
         return (
-          <Container
-          key={id}
-          x={10 + 110*index} y={420}
-          width={100}
-          height={50}
-          alpha={1}
-          >
+          <Container key={id} x={10 + 110 * index} y={420} width={100} height={50} alpha={1}>
             <Sprite texture={PIXI.Texture.from(passiveGraphics)} y={-1} />
-            <Text key={id} text={`${description}`}
-              x={5} y={5}
+            <Text
+              key={id}
+              text={`${description}`}
+              x={5}
+              y={5}
               style={{
-              fontSize: 10,
-              fontWeight: 'bold',
-              wordWrap: true,
-              wordWrapWidth: 90,
-            }}/>
-        </Container>
-
+                fontSize: 10,
+                fontWeight: 'bold',
+                wordWrap: true,
+                wordWrapWidth: 90,
+              }}
+            />
+          </Container>
         );
       })}
       {state.cards.map(({ id, title, description, cost, manaGain, nameId }, index) => {
