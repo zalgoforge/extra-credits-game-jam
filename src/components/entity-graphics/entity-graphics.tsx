@@ -278,7 +278,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
   const { x = 0, y = 0, hp, isDying } = props;
 
   useEffect(() => {
-    if (previousHp.current !== undefined && hp !== previousHp.current) {
+    if (previousHp.current !== undefined && hp < previousHp.current) {
       setState('isDmg');
     }
     previousHp.current = hp;
