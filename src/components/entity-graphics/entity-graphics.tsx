@@ -14,7 +14,6 @@ import sfxBoom from '../../assets/img/sfx/boom.png';
 
 import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
 import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
-import headhunterGraphics from '../../assets/img/enemies/headhunter.png';
 import headhunterCierpiGraphics from '../../assets/img/enemies/headhunter_cierpi.png';
 import inkwizytorCierpiGraphics from '../../assets/img/enemies/inkwizytor_cierpi.png';
 import wiedzmaGraphics from '../../assets/img/enemies/wiedzma.png';
@@ -42,6 +41,15 @@ import inkwizytorFrame0004 from '../../assets/img/animated_enemies/inkwizytor/fr
 import inkwizytorFrame0005 from '../../assets/img/animated_enemies/inkwizytor/frame_0005.png';
 import inkwizytorFrame0006 from '../../assets/img/animated_enemies/inkwizytor/frame_0006.png';
 import inkwizytorFrame0007 from '../../assets/img/animated_enemies/inkwizytor/frame_0007.png';
+
+import headhunterFrame0000 from '../../assets/img/animated_enemies/headhunter/frame_0000.png';
+import headhunterFrame0001 from '../../assets/img/animated_enemies/headhunter/frame_0001.png';
+import headhunterFrame0002 from '../../assets/img/animated_enemies/headhunter/frame_0002.png';
+import headhunterFrame0003 from '../../assets/img/animated_enemies/headhunter/frame_0003.png';
+import headhunterFrame0004 from '../../assets/img/animated_enemies/headhunter/frame_0004.png';
+import headhunterFrame0005 from '../../assets/img/animated_enemies/headhunter/frame_0005.png';
+import headhunterFrame0006 from '../../assets/img/animated_enemies/headhunter/frame_0006.png';
+import headhunterFrame0007 from '../../assets/img/animated_enemies/headhunter/frame_0007.png';
 
 import { AnimatedSprite } from '../animated-sprite';
 
@@ -98,7 +106,16 @@ const nameMapping: NameMapping = {
   },
   FastEnemy: {
     texture: {
-      isOk: [PIXI.Texture.from(headhunterGraphics, mipmapOption)],
+      isOk: [
+        PIXI.Texture.from(headhunterFrame0000, mipmapOption),
+        PIXI.Texture.from(headhunterFrame0001, mipmapOption),
+        PIXI.Texture.from(headhunterFrame0002, mipmapOption),
+        PIXI.Texture.from(headhunterFrame0003, mipmapOption),
+        PIXI.Texture.from(headhunterFrame0004, mipmapOption),
+        PIXI.Texture.from(headhunterFrame0005, mipmapOption),
+        PIXI.Texture.from(headhunterFrame0006, mipmapOption),
+        PIXI.Texture.from(headhunterFrame0007, mipmapOption),
+      ],
       isDmg: [PIXI.Texture.from(headhunterCierpiGraphics, mipmapOption)],
     },
     sayings: [
