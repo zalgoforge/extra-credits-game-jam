@@ -212,13 +212,20 @@ const renderEntity = (
         height={58 / 2.6}
         anchor={ANCHOR_POINT}
       />
-      <AnimatedSprite
-        textures={getEnemyTexture(name, state)}
+      {state === 'isOk' && ( <AnimatedSprite
+        textures={getEnemyTexture(name, 'isOk')}
         width={300 / 3}
         height={400 / 3}
         {...getTint(isSoaked, isPoisoned)}
         anchor={ANCHOR_POINT}
-      />
+      /> ) }
+      {state === 'isDmg' && ( <AnimatedSprite
+        textures={getEnemyTexture(name, 'isDmg')}
+        width={300 / 3}
+        height={400 / 3}
+        {...getTint(isSoaked, isPoisoned)}
+        anchor={ANCHOR_POINT}
+      /> ) }
       <Container x={-20} y={-160}>
         <Sprite texture={PIXI.Texture.from(chmurkaGraphics)} width={100 / 3} height={84 / 3} />
         <Text
