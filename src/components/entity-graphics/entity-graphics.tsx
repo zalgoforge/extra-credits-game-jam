@@ -9,6 +9,7 @@ import { TimedContainer } from '../timed-container';
 import { getRandomInt } from '../../utils';
 
 import popupGraphics from '../../assets/img/dialogue/popup.png';
+import dropGraphics from '../../assets/img/sfx/drop.png';
 import sfxBoom from '../../assets/img/sfx/boom.png';
 
 import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
@@ -49,6 +50,7 @@ interface Props {
   y?: number;
   hp: number;
   isSoaked: boolean;
+  soaked: number;
   isPoisoned: boolean;
   isDying: boolean;
   name: string;
@@ -203,7 +205,7 @@ const renderEntity = (
   setEffects: any,
   setState: any
 ) => {
-  const { hp, name, isSoaked, isPoisoned, isDying } = props;
+  const { hp, name, isSoaked, soaked, isPoisoned, isDying } = props;
   return (
     <Container {...(isDying ? { scale: SCALE, x: 100 } : {})}>
       <Sprite
@@ -229,12 +231,28 @@ const renderEntity = (
       <Container x={-20} y={-160}>
         <Sprite texture={PIXI.Texture.from(chmurkaGraphics)} width={100 / 3} height={84 / 3} />
         <Text
-          x={13}
+          x={hp > 10 ? 8 : 13}
           y={2}
           text={`${hp}`}
           style={{ fontSize: 16, fontWeight: 'bold', fontFamily: 'Sans' }}
         />
       </Container>
+
+      {/* effects */}
+      { soaked > 0 && (
+        <Container x={0} y={-160}>
+        <Sprite texture={PIXI.Texture.from(dropGraphics)} y={-3} scale={new PIXI.Point(0.2,0.2)} />
+        <Text
+          x={9}
+          y={2}
+          text={`${soaked}`}
+          style={{ fontSize: 16, fontWeight: 'bold', fontFamily: 'Sans', fill: 0x310CFF, align: 'center' }}
+        />
+      </Container>
+      )}
+
+
+
       {effects.map((e) => {
         return (
           <TimedContainer

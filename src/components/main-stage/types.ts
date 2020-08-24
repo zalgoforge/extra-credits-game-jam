@@ -17,6 +17,7 @@ export interface Enemy {
   hp: number;
   name: string;
   isSoaked: boolean;
+  soaked: number;
   isPoisoned: boolean;
 }
 
