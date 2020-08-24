@@ -261,22 +261,26 @@ const renderEntity = (
         height={58 / 2.6}
         anchor={ANCHOR_POINT}
       />
-      {state === 'isOk' && ( <AnimatedSprite
-        textures={getEnemyTexture(name, 'isOk')}
-        animationSpeed={getEnemyAnimationSpeed(name)}
-        width={300 / 3}
-        height={400 / 3}
-        {...getTint(isSoaked, isPoisoned)}
-        anchor={ANCHOR_POINT}
-      /> ) }
-      {state === 'isDmg' && ( <AnimatedSprite
-        textures={getEnemyTexture(name, 'isDmg')}
-        animationSpeed={getEnemyAnimationSpeed(name)}
-        width={300 / 3}
-        height={400 / 3}
-        {...getTint(isSoaked, isPoisoned)}
-        anchor={ANCHOR_POINT}
-      /> ) }
+      {state === 'isOk' && (
+        <AnimatedSprite
+          textures={getEnemyTexture(name, 'isOk')}
+          animationSpeed={getEnemyAnimationSpeed(name)}
+          width={300 / 3}
+          height={400 / 3}
+          {...getTint(isSoaked, isPoisoned)}
+          anchor={ANCHOR_POINT}
+        />
+      )}
+      {state === 'isDmg' && (
+        <AnimatedSprite
+          textures={getEnemyTexture(name, 'isDmg')}
+          animationSpeed={getEnemyAnimationSpeed(name)}
+          width={300 / 3}
+          height={400 / 3}
+          {...getTint(isSoaked, isPoisoned)}
+          anchor={ANCHOR_POINT}
+        />
+      )}
       <Container x={-20} y={-160}>
         <Sprite texture={PIXI.Texture.from(chmurkaGraphics)} width={100 / 3} height={84 / 3} />
         <Text
@@ -288,30 +292,49 @@ const renderEntity = (
       </Container>
 
       {/* effects */}
-      { soaked > 0 && (
+      {soaked > 0 && (
         <Container x={0} y={-160}>
-        <Sprite texture={PIXI.Texture.from(dropGraphics)} y={-3} scale={new PIXI.Point(0.2,0.2)} />
-        <Text
-          x={9}
-          y={2}
-          text={`${soaked}`}
-          style={{ fontSize: 16, fontWeight: 'bold', fontFamily: 'Sans', fill: 0x310CFF, align: 'center' }}
-        />
-      </Container>
+          <Sprite
+            texture={PIXI.Texture.from(dropGraphics)}
+            y={-3}
+            scale={new PIXI.Point(0.2, 0.2)}
+          />
+          <Text
+            x={9}
+            y={2}
+            text={`${soaked}`}
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              fontFamily: 'Sans',
+              fill: 0x310cff,
+              align: 'center',
+            }}
+          />
+        </Container>
       )}
 
-      { tough > 0 && (
+      {tough > 0 && (
         <Container x={-30} y={-160}>
-        <Sprite texture={PIXI.Texture.from(shieldGraphics)} y={-1} scale={new PIXI.Point(0.2,0.2)} />
-        <Text
-          x={9}
-          y={2}
-          text={`${tough}`}
-          style={{ fontSize: 16, fontWeight: 'bold', fontFamily: 'Sans', fill: 0x676867, align: 'center' }}
-        />
-      </Container>
+          <Sprite
+            texture={PIXI.Texture.from(shieldGraphics)}
+            y={-1}
+            scale={new PIXI.Point(0.2, 0.2)}
+          />
+          <Text
+            x={9}
+            y={2}
+            text={`${tough}`}
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              fontFamily: 'Sans',
+              fill: 0x676867,
+              align: 'center',
+            }}
+          />
+        </Container>
       )}
-
 
       {effects.map((e) => {
         return (
@@ -379,7 +402,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
               ? [
                   {
                     id: uuidv4(),
-                    timeout: 2000,
+                    timeout: 3000,
                     type: 'show-message',
                     message: getEnemySaying(props.name),
                   },
