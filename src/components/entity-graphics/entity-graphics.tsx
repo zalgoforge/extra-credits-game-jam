@@ -106,7 +106,12 @@ const nameMapping: NameMapping = {
       isDmg: [PIXI.Texture.from(elfikCierpiGraphics, mipmapOption)],
     },
     animationSpeed: 0.2,
-    sayings: ['Delivery from Fantazon', 'Package for mr. J. P. Swanson'],
+    sayings: [
+      'Sir, pandemic ended months ago!',
+      'Sir, I will deliver this package, resistance is futile.',
+      "It's a package from your mom, sir.",
+      "I have a package from Fantazon."
+    ],
   },
   FastEnemy: {
     texture: {
@@ -126,7 +131,8 @@ const nameMapping: NameMapping = {
     sayings: [
       'Looking for Java Developers',
       'Do you know JavaScript maybe?',
-      'Hello mr <PasteNameHere>!',
+      'We have an excellent dental plan.',
+      'Our corporation has free Taco Tuesdays!'
     ],
   },
   BigEnemy: {
@@ -142,8 +148,9 @@ const nameMapping: NameMapping = {
     animationSpeed: 0.2,
     sayings: [
       'There was a gas leak',
-      'Sir, did you check your pipes?',
-      'Gas can be hallucinogenic',
+      'Hallucinogenic gas is toxic, please let me in.',
+      "We don't even need to talk, I just want to see your pipes!",
+      "Sir, this will only take a minute."
     ],
   },
   HealerEnemy: {
@@ -161,7 +168,12 @@ const nameMapping: NameMapping = {
       isDmg: [PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption)],
     },
     animationSpeed: 0.2,
-    sayings: ['Do you want to talk about Jesus?'],
+    sayings: [
+      'Do you want to talk about Jesus?',
+      'Jesus is our Lord and Savior.',
+      "Your behaviour shows me you haven't accepted Jesus yet.",
+      "Just open your heart and doors.",
+    ],
   },
   ToughEnemy: {
     texture: {
@@ -169,7 +181,12 @@ const nameMapping: NameMapping = {
       isDmg: [PIXI.Texture.from(wiedzmaCierpiGraphics, mipmapOption)],
     },
     animationSpeed: 0.2,
-    sayings: ['Do you have any sugar, neighbor?'],
+    sayings: [
+      'Do you have any sugar, neighbor?',
+      'I want to bake a cake, you know.',
+      'I need that sweet sugar!',
+      'I bet you have a lot of sugar, share some.',
+    ],
   },
 };
 
