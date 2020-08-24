@@ -15,6 +15,13 @@ export interface Enemy {
   isPoisoned: boolean;
 }
 
+export interface DyingEnemy {
+  id: string;
+  name: string;
+  laneIndex: number;
+  fieldIndex: number;
+}
+
 export interface GameObject {
   id: string;
   nameId: string;
@@ -34,6 +41,7 @@ export interface Lane {
 export interface State {
   cards: Card[];
   lanes: Lane[];
+  dyingEnemies: DyingEnemy[];
   mana: number;
   health: number;
   turnCount: number;

@@ -47,6 +47,7 @@ interface Props {
   hp: number;
   isSoaked: boolean;
   isPoisoned: boolean;
+  isDying: boolean;
   name: string;
 }
 
@@ -189,43 +190,18 @@ const renderEffect = (props: Props, e: any) => {
   return null;
 };
 
-export const EntityGraphics: React.FC<Props> = (props) => {
-  const [effects, setEffects] = useState<any[]>([]);
-  const [state, setState] = useState<EntityState>('isOk');
-  const previousHp = useRef<number>();
+const SCALE = new PIXI.Point(-1, 1);
 
-  const { x = 0, y = 0, hp, name, isSoaked, isPoisoned } = props;
-
-  useEffect(() => {
-    if (previousHp.current !== undefined && hp !== previousHp.current) {
-      setState('isDmg');
-    }
-    previousHp.current = hp;
-  }, [hp]);
-
+const renderEntity = (
+  props: Props,
+  state: EntityState,
+  effects: any[],
+  setEffects: any,
+  setState: any
+) => {
+  const { hp, name, isSoaked, isPoisoned, isDying } = props;
   return (
-    <AnimatedContainer
-      x={x}
-      y={y}
-      initialX={1200}
-      onMoveFinished={() => {
-        setEffects((prev) => {
-          return [
-            ...prev,
-            ...(shouldSaySomething()
-              ? [
-                  {
-                    id: uuidv4(),
-                    timeout: 2000,
-                    type: 'show-message',
-                    message: getEnemySaying(props.name),
-                  },
-                ]
-              : []),
-          ];
-        });
-      }}
-    >
+    <Container {...(isDying ? { scale: SCALE, x: 100 } : {})}>
       <Sprite
         texture={PIXI.Texture.from(cienPodPostacGraphics)}
         width={244 / 2.6}
@@ -254,7 +230,7 @@ export const EntityGraphics: React.FC<Props> = (props) => {
             key={e.id}
             timeout={e.timeout}
             onTimeout={() => {
-              setEffects((prev) => prev.filter((prevEffect) => prevEffect.id !== e.id));
+              setEffects((prev: any) => prev.filter((prevEffect: any) => prevEffect.id !== e.id));
             }}
           >
             {renderEffect(props, e)}
@@ -269,6 +245,52 @@ export const EntityGraphics: React.FC<Props> = (props) => {
           }}
         />
       )}
+    </Container>
+  );
+};
+
+export const EntityGraphics: React.FC<Props> = (props) => {
+  const [effects, setEffects] = useState<any[]>([]);
+  const [state, setState] = useState<EntityState>('isOk');
+  const previousHp = useRef<number>();
+
+  const { x = 0, y = 0, hp, isDying } = props;
+
+  useEffect(() => {
+    if (previousHp.current !== undefined && hp !== previousHp.current) {
+      setState('isDmg');
+    }
+    previousHp.current = hp;
+  }, [hp]);
+
+  return isDying ? (
+    <AnimatedContainer x={1200} y={y} initialX={x} initialY={y} duration={2000}>
+      {renderEntity(props, state, effects, setEffects, setState)}
+    </AnimatedContainer>
+  ) : (
+    <AnimatedContainer
+      x={x}
+      y={y}
+      initialX={1200}
+      onMoveFinished={() => {
+        setEffects((prev) => {
+          return [
+            ...prev,
+            ...(shouldSaySomething()
+              ? [
+                  {
+                    id: uuidv4(),
+                    timeout: 2000,
+                    type: 'show-message',
+                    message: getEnemySaying(props.name),
+                  },
+                ]
+              : []),
+          ];
+        });
+      }}
+    >
+      {renderEntity(props, state, effects, setEffects, setState)}
     </AnimatedContainer>
   );
 };

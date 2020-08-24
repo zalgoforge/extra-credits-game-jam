@@ -92,6 +92,15 @@ const getTurnCount = () => {
   return GameState.instance().turnCount.value();
 };
 
+const getDyingEnemies = () => {
+  return GameState.instance().board.recentlyDestroyedEntities.map((e) => ({
+    id: e.uuid,
+    laneIndex: e.field()!.laneIdx,
+    fieldIndex: e.field()!.fieldIdx,
+    name: e.name,
+  }));
+};
+
 export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
   const [state, setState] = useState<State>({
     cards: getCards(),
@@ -99,6 +108,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
     mana: getMana(),
     health: getHealth(),
     turnCount: getTurnCount(),
+    dyingEnemies: getDyingEnemies(),
     highlightedTargets: undefined,
     hoveredTarget: undefined,
   });
@@ -152,7 +162,15 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
     };
 
     game.board.onEntityAdded.do(updateLanes).bind();
-    game.board.onEntityRemoved.do(updateLanes).bind();
+    game.board.onEntityRemoved
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          lanes: getLanes(),
+          dyingEnemies: getDyingEnemies(),
+        }));
+      })
+      .bind();
     game.board.onCardAdded.do(updateLanes).bind();
     game.board.onCardRemoved.do(updateLanes).bind();
 
@@ -297,6 +315,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                   isSoaked={enemies[0].isSoaked}
                   isPoisoned={enemies[0].isPoisoned}
+                  isDying={false}
                   hp={enemies[0].hp}
                   name={enemies[0].name}
                 />
@@ -305,6 +324,21 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
             .filter((e) => !!e)
         )
         .flat(1)}
+      {/* Dying Enemies */}
+      {state.dyingEnemies.map(({ id, name, laneIndex, fieldIndex }) => {
+        return (
+          <EntityGraphics
+            key={id}
+            x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * fieldIndex}
+            y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
+            isSoaked={false}
+            isPoisoned={false}
+            isDying={true}
+            hp={0}
+            name={name}
+          />
+        );
+      })}
       <DroppableContainer
         {...DISCARD_PILE}
         acceptTags={['board-targatable', 'lane-targatable', 'field-targatable']}
