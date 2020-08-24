@@ -23,7 +23,7 @@ export const behavior = {
   ) {
     instance.width = newProps.width;
     instance.height = newProps.height;
-    //instance.tint = newProps.tint;
+    instance.tint = newProps.tint;
     instance.anchor = newProps.anchor;
     //(this as any).applyDisplayObjectProps(oldProps, newProps);
   },
