@@ -10,6 +10,7 @@ import { getRandomInt } from '../../utils';
 
 import popupGraphics from '../../assets/img/dialogue/popup.png';
 import dropGraphics from '../../assets/img/sfx/drop.png';
+import shieldGraphics from '../../assets/img/sfx/shield.png';
 import sfxBoom from '../../assets/img/sfx/boom.png';
 
 import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
@@ -59,6 +60,7 @@ interface Props {
   hp: number;
   isSoaked: boolean;
   soaked: number;
+  tough: number;
   isPoisoned: boolean;
   isDying: boolean;
   name: string;
@@ -233,7 +235,7 @@ const renderEntity = (
   setEffects: any,
   setState: any
 ) => {
-  const { hp, name, isSoaked, soaked, isPoisoned, isDying } = props;
+  const { hp, name, isSoaked, soaked, tough, isPoisoned, isDying } = props;
   return (
     <Container {...(isDying ? { scale: SCALE, x: 100 } : {})}>
       <Sprite
@@ -281,6 +283,17 @@ const renderEntity = (
       </Container>
       )}
 
+      { tough > 0 && (
+        <Container x={-30} y={-160}>
+        <Sprite texture={PIXI.Texture.from(shieldGraphics)} y={-1} scale={new PIXI.Point(0.2,0.2)} />
+        <Text
+          x={9}
+          y={2}
+          text={`${tough}`}
+          style={{ fontSize: 16, fontWeight: 'bold', fontFamily: 'Sans', fill: 0x676867, align: 'center' }}
+        />
+      </Container>
+      )}
 
 
       {effects.map((e) => {

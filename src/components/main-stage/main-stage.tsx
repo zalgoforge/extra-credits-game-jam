@@ -72,6 +72,7 @@ const getLanes = () => {
               name: f.entity()!.name,
               isSoaked: f.entity()!.statuses.getValue(Status.Soak) !== 0,
               soaked: f.entity()!.statuses.getValue(Status.Soak),
+              tough: f.entity()!.statuses.getValue(Status.Tough),
               isPoisoned: f.entity()!.statuses.getValue(Status.Poison) !== 0,
             },
           ]
@@ -332,6 +333,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                   isSoaked={enemies[0].isSoaked}
                   soaked={enemies[0].soaked}
+                  tough={enemies[0].tough}
                   isPoisoned={enemies[0].isPoisoned}
                   isDying={false}
                   hp={enemies[0].hp}
@@ -351,6 +353,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
             y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
             isSoaked={false}
             soaked={0}
+            tough={0}
             isPoisoned={false}
             isDying={true}
             hp={0}
