@@ -83,7 +83,7 @@ export class ToyGun extends Card {
     this.id = "toy-gun";
     this.title = 'Toy Gun';
     this.cost = 1;
-    this.description = `Deal ${this.damage1} dmg to first enemy then ${this.damage2} one field further.`;
+    this.description = `Deal ${this.damage1} dmg to first enemy, then ${this.damage2} right behind him.`;
   }
 
   protected getPossibleTargets(): Array<UniqueObject> {
