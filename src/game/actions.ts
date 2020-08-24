@@ -168,6 +168,7 @@ export class Actions {
   }
 
   static killEntity(entity: Entity) {
+    entity.destroyed = true;
     return Actions.board().destroyEntity(entity);
   }
 

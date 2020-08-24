@@ -83,6 +83,7 @@ export class Board extends UniqueObject {
 
   lanes = Array<Lane>();
   entities = Array<Entity>();
+  recentlyDestroyedEntities = Array<Entity>();
   cards = Array<Card>();
 
   constructor() {
@@ -111,9 +112,13 @@ export class Board extends UniqueObject {
     if (index == -1) return false;
 
     this.entities.splice(index, 1);
+    if (entity.destroyed) {
+      this.recentlyDestroyedEntities.push(entity);
+    }
+
     let field = entity.field();
     field?._setEntity(null);
-    entity._setField(null);
+    //entity._setField(null); TODO think if this will not break something
     entity.destroy();
 
     this.onEntityRemoved.emit(entity);
@@ -175,6 +180,12 @@ export class Board extends UniqueObject {
     for (let card of this.cards) {
       card.endOfTurn();
     }
+
+    for (let entity of this.recentlyDestroyedEntities) {
+      entity.turnsSinceDestroyed ++;
+    }
+
+    this.recentlyDestroyedEntities = this.recentlyDestroyedEntities.filter( e => e.turnsSinceDestroyed < 2 );
   }
 
   field(laneIdx:number, fieldIdx:number) {

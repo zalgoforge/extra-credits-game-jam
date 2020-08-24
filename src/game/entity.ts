@@ -22,6 +22,9 @@ export class Entity extends UniqueObject {
   // TODO add maxHP
   hp = new Stat(10);
   statuses = new Statuses();
+  destroyed = false;
+  turnsSinceDestroyed = 0;
+
   //attack = new SignalizingVariable(1);
   private _field: Field | null = null;
 
