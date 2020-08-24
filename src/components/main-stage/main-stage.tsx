@@ -311,7 +311,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
               return enemies.length ? (
                 <EntityGraphics
                   key={enemies[0].id}
-                  x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex}
+                  x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * reverseIndex + FIELD_WIDTH / 2}
                   y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
                   isSoaked={enemies[0].isSoaked}
                   isPoisoned={enemies[0].isPoisoned}

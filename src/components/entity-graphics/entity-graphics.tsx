@@ -69,7 +69,7 @@ interface NameMapping {
   ToughEnemy: EnemyData;
 }
 
-const ANCHOR_POINT = new PIXI.Point(0, 1);
+const ANCHOR_POINT = new PIXI.Point(0.5, 1);
 
 const mipmapOption = { mipmap: PIXI.MIPMAP_MODES.ON };
 
