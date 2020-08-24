@@ -6,6 +6,10 @@ import { Status } from '../status';
 
 let additionalHP = 2;
 
+export function AddHPToEnemies(hp: number) {
+  additionalHP += hp;
+}
+
 export class TestEnemy extends Enemy {
   constructor() {
     super();

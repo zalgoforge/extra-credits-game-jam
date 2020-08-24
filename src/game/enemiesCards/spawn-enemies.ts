@@ -1,6 +1,6 @@
 import { Card, PlayContext } from '../card';
 import { Actions } from '../actions';
-import { TestEnemy, FastEnemy, BigEnemy, HealerEnemy, ToughEnemy } from '../enemies/enemies';
+import { TestEnemy, FastEnemy, BigEnemy, HealerEnemy, ToughEnemy, AddHPToEnemies } from '../enemies/enemies';
 import { Enemy } from '../enemies/enemy';
 import { Target } from '../target';
 import { GameState } from '../game';
@@ -69,6 +69,49 @@ let testWaves: Wave[] = [
 
 ];
 
+let harderWaves: Wave[] = [
+  {
+    enemies: () => [new TestEnemy, new TestEnemy, new FastEnemy],
+    weight: 2,
+    delay: 2,
+  },
+  {
+    enemies: () => [new TestEnemy, new TestEnemy, new TestEnemy],
+    weight: 2,
+    delay: 2,
+  },
+
+  {
+    enemies: () => [new FastEnemy, new BigEnemy, new BigEnemy],
+    weight: 2,
+    delay: 2,
+  },
+
+  {
+    enemies: () => [new FastEnemy, new FastEnemy, new FastEnemy],
+    weight: 2,
+    delay: 2,
+  },
+
+  {
+    enemies: () => [new HealerEnemy, new HealerEnemy, new ToughEnemy],
+    weight: 2,
+    delay: 2,
+  },
+
+  {
+    enemies: () => [new ToughEnemy, new ToughEnemy, new HealerEnemy],
+    weight: 1,
+    delay: 3,
+  },
+
+  {
+    enemies: () => [new ToughEnemy, new FastEnemy, new BigEnemy],
+    weight: 2,
+    delay: 3,
+  },
+];
+
 
 function PickRandomWaveFromWaves(waves: Wave[]) : Wave {
   let input = waves.map( wave => [wave, wave.weight]);
@@ -78,6 +121,7 @@ function PickRandomWaveFromWaves(waves: Wave[]) : Wave {
 export class SpawnEnemies extends Card {
   delay = 1;
   turn = 0;
+  currentTurn = 0;
   availableColumns = 2;
   lastPick: Wave | null = null;
 
@@ -98,6 +142,7 @@ export class SpawnEnemies extends Card {
 
   endOfTurn() {
     this.turn ++;
+    this.currentTurn ++;
     if (GameState.instance().board.entities.length == 0) {
       this.turn = this.delay;
     }
@@ -113,9 +158,15 @@ export class SpawnEnemies extends Card {
       return false;
     }
 
+    let waves = this.currentTurn < 10 ? testWaves : harderWaves;
+
+    if ( this.currentTurn >= 15 && this.currentTurn % 3 == 0  ) {
+      AddHPToEnemies(1);
+    }
+
     let wave: Wave;
     do {
-      wave = PickRandomWaveFromWaves(testWaves);
+      wave = PickRandomWaveFromWaves(waves);
     }
     while (wave == this.lastPick);
     this.lastPick = wave;
