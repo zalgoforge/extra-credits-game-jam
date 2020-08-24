@@ -18,6 +18,7 @@ import { ManaWhirl } from '../mana-whirl';
 import { ObjectGraphics } from '../object-graphics';
 import { Status } from '../../game/status';
 import passiveGraphics from '../../assets/img/sfx/passive.png';
+import { SayingsGraphics } from '../entity-graphics/sayings-graphics';
 
 interface Props {
   app: PIXI.Application;
@@ -362,6 +363,32 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
                   isPoisoned={enemies[0].isPoisoned}
                   isDying={false}
                   hp={enemies[0].hp}
+                  name={enemies[0].name}
+                />
+              ) : null;
+            })
+            .filter((e) => !!e)
+        )
+        .flat(1)}
+      {/* Sayings */}
+      {state.lanes
+        .map(({ fields }, laneIndex) =>
+          fields
+            .slice()
+            .reverse()
+            .map(({ id, enemies }, index) => {
+              const reverseIndex = fields.length - index;
+              return enemies.length ? (
+                <SayingsGraphics
+                  key={enemies[0].id}
+                  x={
+                    LANE_OFFSET.x -
+                    laneIndex * LANE_SHIFT +
+                    FIELD_WIDTH * reverseIndex +
+                    FIELD_WIDTH / 2
+                  }
+                  y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
+                  isDying={false}
                   name={enemies[0].name}
                 />
               ) : null;

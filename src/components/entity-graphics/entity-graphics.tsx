@@ -4,55 +4,14 @@ import cienPodPostacGraphics from '../../assets/img/cien_pod_postac.png';
 import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { AnimatedContainer } from '../animated-container';
-import { v4 as uuidv4 } from 'uuid';
 import { TimedContainer } from '../timed-container';
-import { getRandomInt } from '../../utils';
 
-import popupGraphics from '../../assets/img/dialogue/popup.png';
 import dropGraphics from '../../assets/img/sfx/drop.png';
 import shieldGraphics from '../../assets/img/sfx/shield.png';
 import sfxBoom from '../../assets/img/sfx/boom.png';
 
-import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
-import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
-import headhunterCierpiGraphics from '../../assets/img/enemies/headhunter_cierpi.png';
-import inkwizytorCierpiGraphics from '../../assets/img/enemies/inkwizytor_cierpi.png';
-import wiedzmaGraphics from '../../assets/img/enemies/wiedzma.png';
-import wiedzmaCierpiGraphics from '../../assets/img/enemies/wiedzma_cierpi.png';
-
-import elfikFrame0000 from '../../assets/img/animated_enemies/elfik/frame_0000.png';
-import elfikFrame0001 from '../../assets/img/animated_enemies/elfik/frame_0001.png';
-import elfikFrame0002 from '../../assets/img/animated_enemies/elfik/frame_0002.png';
-import elfikFrame0003 from '../../assets/img/animated_enemies/elfik/frame_0003.png';
-import elfikFrame0004 from '../../assets/img/animated_enemies/elfik/frame_0004.png';
-import elfikFrame0005 from '../../assets/img/animated_enemies/elfik/frame_0005.png';
-import elfikFrame0006 from '../../assets/img/animated_enemies/elfik/frame_0006.png';
-import elfikFrame0007 from '../../assets/img/animated_enemies/elfik/frame_0007.png';
-
-import ogrFrame0000 from '../../assets/img/animated_enemies/ogr/frame_0000.png';
-import ogrFrame0001 from '../../assets/img/animated_enemies/ogr/frame_0001.png';
-import ogrFrame0002 from '../../assets/img/animated_enemies/ogr/frame_0002.png';
-import ogrFrame0003 from '../../assets/img/animated_enemies/ogr/frame_0003.png';
-
-import inkwizytorFrame0000 from '../../assets/img/animated_enemies/inkwizytor/frame_0000.png';
-import inkwizytorFrame0001 from '../../assets/img/animated_enemies/inkwizytor/frame_0001.png';
-import inkwizytorFrame0002 from '../../assets/img/animated_enemies/inkwizytor/frame_0002.png';
-import inkwizytorFrame0003 from '../../assets/img/animated_enemies/inkwizytor/frame_0003.png';
-import inkwizytorFrame0004 from '../../assets/img/animated_enemies/inkwizytor/frame_0004.png';
-import inkwizytorFrame0005 from '../../assets/img/animated_enemies/inkwizytor/frame_0005.png';
-import inkwizytorFrame0006 from '../../assets/img/animated_enemies/inkwizytor/frame_0006.png';
-import inkwizytorFrame0007 from '../../assets/img/animated_enemies/inkwizytor/frame_0007.png';
-
-import headhunterFrame0000 from '../../assets/img/animated_enemies/headhunter/frame_0000.png';
-import headhunterFrame0001 from '../../assets/img/animated_enemies/headhunter/frame_0001.png';
-import headhunterFrame0002 from '../../assets/img/animated_enemies/headhunter/frame_0002.png';
-import headhunterFrame0003 from '../../assets/img/animated_enemies/headhunter/frame_0003.png';
-import headhunterFrame0004 from '../../assets/img/animated_enemies/headhunter/frame_0004.png';
-import headhunterFrame0005 from '../../assets/img/animated_enemies/headhunter/frame_0005.png';
-import headhunterFrame0006 from '../../assets/img/animated_enemies/headhunter/frame_0006.png';
-import headhunterFrame0007 from '../../assets/img/animated_enemies/headhunter/frame_0007.png';
-
 import { AnimatedSprite } from '../animated-sprite';
+import { nameMapping } from './enemy-data';
 
 interface Props {
   x?: number;
@@ -68,127 +27,8 @@ interface Props {
 
 type EntityState = 'isOk' | 'isDmg';
 
-interface EnemyData {
-  texture: {
-    isOk: PIXI.Texture[];
-    isDmg: PIXI.Texture[];
-  };
-  animationSpeed: number;
-  sayings: string[];
-}
-
-interface NameMapping {
-  Enemy: EnemyData;
-  FastEnemy: EnemyData;
-  BigEnemy: EnemyData;
-  HealerEnemy: EnemyData;
-  ToughEnemy: EnemyData;
-}
-
 const ANCHOR_POINT = new PIXI.Point(0.5, 1);
 const CENTER_POINT = new PIXI.Point(0.5, 0.5);
-
-const mipmapOption = { mipmap: PIXI.MIPMAP_MODES.ON };
-
-const nameMapping: NameMapping = {
-  Enemy: {
-    texture: {
-      isOk: [
-        PIXI.Texture.from(elfikFrame0000, mipmapOption),
-        PIXI.Texture.from(elfikFrame0001, mipmapOption),
-        PIXI.Texture.from(elfikFrame0002, mipmapOption),
-        PIXI.Texture.from(elfikFrame0003, mipmapOption),
-        PIXI.Texture.from(elfikFrame0004, mipmapOption),
-        PIXI.Texture.from(elfikFrame0005, mipmapOption),
-        PIXI.Texture.from(elfikFrame0006, mipmapOption),
-        PIXI.Texture.from(elfikFrame0007, mipmapOption),
-      ],
-      isDmg: [PIXI.Texture.from(elfikCierpiGraphics, mipmapOption)],
-    },
-    animationSpeed: 0.2,
-    sayings: [
-      'Sir, pandemic ended months ago!',
-      'Sir, I will deliver this package, resistance is futile.',
-      "It's a package from your mom, sir.",
-      "I have a package from Fantazon."
-    ],
-  },
-  FastEnemy: {
-    texture: {
-      isOk: [
-        PIXI.Texture.from(headhunterFrame0000, mipmapOption),
-        PIXI.Texture.from(headhunterFrame0001, mipmapOption),
-        PIXI.Texture.from(headhunterFrame0002, mipmapOption),
-        PIXI.Texture.from(headhunterFrame0003, mipmapOption),
-        PIXI.Texture.from(headhunterFrame0004, mipmapOption),
-        PIXI.Texture.from(headhunterFrame0005, mipmapOption),
-        PIXI.Texture.from(headhunterFrame0006, mipmapOption),
-        PIXI.Texture.from(headhunterFrame0007, mipmapOption),
-      ],
-      isDmg: [PIXI.Texture.from(headhunterCierpiGraphics, mipmapOption)],
-    },
-    animationSpeed: 0.15,
-    sayings: [
-      'Looking for Java Developers',
-      'Do you know JavaScript maybe?',
-      'We have an excellent dental plan.',
-      'Our corporation has free Taco Tuesdays!'
-    ],
-  },
-  BigEnemy: {
-    texture: {
-      isOk: [
-        PIXI.Texture.from(ogrFrame0000, mipmapOption),
-        PIXI.Texture.from(ogrFrame0001, mipmapOption),
-        PIXI.Texture.from(ogrFrame0002, mipmapOption),
-        PIXI.Texture.from(ogrFrame0003, mipmapOption),
-      ],
-      isDmg: [PIXI.Texture.from(ogrCierpiGraphics, mipmapOption)],
-    },
-    animationSpeed: 0.2,
-    sayings: [
-      'There was a gas leak',
-      'Hallucinogenic gas is toxic, please let me in.',
-      "We don't even need to talk, I just want to see your pipes!",
-      "Sir, this will only take a minute."
-    ],
-  },
-  HealerEnemy: {
-    texture: {
-      isOk: [
-        PIXI.Texture.from(inkwizytorFrame0000, mipmapOption),
-        PIXI.Texture.from(inkwizytorFrame0001, mipmapOption),
-        PIXI.Texture.from(inkwizytorFrame0002, mipmapOption),
-        PIXI.Texture.from(inkwizytorFrame0003, mipmapOption),
-        PIXI.Texture.from(inkwizytorFrame0004, mipmapOption),
-        PIXI.Texture.from(inkwizytorFrame0005, mipmapOption),
-        PIXI.Texture.from(inkwizytorFrame0006, mipmapOption),
-        PIXI.Texture.from(inkwizytorFrame0007, mipmapOption),
-      ],
-      isDmg: [PIXI.Texture.from(inkwizytorCierpiGraphics, mipmapOption)],
-    },
-    animationSpeed: 0.2,
-    sayings: [
-      'Do you want to talk about Jesus?',
-      'Jesus is our Lord and Savior.',
-      "Your behaviour shows me you haven't accepted Jesus yet.",
-      "Just open your heart and doors.",
-    ],
-  },
-  ToughEnemy: {
-    texture: {
-      isOk: [PIXI.Texture.from(wiedzmaGraphics, mipmapOption)],
-      isDmg: [PIXI.Texture.from(wiedzmaCierpiGraphics, mipmapOption)],
-    },
-    animationSpeed: 0.2,
-    sayings: [
-      'Do you have any sugar, neighbor?',
-      'I want to bake a cake, you know.',
-      'I need that sweet sugar!',
-      'I bet you have a lot of sugar, share some.',
-    ],
-  },
-};
 
 const getEnemyTexture = (name: string, state: 'isOk' | 'isDmg') => {
   const enemy = (nameMapping as any)[name] || nameMapping.Enemy;
@@ -198,12 +38,6 @@ const getEnemyTexture = (name: string, state: 'isOk' | 'isDmg') => {
 const getEnemyAnimationSpeed = (name: string) => {
   const enemy = (nameMapping as any)[name] || nameMapping.Enemy;
   return enemy.animationSpeed;
-};
-
-const getEnemySaying = (name: string) => {
-  const sayings = ((nameMapping as any)[name] || nameMapping.Enemy).sayings;
-  const sayingIndex = getRandomInt(0, sayings.length - 1);
-  return sayings[sayingIndex];
 };
 
 const getTint = (isSoaked: boolean, isPoisoned: boolean) => {
@@ -218,40 +52,9 @@ const getTint = (isSoaked: boolean, isPoisoned: boolean) => {
   }
 };
 
-const shouldSaySomething = () => getRandomInt(0, 10) >= 8;
-
-const renderEffect = (props: Props, e: any) => {
-  if (e.type === 'show-message') {
-    return (
-      <Container x={-150} y={-170}>
-        <Sprite texture={PIXI.Texture.from(popupGraphics)} width={100} height={84} />
-        <Text
-          x={20}
-          y={20}
-          text={`${e.message}`}
-          style={{
-            fontSize: 11,
-            fontWeight: 'bold',
-            fontFamily: 'Sans',
-            wordWrap: true,
-            wordWrapWidth: 70,
-          }}
-        />
-      </Container>
-    );
-  }
-  return null;
-};
-
 const SCALE = new PIXI.Point(-1, 1);
 
-const renderEntity = (
-  props: Props,
-  state: EntityState,
-  effects: any[],
-  setEffects: any,
-  setState: any
-) => {
+const renderEntity = (props: Props, state: EntityState, setState: any) => {
   const { hp, name, isSoaked, soaked, tough, isPoisoned, isDying } = props;
   return (
     <Container {...(isDying ? { scale: SCALE, x: 100 } : {})}>
@@ -335,20 +138,6 @@ const renderEntity = (
           />
         </Container>
       )}
-
-      {effects.map((e) => {
-        return (
-          <TimedContainer
-            key={e.id}
-            timeout={e.timeout}
-            onTimeout={() => {
-              setEffects((prev: any) => prev.filter((prevEffect: any) => prevEffect.id !== e.id));
-            }}
-          >
-            {renderEffect(props, e)}
-          </TimedContainer>
-        );
-      })}
       {state === 'isDmg' && (
         <TimedContainer
           timeout={1000}
@@ -372,7 +161,6 @@ const renderEntity = (
 };
 
 export const EntityGraphics: React.FC<Props> = (props) => {
-  const [effects, setEffects] = useState<any[]>([]);
   const [state, setState] = useState<EntityState>('isOk');
   const previousHp = useRef<number>();
 
@@ -387,32 +175,11 @@ export const EntityGraphics: React.FC<Props> = (props) => {
 
   return isDying ? (
     <AnimatedContainer x={1200} y={y} initialX={x} initialY={y} duration={2000}>
-      {renderEntity(props, state, effects, setEffects, setState)}
+      {renderEntity(props, state, setState)}
     </AnimatedContainer>
   ) : (
-    <AnimatedContainer
-      x={x}
-      y={y}
-      initialX={1200}
-      onMoveFinished={() => {
-        setEffects((prev) => {
-          return [
-            ...prev,
-            ...(shouldSaySomething()
-              ? [
-                  {
-                    id: uuidv4(),
-                    timeout: 3000,
-                    type: 'show-message',
-                    message: getEnemySaying(props.name),
-                  },
-                ]
-              : []),
-          ];
-        });
-      }}
-    >
-      {renderEntity(props, state, effects, setEffects, setState)}
+    <AnimatedContainer x={x} y={y} initialX={1200}>
+      {renderEntity(props, state, setState)}
     </AnimatedContainer>
   );
 };
