@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Container } from 'react-pixi-fiber';
+import { Sprite, Text, Container } from 'react-pixi-fiber';
 import { DraggableContainer } from '../draggable-container';
 import * as PIXI from 'pixi.js';
 import { DroppableContainer } from '../droppable-container';
@@ -17,6 +17,7 @@ import { AnimatedContainer } from '../animated-container';
 import { ManaWhirl } from '../mana-whirl';
 import { ObjectGraphics } from '../object-graphics';
 import { Status } from '../../game/status';
+import passiveGraphics from '../../assets/img/sfx/passive.png';
 
 interface Props {
   app: PIXI.Application;
@@ -373,7 +374,26 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
       <ManaWhirl x={DISCARD_PILE.x} y={DISCARD_PILE.y} mana={state.mana} />
       {/* passives */}
       {state.passives.map(({ id, description }, index) => {
-        return (<Text key={id} x={500} y={30+30*index} text={`${description}`} />);
+        return (
+          <Container
+          key={id}
+          x={10 + 110*index} y={420}
+          width={100}
+          height={50}
+          alpha={1}
+          >
+            <Sprite texture={PIXI.Texture.from(passiveGraphics)} y={-1} />
+            <Text key={id} text={`${description}`}
+              x={5} y={5}
+              style={{
+              fontSize: 10,
+              fontWeight: 'bold',
+              wordWrap: true,
+              wordWrapWidth: 90,
+            }}/>
+        </Container>
+
+        );
       })}
       {state.cards.map(({ id, title, description, cost, manaGain, nameId }, index) => {
         const targets = GameState.instance().getPossibleTargetsForCard(id);

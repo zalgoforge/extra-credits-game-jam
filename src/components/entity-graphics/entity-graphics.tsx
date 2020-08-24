@@ -311,12 +311,12 @@ const renderEntity = (
       })}
       {state === 'isDmg' && (
         <TimedContainer
-          timeout={1500}
+          timeout={1000}
           onTimeout={() => {
             setState('isOk');
           }}
         >
-          <AnimatedContainer x={0} y={0} blink={1500}>
+          <AnimatedContainer x={0} y={0} blink={800}>
             <Sprite
               texture={PIXI.Texture.from(sfxBoom)}
               anchor={CENTER_POINT}
