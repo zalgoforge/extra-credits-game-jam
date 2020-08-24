@@ -22,6 +22,7 @@ export type AnimatedContainerInstance = PIXI.Container & {
   __tweenPosition: any;
   __coords: any;
   __tweenAlpha: any;
+  __tweenBlink: any;
   _destroyed: boolean;
   __onMoveFinished?: () => void;
 };
@@ -79,6 +80,39 @@ export const behavior = {
         .start(TWEEN.now());
       instance.__oldAlpha = newProps.alpha;
     }
+
+    if (!oldProps || oldProps.blink !== newProps.blink) {
+      if (instance.__tweenBlink) {
+        instance.__tweenBlink.end();
+      }
+
+      if (!newProps.blink) return;
+
+      const coords = { alpha: 0, scale: 0.75 };
+      const duration = newProps.blink;
+      let onUpdate = () => {
+        if (!instance._destroyed) {
+          instance.alpha = coords.alpha;
+          instance.scale = new PIXI.Point( coords.scale, coords.scale )
+        };
+      };
+
+      instance.__tweenAlpha = new TWEEN.Tween(coords)
+        .to({ alpha: 1, scale: 1.5 }, duration/2)
+        .easing(TWEEN.Easing.Quadratic.In)
+        .onUpdate(onUpdate);
+
+      instance.__tweenAlpha.chain(
+        new TWEEN.Tween(coords)
+        .to({ alpha: 0 }, duration/2)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onUpdate(onUpdate));
+
+      instance.__tweenAlpha.start(TWEEN.now());
+
+      instance.__oldAlpha = newProps.alpha;
+    }
+
     instance.__onMoveFinished = newProps.onMoveFinished;
   },
 };

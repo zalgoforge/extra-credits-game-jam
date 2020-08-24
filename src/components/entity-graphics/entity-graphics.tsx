@@ -9,7 +9,7 @@ import { TimedContainer } from '../timed-container';
 import { getRandomInt } from '../../utils';
 
 import popupGraphics from '../../assets/img/dialogue/popup.png';
-
+import sfxBoom from '../../assets/img/sfx/boom.png';
 
 import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
 import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
@@ -73,6 +73,7 @@ interface NameMapping {
 }
 
 const ANCHOR_POINT = new PIXI.Point(0.5, 1);
+const CENTER_POINT = new PIXI.Point(0.5, 0.5);
 
 const mipmapOption = { mipmap: PIXI.MIPMAP_MODES.ON };
 
@@ -246,7 +247,17 @@ const renderEntity = (
           onTimeout={() => {
             setState('isOk');
           }}
-        />
+        >
+          <AnimatedContainer x={0} y={0} blink={700}>
+            <Sprite
+              texture={PIXI.Texture.from(sfxBoom)}
+              anchor={CENTER_POINT}
+              y={-50}
+              x={-5}
+              scale={new PIXI.Point(0.25, 0.25)}
+            />
+          </AnimatedContainer>
+        </TimedContainer>
       )}
     </Container>
   );
