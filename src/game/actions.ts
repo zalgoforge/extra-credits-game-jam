@@ -92,6 +92,7 @@ export class Actions {
   static discardCard(card: Card) {
     if (Actions.player().hand.remove(card)) {
       if (!card.temporary) Actions.player().discard.add(card);
+      card.discarded();
       Actions.player().onDiscardedCard.emit(card);
       return true;
     } else {

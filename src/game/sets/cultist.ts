@@ -104,6 +104,42 @@ export class ToyGun extends Card {
   }
 }
 
+export class MagicUp extends Card {
+  damage = 2;
+  bonusDmg = 0;
+
+  constructor() {
+    super();
+    this.id = "magic-up";
+    this.title = 'Magic up';
+    this.cost = 2;
+    this.updateDesc();
+  }
+
+  protected getPossibleTargets(): Array<UniqueObject> {
+    return Target.anyFieldWithEnemy();
+  }
+
+  updateDesc() {
+    this.description = `Deal ${this.bonusDmg + this.damage} dmg. +2 if this stays in your hand at end of turn. (up to 10)`;
+  }
+
+  play(ctx: PlayContext) {
+    Actions.dealDamageToField(ctx.field(), new Damage(this.bonusDmg + this.damage));
+    this.bonusDmg = 0;
+  }
+
+  endOfTurn() {
+    this.bonusDmg += 2;
+    if (this.bonusDmg > 8) this.bonusDmg = 8;
+    this.updateDesc();
+  }
+
+  discarded() {
+    this.bonusDmg = 0;
+  }
+}
+
 
 export function CreateSet() {
   return [
@@ -117,5 +153,6 @@ export function CreateSet() {
     new ToyGun,
 
     new DrainHP,
+    new MagicUp,
    ];
 }

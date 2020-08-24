@@ -21,6 +21,7 @@ import droneStrike from '../../assets/img/cards/drone_strike.png';
 import grumble from '../../assets/img/cards/grumble.png';
 import teen_poetry from '../../assets/img/cards/teen_poetry.png';
 import toyGun from '../../assets/img/cards/toy_gun.png';
+import magicUp from '../../assets/img/cards/magic_up.png';
 
 import { Container, Sprite, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
@@ -92,6 +93,9 @@ const nameIdImgMap: any = {
   },
   ['toy-gun']: {
     texture: PIXI.Texture.from(toyGun),
+  },
+  ['magic-up']: {
+    texture: PIXI.Texture.from(magicUp),
   },
 };
 

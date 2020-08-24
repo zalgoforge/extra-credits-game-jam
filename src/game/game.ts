@@ -52,13 +52,15 @@ export class GameState {
 
   endTurn() {
     if (this.gameOver) return;
-    Actions.loseAllMana();
-    Actions.drawToHandSize();
 
     this.player.entity.endOfTurn();
     this.board.endOfTurn();
     this.player.hand.endOfTurn();
     this.passiveEffects.endOfTurn();
+
+    Actions.loseAllMana();
+    Actions.drawToHandSize();
+
 
     if (this.player.entity.hp.value() <= 0) {
       this.gameOver = true;

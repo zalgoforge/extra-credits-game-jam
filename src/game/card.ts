@@ -60,5 +60,7 @@ export class Card extends UniqueObject {
 
   endOfTurn() { }
 
+  discarded() { }
+
   play(ctx: PlayContext) {}
 }
