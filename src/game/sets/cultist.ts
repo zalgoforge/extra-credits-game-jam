@@ -127,6 +127,7 @@ export class MagicUp extends Card {
   play(ctx: PlayContext) {
     Actions.dealDamageToField(ctx.field(), new Damage(this.bonusDmg + this.damage));
     this.bonusDmg = 0;
+    this.updateDesc();
   }
 
   endOfTurn() {
@@ -137,6 +138,7 @@ export class MagicUp extends Card {
 
   discarded() {
     this.bonusDmg = 0;
+    this.updateDesc();
   }
 }
 
