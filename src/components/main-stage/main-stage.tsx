@@ -329,7 +329,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
         return (
           <EntityGraphics
             key={id}
-            x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * fieldIndex}
+            x={LANE_OFFSET.x - laneIndex * LANE_SHIFT + FIELD_WIDTH * fieldIndex + FIELD_WIDTH / 2}
             y={LANE_OFFSET.y + laneIndex * (LANE_DIMENSIONS.height + LANE_SPACER) + 40}
             isSoaked={false}
             isPoisoned={false}
