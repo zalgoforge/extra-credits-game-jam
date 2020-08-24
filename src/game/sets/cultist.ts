@@ -74,6 +74,36 @@ export class DrainHP extends Card {
   }
 }
 
+export class ToyGun extends Card {
+  damage1 = 2;
+  damage2 = 4;
+
+  constructor() {
+    super();
+    this.id = "toy-gun";
+    this.title = 'Toy Gun';
+    this.cost = 1;
+    this.description = `Deal ${this.damage1} dmg to first enemy then ${this.damage2} one field further.`;
+  }
+
+  protected getPossibleTargets(): Array<UniqueObject> {
+    return Target.anyLane();
+  }
+
+  play(ctx: PlayContext) {
+    let entity = Target.firstEnemyInLane(ctx.lane());
+    if (!entity) return;
+
+    let dmg = new Damage(this.damage1);
+    Actions.dealDamage(entity, dmg);
+    let target2 = entity.field()?.previousField()?.entity();
+    if (!target2) return;
+
+    dmg = new Damage(this.damage2);
+    Actions.dealDamage(target2, dmg);
+  }
+}
+
 
 export function CreateSet() {
   return [
@@ -83,7 +113,9 @@ export function CreateSet() {
     new Raze,
     new Raze,
 
-    new DrainHP,
+    new ToyGun,
+    new ToyGun,
+
     new DrainHP,
    ];
 }
