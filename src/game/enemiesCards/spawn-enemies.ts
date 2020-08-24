@@ -67,6 +67,7 @@ export class SpawnEnemies extends Card {
     super();
     this.title = 'SpawnEnemies';
     this.description = 'SpawnEnemies';
+    //this.passiveDescription = 'SpawnEnemies';
   }
 
   play(ctx: PlayContext) {

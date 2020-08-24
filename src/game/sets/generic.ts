@@ -78,6 +78,7 @@ export class Rations extends Card {
     this.cost = 4;
     this.title = 'Rations';
     this.description = `Gain "After first discard each turn, draw a card"`;
+    this.passiveDescription = `After first discard each turn, draw a card`;
   }
 
   play(ctx: PlayContext) {

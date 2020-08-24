@@ -7,6 +7,11 @@ export interface Card {
   manaGain: number;
 }
 
+export interface Passive {
+  id: string;
+  description: string;
+}
+
 export interface Enemy {
   id: string;
   hp: number;
@@ -40,6 +45,7 @@ export interface Lane {
 
 export interface State {
   cards: Card[];
+  passives: Passive[];
   lanes: Lane[];
   dyingEnemies: DyingEnemy[];
   mana: number;

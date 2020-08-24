@@ -52,6 +52,13 @@ const getCards = () => {
   }));
 };
 
+const getPassives = () => {
+  return GameState.instance().passiveEffects.cards.filter(c => c.passiveDescription != "" ).map((c) => ({
+    id: c.uuid,
+    description: c.passiveDescription,
+  }));
+};
+
 const getLanes = () => {
   return GameState.instance().board.lanes.map((l) => ({
     id: l.uuid,
@@ -109,6 +116,7 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
     health: getHealth(),
     turnCount: getTurnCount(),
     dyingEnemies: getDyingEnemies(),
+    passives: getPassives(),
     highlightedTargets: undefined,
     hoveredTarget: undefined,
   });
@@ -121,6 +129,14 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
         setState((prev) => ({
           ...prev,
           cards: getCards(),
+        }));
+      })
+      .bind();
+      game.passiveEffects.onCardsChanged
+      .do(() => {
+        setState((prev) => ({
+          ...prev,
+          passives: getPassives(),
         }));
       })
       .bind();
@@ -349,6 +365,10 @@ export const MainStage: React.FC<Props> = ({ app, onComplete }) => {
         }}
       />
       <ManaWhirl x={DISCARD_PILE.x} y={DISCARD_PILE.y} mana={state.mana} />
+      {/* passives */}
+      {state.passives.map(({ id, description }, index) => {
+        return (<Text key={id} x={500} y={30+30*index} text={`${description}`} />);
+      })}
       {state.cards.map(({ id, title, description, cost, manaGain, nameId }, index) => {
         const targets = GameState.instance().getPossibleTargetsForCard(id);
         const boardLaneIds = GameState.instance().board.lanes.map((l) => l.uuid);
