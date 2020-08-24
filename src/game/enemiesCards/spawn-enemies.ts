@@ -20,9 +20,20 @@ let testWaves: Wave[] = [
     delay: 2,
   },
   {
+    enemies: () => [new TestEnemy, new TestEnemy, new TestEnemy],
+    weight: 2,
+    delay: 2,
+  },
+  {
     enemies: () => [new TestEnemy],
     weight: 2,
     delay: 1,
+  },
+
+  {
+    enemies: () => [new FastEnemy, new BigEnemy],
+    weight: 2,
+    delay: 2,
   },
 
   {
@@ -39,6 +50,12 @@ let testWaves: Wave[] = [
 
   {
     enemies: () => [new ToughEnemy, new ToughEnemy],
+    weight: 1,
+    delay: 3,
+  },
+
+  {
+    enemies: () => [new ToughEnemy, new FastEnemy],
     weight: 2,
     delay: 3,
   },
@@ -62,6 +79,7 @@ export class SpawnEnemies extends Card {
   delay = 1;
   turn = 0;
   availableColumns = 2;
+  lastPick: Wave | null = null;
 
   constructor() {
     super();
@@ -95,7 +113,13 @@ export class SpawnEnemies extends Card {
       return false;
     }
 
-    let wave = PickRandomWaveFromWaves(testWaves);
+    let wave: Wave;
+    do {
+      wave = PickRandomWaveFromWaves(testWaves);
+    }
+    while (wave == this.lastPick);
+    this.lastPick = wave;
+
     this.delay = wave.delay;
     let enemies = wave.enemies();
 

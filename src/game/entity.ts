@@ -19,7 +19,6 @@ export class EntityStatusUpdate {
 
 export class Entity extends UniqueObject {
   name = "Unknown";
-  // TODO add maxHP
   hp = new Stat(10);
   statuses = new Statuses();
   destroyed = false;
@@ -36,7 +35,10 @@ export class Entity extends UniqueObject {
     let oldHP = this.hp.value();
 
     // add damage for each soak token
-    damage.amount += this.statuses.getValue(Status.Soak);
+    if (this.statuses.getValue(Status.Soak)) {
+      damage.amount += 2;
+    }
+
     if (damage.type != DamageType.PiercingDamage) {
       damage.amount -= this.statuses.getValue(Status.Tough);
     }
