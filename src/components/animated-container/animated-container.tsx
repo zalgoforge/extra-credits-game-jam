@@ -98,13 +98,14 @@ export const behavior = {
       };
 
       instance.__tweenAlpha = new TWEEN.Tween(coords)
-        .to({ alpha: 1, scale: 1.5 }, duration/2)
+        .to({ alpha: 1, scale: 1.5 }, duration/3)
         .easing(TWEEN.Easing.Quadratic.In)
         .onUpdate(onUpdate);
 
       instance.__tweenAlpha.chain(
         new TWEEN.Tween(coords)
-        .to({ alpha: 0 }, duration/2)
+        .delay(duration/3)
+        .to({ alpha: 0 }, duration/3)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onUpdate(onUpdate));
 
