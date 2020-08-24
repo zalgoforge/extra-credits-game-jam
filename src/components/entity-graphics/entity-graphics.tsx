@@ -8,6 +8,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { TimedContainer } from '../timed-container';
 import { getRandomInt } from '../../utils';
 
+import popupGraphics from '../../assets/img/dialogue/popup.png';
+
+
 import elfikCierpiGraphics from '../../assets/img/enemies/elfik_cierpi.png';
 import ogrCierpiGraphics from '../../assets/img/enemies/ogr_cierpi.png';
 import headhunterGraphics from '../../assets/img/enemies/headhunter.png';
@@ -170,11 +173,11 @@ const shouldSaySomething = () => getRandomInt(0, 10) >= 8;
 const renderEffect = (props: Props, e: any) => {
   if (e.type === 'show-message') {
     return (
-      <Container x={-10} y={-200}>
-        <Sprite texture={PIXI.Texture.from(chmurkaGraphics)} width={100} height={84} />
+      <Container x={-150} y={-170}>
+        <Sprite texture={PIXI.Texture.from(popupGraphics)} width={100} height={84} />
         <Text
-          x={10}
-          y={10}
+          x={20}
+          y={20}
           text={`${e.message}`}
           style={{
             fontSize: 11,
