@@ -215,7 +215,7 @@ const renderEntity = (
         {...getTint(isSoaked, isPoisoned)}
         anchor={ANCHOR_POINT}
       />
-      <Container x={30} y={-160}>
+      <Container x={-20} y={-160}>
         <Sprite texture={PIXI.Texture.from(chmurkaGraphics)} width={100 / 3} height={84 / 3} />
         <Text
           x={13}
